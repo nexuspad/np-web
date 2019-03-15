@@ -1,0 +1,43 @@
+{
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "node prebuild.js",
+    "start": "node prebuild.js && electron ./app dev",
+    "release": "build"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "cpx": "*",
+    "electron": "^4.0.6",
+    "electron-builder": "^20.38.5"
+  },
+  "build": {
+    "appId": "com.nexuspad.NexusApp",
+    "productName": "NexusApp",
+    "directories": {
+      "buildResources": "../src/assets"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "../src/assets/np-logo.png"
+    },
+    "nsis": {
+      "createDesktopShortcut": "always"
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "../src/assets/np-logo.icns",
+      "target": [
+        "zip",
+        "dmg"
+      ]
+    },
+    "artifactName": "nexusapp-latest.${ext}",
+    "publish": {
+      "provider": "s3",
+      "bucket": "davinci.nexuspad.com",
+      "path": "desktop-release",
+      "region": "us-east-1"
+    }
+  }
+}

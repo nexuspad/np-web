@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Check for update</title>
+</head>
+<style>
+* {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
+</style>
+<html>
+<body>
+  <strong>version:</strong> <span id="version"></span>
+  <br/>
+  <p id="messages" style="font-size:85%;">checking for update...</p>
+  <script>
+    // Display the current version
+    let version = window.location.hash.substring(1);
+    document.getElementById('version').innerText = version;
+  
+    // Listen for messages
+    const {ipcRenderer} = require('electron');
+    ipcRenderer.on('message', function(event, text) {
+      var container = document.getElementById('messages');
+      container.innerHTML = text;
+    })
+  </script>
+</body>
+</html>

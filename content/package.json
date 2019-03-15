@@ -1,0 +1,10 @@
+{
+  "name": "np-web-content",
+  "scripts": {
+    "deploy": "s3-deploy './*.html' --cwd './' --region us-east-1 --bucket davinci.nexuspad.com && s3-deploy './images/**' --cwd './' --region us-east-1 --bucket davinci.nexuspad.com"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "s3-deploy": "^1.2.1"
+  }
+}

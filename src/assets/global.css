@@ -1,0 +1,212 @@
+/*
+- detect which block is causing the horizontal scrollbar.
+{
+  border: 1px solid #f00 !important;
+}
+*/
+
+textarea:focus, input:focus{
+  outline: none !important;
+}
+
+.row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+/*
+ * 1039 is the highest z-index we want to go since the bootstrap modal backdrop is at 1040.
+ * we don't want the sticky element laid on top of the modal.
+ */
+.np-module-container {
+  margin-top:60px;
+}
+
+.np-slim-box {
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+}
+
+.np-slim-box h2 {padding-top: 0.5em; margin-bottom: 1em;}
+
+.np-side-nav {
+  height: 100vh; overflow: auto;
+  position:sticky; top:65px; z-index:1031;
+}
+
+/*
+ * z-index needs to be great than 1030, which is set for the top navigation.
+ * since a modal is wrapped inside the bar, it will be partially hidden if the z-index is less than 1030. 
+ */
+.np-entry-menu-bar, .np-list-menu-bar {
+  position:sticky; top:65px; background-color:rgba(255, 255, 255, 0.5); z-index:1031;
+}
+
+.np-content-below-menu {
+  margin-bottom: 2em;
+}
+
+.np-pagination {
+  position:sticky; bottom:10px;
+}
+
+.np-message {
+  position:fixed; top:80px; left: 50%; transform: translate(-50%, 0); z-index: 9999;
+}
+
+/*
+ * this overwrites bootstrap dropdown menu z-index because it will be partially hidden behind the np-list-menu-bar if it's <= 1039
+ */
+div.dropdown-menu {
+  z-index: 1040 !important;
+}
+
+.pinned { font-weight: bold; }
+
+ul.list-unstyled a { color: #222 !important; }
+ul.list-unstyled a.disabled { cursor: auto; color: #888888 !important; }
+
+a:hover { text-decoration: none !important; }
+
+a.folder-selected, span.folder-selected {
+  background: #b3e6ff;
+  border-radius: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+/* a link display with the style of a button. */
+a.btn-secondary {color: white !important;}
+
+button.icon-button {border: 0; background: none;}
+
+i.fa-external-link-alt { color: #6699cc; font-size: 75%; }
+
+.color-label {
+  border-radius: 50% !important;
+  width: 36px !important;
+  border: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+}
+
+i.fa-edit:hover, i.fa-plus:hover, i.fa-trash:hover, i.fa-plus-circle:hover, i.fa-times:hover,
+i.fa-angle-double-down, i.fa-angle-double-up, i.fa-times-circle {
+  cursor: pointer;
+}
+
+i.np-primary {
+  color: #007bff !important;
+}
+
+i.np-danger {
+  color: #dc3545;
+}
+
+:-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #cccccc;
+	border: 1px solid #dedede;
+}
+
+.input-underline {
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #ced4da !important;
+}
+
+.debug-info {
+  border-top:1px solid #ccc; margin-top:4em;
+}
+
+div.gallery {
+  float: left;
+  width: 200px;
+  position: relative;
+  margin: 5px;
+}
+
+div.gallery div.desc {
+  padding: 15px;
+  font-size: 50%;
+  overflow: hidden;
+}
+
+div.gallery .image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    width: 200px;
+    height: 150px;
+}
+
+div.gallery .pinned {
+  border-bottom: 1px solid #888888;
+}
+
+div.gallery input {
+  position: absolute; top: 5px; left: 5px; z-index: 200;
+}
+
+div.gallery .dropdown {
+  position: absolute; top: 0px; right: 0px; z-index: 200;
+}
+
+div.gallery .dropdown i.fa-ellipsis-h {
+  color:lightgrey;
+  border: transparent;
+}
+
+div.gallery .dropdown i:hover {
+  color: #007bff;
+}
+
+div.gallery div.tag {
+  position:absolute; right:0; bottom:0;
+}
+
+
+/** for spinning the logo */
+
+.imageRotateHorizontal{
+  -moz-animation: spinHorizontal .8s infinite linear;
+  -o-animation: spinHorizontal .8s infinite linear;    
+  -webkit-animation: spinHorizontal .8s infinite linear;
+  animation: spinHorizontal .8s infinite linear;
+}
+@-moz-keyframes spinHorizontal {
+  0% {-moz-transform: rotateY(0deg);}
+  100% {-moz-transform: rotateY(360deg);}
+}
+@keyframes spinHorizontal {
+  0% {transform: rotateY(0deg);}
+  100% {transform: rotateY(360deg);}
+}
+@-ms-keyframes spinHorizontal {
+  0% {-ms-transform: rotateY(0deg); }
+  100% {-ms-transform: rotateY(360deg);}
+}
+@-o-keyframes spinHorizontal {
+  0% { -o-transform: rotateY(0deg); }
+  100% { -o-transform: rotateY(360deg); }
+}
+@-webkit-keyframes spinHorizontal {
+  0% { -webkit-transform: rotateY(0deg); }
+  100% { -webkit-transform: rotateY(360deg); }
+}
