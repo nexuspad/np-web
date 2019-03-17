@@ -192,6 +192,7 @@ export default {
       }
 
       this.npEvent.folder = this.folder;
+      console.log('1 >', this.npEvent.folder);
     }
   },
   methods: {

@@ -295,10 +295,10 @@ export default class EntryList {
       if (entry.moduleId === self.listSetting.moduleId && entry.keyMatches(elem)) {
         if (theArray[index].status === NPEntry.DELETED && entry.status !== NPEntry.DELETED) {
           // an entry is restored. it needs to be removed from the list
-          console.log('Entry in the list deleted: ', entry.moduleId, entry.getKeyId());
+          console.log('Entry in the list deleted: ', entry.moduleId, self.listSetting.folderId, entry.getKeyId());
           self.deleteEntry(entry);
         } else {
-          console.log('Entry in the list updated: ', entry.moduleId, entry.getKeyId());
+          console.log('Entry in the list updated: ', entry.moduleId, self.listSetting.folderId, entry.getKeyId());
           theArray[index] = Object.assign(theArray[index], entry);
         }
         updated = true;
@@ -307,6 +307,7 @@ export default class EntryList {
 
     if (!updated) {
       // add the new entry to the front
+      console.log('Add the entry to the list', this.listSetting.folderId, entry.entryId);
       this.entries.unshift(entry);
     }
   }

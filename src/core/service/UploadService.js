@@ -8,6 +8,7 @@ import NPUpload from '../datamodel/NPUpload';
 import ListServiceFactory from './ListServiceFactory';
 import ErrorHandler from '../util/ErrorHandler'
 import NPError from '../datamodel/NPError';
+import NPModule from '../datamodel/NPModule';
 
 export default class UploadService extends BaseService {
   uploadId = '';
@@ -67,7 +68,7 @@ export default class UploadService extends BaseService {
                           listService.updateEntriesInList(parentEntry.getModuleId(), Array(1).fill(parentEntry));
                         }
 
-                        self._concludeService({ resolve:resolve, reject:reject, parentEntry:parentEntry, uploadEntryId: uploadEntry.entryId });
+                        self._concludeService({ resolve:resolve, reject:reject, parentEntry:parentEntry, uploadEntry: uploadEntry });
                       }
                     })
                     .catch(function (error) {
@@ -152,15 +153,19 @@ export default class UploadService extends BaseService {
     return httpClient.post(uri);
   }
 
-  _concludeService ({ resolve, reject, uploadEntryId = null, parentEntry = null, error = null }) {
+  _concludeService ({ resolve, reject, parentEntry = null, uploadEntry = null, error = null }) {
     this._active = false;
     if (parentEntry !== null) {
-      let uploadEntry;
-      if (uploadEntryId !== null) {
-        for (let i = 0; i < parentEntry.attachments.length; i++) {
-          if (parentEntry.attachments[i].entryId === uploadEntryId) {
-            uploadEntry = parentEntry.attachments[i];
-          }
+      if (uploadEntry !== null) {
+        // this uploadEntry is not a complete object returned from the service.
+        // doc object with attachments will be returned from the service, so the correct uploadEntry
+        // needs to be pulled from attachment array.
+        if (parentEntry.moduleId === NPModule.DOC) {
+          for (let i = 0; i < parentEntry.attachments.length; i++) {
+            if (parentEntry.attachments[i].entryId === uploadEntry.entryId) {
+              uploadEntry = parentEntry.attachments[i];
+            }
+          }  
         }
         resolve({ parentEntry: parentEntry, uploadEntry: uploadEntry });
       } else {

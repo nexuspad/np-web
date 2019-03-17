@@ -8,6 +8,10 @@ export default class FolderUtil {
   static convertToTree (folderArr) {
     let folderTree = [];
 
+    let allFolderIds = folderArr.map((f) => {
+      return f.folderId;
+    });
+
     // Add all the level 1 folders first
     for (let i = folderArr.length - 1; i >= 0; i--) {
       if (!folderArr[i].parent || !folderArr[i].subFolders) {
@@ -23,6 +27,14 @@ export default class FolderUtil {
       }
     }
 
+    // add the "orphaned" folders to the root level first
+    for (let i = folderArr.length - 1; i >= 0; i--) {
+      if (allFolderIds.indexOf(folderArr[i].parent.folderId) === -1) {
+        folderTree.push(folderArr[i]);
+        folderArr.splice(i, 1);
+      }
+    }    
+
     // Add the child folders
     let MAX_ITERATION = folderArr.length * folderArr.length;
     let iterationCount = 0;
@@ -37,7 +49,7 @@ export default class FolderUtil {
       for (let i = folderArr.length - 1; i >= 0; i--) {
         iterationCount++;
 
-        if (FolderUtil.addChildNodeToFolderTree(folderTree, folderArr[i])) {
+        if (FolderUtil._addChildNodeToFolderTree(folderTree, folderArr[i])) {
           folderArr.splice(i, 1);
         }
       }
@@ -48,18 +60,18 @@ export default class FolderUtil {
     }
 
     // Add the remaining folders to the ROOT level.
-    for (let i = folderArr.length - 1; i >= 0; i--) {
-      folderArr[i].parent.folderId = 0;
-      folderTree.push(folderArr[i]);
-      folderArr.splice(i, 1);
-    }
+    // for (let i = folderArr.length - 1; i >= 0; i--) {
+    //   folderArr[i].parent.folderId = 0;
+    //   folderTree.push(folderArr[i]);
+    //   folderArr.splice(i, 1);
+    // }
 
     FolderUtil.sortFolderTree(folderTree);
 
     return folderTree;
   }
 
-  static addChildNodeToFolderTree (folderTree, folder) {
+  static _addChildNodeToFolderTree (folderTree, folder) {
     let len = folderTree.length;
 
     for (let i = 0; i < len; i++) {
@@ -67,7 +79,7 @@ export default class FolderUtil {
         folderTree[i].subFolders.push(folder);
         return true;
       } else if (folderTree[i].subFolders.length > 0) {
-        if (FolderUtil.addChildNodeToFolderTree(folderTree[i].subFolders, folder)) {
+        if (FolderUtil._addChildNodeToFolderTree(folderTree[i].subFolders, folder)) {
           return true;
         }
       }

@@ -40,7 +40,6 @@ export default class NPContact extends NPEntry {
         for (let p of data['phones']) {
           this.phones.push(new NPItem(p));
         }
-        console.log(this.phones);
       }
 
       if (data['address']) {
@@ -55,12 +54,10 @@ export default class NPContact extends NPEntry {
     if (!this.emails) {
       this.emails = [];
     }
-    this.emails.unshift(new NPItem());
 
     if (!this.phones) {
       this.phones = [];
     }
-    this.phones.unshift(new NPItem());
 
     if (!this.address) {
       this.address = new NPLocation();

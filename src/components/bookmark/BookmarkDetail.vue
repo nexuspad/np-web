@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h1>{{ bookmarkObj.title }}</h1>
-    <div>
+  <div class="card">
+    <h1 class="card-header">{{ bookmarkObj.title }}</h1>
+    <div class="card-body">
       <ul class="list-inline">
         <li v-for="tag in bookmarkObj.tags" :key="tag" class="list-inline-item">
           <span class="badge badge-info">{{ tag }}</span>
@@ -10,9 +10,9 @@
       <div>
         <a target="_blank" :href="bookmarkObj.webAddress">{{ bookmarkObj.webAddress }}</a>
       </div>
-      <div class="row" v-if="bookmarkObj.note">
-        <span style="white-space: pre;">{{ bookmarkObj.note }}</span>
-      </div>
+    </div>
+    <div class="card-footer" v-if="contactObj.note">
+      <span style="white-space: pre;">{{ bookmarkObj.note }}</span>
     </div>
   </div>
 </template>

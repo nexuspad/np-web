@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="card">
     <delete-confirm-modal ref="deleteConfirmModalRef" @deleteEntryConfirmed="deleteAttachment" />
-    <h1 v-show="!editTitle">{{ docObj.title }}
+    <h1 class="card-header" v-show="!editTitle">{{ docObj.title }}
       <button type="button" class="icon-button" @click="editTitle = !editTitle"><i class="fa fa-edit"></i></button>
     </h1>
-    <div class="row form-group" v-show="editTitle">
+    <div class="row form-group mt-2" v-show="editTitle">
       <div class="col">
         <input type="text" class="form-control input-underline" v-model="docObj.title" />
       </div>
@@ -14,15 +14,15 @@
         </b-button-group>
       </div>
     </div>
-    <div>
+    <div class="card-body">
       <ul class="list-inline">
         <li v-for="tag in docObj.tags" :key="tag" class="list-inline-item">
           <span class="badge badge-info">{{ tag }}</span>
         </li>
       </ul>
+      <span v-html="htmlNote" v-if="isHtml()"></span>
+      <span style="white-space: pre;" v-if="isPlainText()">{{ docObj.note }}</span>
     </div>
-    <span v-html="htmlNote" v-if="isHtml()"></span>
-    <span style="white-space: pre;" v-if="isPlainText()">{{ docObj.note }}</span>
     <ul class="list-group mt-4">
       <li class="list-unstyled" v-for="item in attachments" v-bind:key="item.entryId">
         <div class="row mt-2 mb-2">

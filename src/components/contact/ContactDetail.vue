@@ -1,36 +1,26 @@
 <template>
-  <div>
-    <h1>{{ contactObj.title }}</h1>
-    <div>
+  <div class="card">
+    <h1 class="card-header">{{ contactObj.title }}</h1>
+    <div class="card-body">
       <ul class="list-inline">
         <li v-for="tag in contactObj.tags" :key="tag" class="list-inline-item">
           <span class="badge badge-info">{{ tag }}</span>
         </li>
       </ul>
-      <div class="row" v-if="contactObj.fullName && contactObj.fullName !== contactObj.title">
-        <div class="col">{{ contactObj.fullName }}</div>
-      </div>
-      <div class="row" v-if="contactObj.emails.length > 0">
-        <div class="col">
-          <ul class="list-unstyled">
-            <li v-for="email in contactObj.emails" :key="email.value">
-              <span>{{ email.value }}</span>
-              <span class="badge badge-info" v-if="email.label !== 'EMAIL'">{{ email.label }}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="row" v-if="contactObj.phones.length > 0">
-        <div class="col">
-          <ul class="list-unstyled">
-            <li v-for="phone in contactObj.phones" :key="phone.value">
-              <span>{{ phone.formattedValue }}</span>
-              <span class="badge badge-info" v-if="phone.label !== 'PHONE'">{{ phone.label }}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="row" v-if="contactObj.address && contactObj.address.addressStr">
+      <ul class="list-group list-group" v-if="contactObj.phones.length > 0 || contactObj.emails.length > 0">
+        <li class="list-group-item" v-for="phone in contactObj.phones" :key="phone.value">
+          <span>{{ phone.formattedValue }}</span>
+          <span class="badge badge-info" v-if="phone.label !== 'PHONE'">{{ phone.label }}</span>
+        </li>
+        <li class="list-group-item" v-for="email in contactObj.emails" :key="email.value">
+          <span>{{ email.value }}</span>
+          <span class="badge badge-info" v-if="email.label !== 'EMAIL'">{{ email.label }}</span>
+        </li>
+      </ul>
+      <h5 class="card-title" v-if="contactObj.fullName && contactObj.fullName !== contactObj.title">
+        {{ contactObj.fullName }}
+      </h5>
+      <div v-if="contactObj.address && contactObj.address.addressStr">
         <div class="d-flex flex-wrap">
           <div class="p-2 text-capitalize" v-if="contactObj.address.streetAddress">{{ contactObj.address.streetAddress }},</div>
           <div class="p-2 text-capitalize" v-if="contactObj.address.city">{{ contactObj.address.city }},</div>
@@ -45,9 +35,9 @@
           </div>
         </div>
       </div>
-      <div class="row" v-if="contactObj.note">
-        <span style="white-space: pre;">{{ contactObj.note }}</span>
-      </div>
+    </div>
+    <div class="card-footer" v-if="contactObj.note">
+      <span style="white-space: pre;">{{ contactObj.note }}</span>
     </div>
     <pre class="debug-info" v-if="debuggingEnabled()">
       <code>{{debug()}}</code>

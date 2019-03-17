@@ -35,6 +35,9 @@
           <input class="form-control" type="tel" v-model="item.value" placeholder="phone" autocomplete="disabled" />
         </div>
         <div class="col-md-auto">
+          <input class="form-control" type="text" v-model="item.label" placeholder="label" autocomplete="disabled" />
+        </div>
+        <div class="col-md-auto">
           <button type="button" class="icon-button" v-on:click="addPhone()" v-if="phoneIndex === 0">
             <i class="fa fa-plus fa-lg text-primary"></i>
           </button>
@@ -120,6 +123,7 @@ export default {
     if (!this.$route.params.entryId) {
       this.contact = NPContact.blankInstance(this.folder);
       this.contact.folder = this.folder;
+      this.initEmptyInput();
       return;
     }
 
@@ -136,6 +140,7 @@ export default {
             componentSelf.contact = entry;
             // repoint the folder reference to the one in the component so changing folder would work
             componentSelf.contact.folder = componentSelf.folder;
+            this.initEmptyInput();
           })
           .catch(function (error) {
             console.log(error);
@@ -146,6 +151,14 @@ export default {
       });
   },
   methods: {
+    initEmptyInput () {
+      if (this.contact.emails.length === 0) {
+        this.contact.emails.unshift(new NPItem());
+      }
+      if (this.contact.phones.length === 0) {
+        this.contact.phones.unshift(new NPItem());
+      }
+    },
     addEmail () {
       this.contact.emails.unshift(new NPItem());
     },

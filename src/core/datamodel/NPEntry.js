@@ -170,7 +170,8 @@ export default class NPEntry {
       tags: this.tags,
       colorLabel: this.colorLabel,
       pinned: this.pinned,
-      folder: this.folder.toJson()
+      folder: this.folder.toJson(),
+      status: this.status
     };
 
     if (this.owner) {

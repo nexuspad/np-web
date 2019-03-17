@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h1>{{ eventObj.title }}</h1>
-    <div>
+  <div class="card">
+    <h1 class="card-header">{{ eventObj.title }}</h1>
+    <div class="card-body">
       <ul class="list-inline">
         <li v-for="tag in eventObj.tags" :key="tag" class="list-inline-item">
           <span class="badge badge-info">{{ tag }}</span>
@@ -31,22 +31,22 @@
           to&nbsp; <b>{{ eventObj.localEndDate }}</b>
         </div>
       </div>
+      <div v-if="eventObj.getRecurrence() !== null">
+        <span class="lead">recurring</span>
+        <span>{{eventObj.getRecurrence().pattern}}</span>
+        <span v-if="eventObj.getRecurrence().endDate">until {{eventObj.getRecurrence().endDate}}</span>
+        <span v-if="eventObj.getRecurrence().recurrenceTimes">for {{eventObj.getRecurrence().recurrenceTimes}} times</span>
+      </div>
+      <div v-if="eventObj.hasReminder()">
+        <span class="lead">reminder:</span>
+        {{eventObj.eventReminders[0].deliverType}}
+        {{eventObj.eventReminders[0].deliverAddress}}
+        {{eventObj.eventReminders[0].unitCount}}
+        {{eventObj.eventReminders[0].unit}}
+        before start
+      </div>
     </div>
-    <div v-if="eventObj.getRecurrence() !== null">
-      <span class="lead">recurring</span>
-      <span>{{eventObj.getRecurrence().pattern}}</span>
-      <span v-if="eventObj.getRecurrence().endDate">until {{eventObj.getRecurrence().endDate}}</span>
-      <span v-if="eventObj.getRecurrence().recurrenceTimes">for {{eventObj.getRecurrence().recurrenceTimes}} times</span>
-    </div>
-    <div v-if="eventObj.hasReminder()">
-      <span class="lead">reminder:</span>
-      {{eventObj.eventReminders[0].deliverType}}
-      {{eventObj.eventReminders[0].deliverAddress}}
-      {{eventObj.eventReminders[0].unitCount}}
-      {{eventObj.eventReminders[0].unit}}
-      before start
-    </div>
-    <div v-if="eventObj.note" class="mt-2">
+    <div class="card-footer" v-if="eventObj.note">
       <span style="white-space: pre;">{{ eventObj.note }}</span>
     </div>
     <pre class="debug-info" v-if="debuggingEnabled()">
