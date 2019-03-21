@@ -140,7 +140,7 @@ export default {
             componentSelf.contact = entry;
             // repoint the folder reference to the one in the component so changing folder would work
             componentSelf.contact.folder = componentSelf.folder;
-            this.initEmptyInput();
+            componentSelf.initEmptyInput();
           })
           .catch(function (error) {
             console.log(error);

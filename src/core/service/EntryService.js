@@ -379,10 +379,16 @@ export default class EntryService extends BaseService {
     } else {
       let serviceData = EntryServiceData.ofMultipleUpdates(entryIdsArr, this.MOVE, toFolder);
 
-      let listService = ListServiceFactory.locate({
+      let listServiceFrom = ListServiceFactory.locate({
         moduleId: fromFolder.moduleId,
         folderId: fromFolder.folderId,
         ownerId: fromFolder.getOwnerId()
+      });
+
+      let listServiceTo = ListServiceFactory.locate({
+        moduleId: toFolder.moduleId,
+        folderId: toFolder.folderId,
+        ownerId: toFolder.getOwnerId()
       });
 
       p = new Promise((resolve, reject) => {
@@ -394,11 +400,13 @@ export default class EntryService extends BaseService {
             } else {
               if (response.data.entry) {
                 let entryObj = EntryService.initEntryObj(response.data.entry);
-                listService.deleteEntriesInList(fromFolder.moduleId, Array(1).fill(entryObj));
+                listServiceFrom.deleteEntriesInList(fromFolder.moduleId, Array(1).fill(entryObj));
+                listServiceTo.updateEntriesInList(toFolder.moduleId, Array(1).fill(entryObj));
                 resolve(entryObj);
               } else if (response.data.entryList) {
                 let entryList = EntryService.initEntryListObj(response.data.entryList);
-                listService.deleteEntriesInList(fromFolder.moduleId, entryList.entries);
+                listServiceFrom.deleteEntriesInList(fromFolder.moduleId, entryList.entries);
+                listServiceTo.updateEntriesInList(toFolder.moduleId, entryList.entries);
                 resolve(entryList);
               } else {
                 reject(new NPError('Invalid data response for deleting entry.'));
