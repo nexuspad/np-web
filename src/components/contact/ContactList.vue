@@ -8,21 +8,23 @@
                           @deleteEntryConfirmed="deleteEntry"
                           @bulkDeleteConfirmed="bulkDeleteEntries" />
     <update-tag-modal ref="updateTagModalRef" />
-    <list-menu :folder="folder"
-               :entryIds="bulkEditIds"
-               v-on:toggleBulkEdit="bulkEdit = !bulkEdit; bulkEditIds = []"
-               v-on:bulkSelection="bulkSelection"
-               v-on:refreshList="loadList({refresh: true})"
-               v-on:bulkDelete="openBulkDeleteConfirmModel(folder, bulkEditIds)" />
+    <div class="np-list-menu-bar">
+      <list-menu :folder="folder"
+                :entryIds="bulkEditIds"
+                v-on:toggleBulkEdit="bulkEdit = !bulkEdit; bulkEditIds = []"
+                v-on:bulkSelection="bulkSelection"
+                v-on:refreshList="loadList({refresh: true})"
+                v-on:bulkDelete="openBulkDeleteConfirmModel(folder, bulkEditIds)" />
+      <nav v-if="groups.length > 0">
+        <ul class="pagination">
+          <li class="page-item" v-for="g in groups" v-bind:key="g">
+            <a class="page-link text-uppercase" :href="'#' + g">{{g}}</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
     <!-- make sure the object is populated by checking the folder -->
     <empty :list=true v-if="entryList.folder !==null && entryList.isEmpty()" />
-    <nav v-if="groups.length > 0" class="paging">
-      <ul class="pagination">
-        <li class="page-item" v-for="g in groups" v-bind:key="g">
-          <a class="page-link text-uppercase" :href="'#' + g">{{g}}</a>
-        </li>
-      </ul>
-    </nav>
     <div class="np-content-below-menu anchored-grp" v-for="g in groups" v-bind:key="g">
       <div class="lead font-weight-bold text-uppercase mb-1">{{ g }}</div>
       <a class="grp-anchor" :name="g">&nbsp;</a>

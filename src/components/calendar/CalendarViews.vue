@@ -2,7 +2,9 @@
   <div>
     <message :location="'TOP_STICKY'" />
     <entry-modal ref="entryModalRef" />
-    <list-menu :folder="folder" v-on:toggleBulkEdit="bulkEdit = !bulkEdit" v-on:refreshList="refreshEvents()" />
+    <div class="np-list-menu-bar">
+      <list-menu :folder="folder" v-on:toggleBulkEdit="bulkEdit = !bulkEdit" v-on:refreshList="refreshEvents()" />
+    </div>
     <div class="np-content-below-menu">
       <full-calendar ref="calendar"
                     :event-sources="eventSources"

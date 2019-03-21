@@ -202,6 +202,7 @@ export default class NPEvent extends NPEntry {
   toJson () {
     let data = super.toJson();
 
+    data['recurId'] = this.recurId;
     data['localStartDate'] = this.localStartDate;
     data['localStartTime'] = this.localStartTime;
     data['localEndDate'] = this.localEndDate;

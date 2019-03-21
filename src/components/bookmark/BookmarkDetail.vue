@@ -11,7 +11,7 @@
         <a target="_blank" :href="bookmarkObj.webAddress">{{ bookmarkObj.webAddress }}</a>
       </div>
     </div>
-    <div class="card-footer" v-if="contactObj.note">
+    <div class="card-footer" v-if="bookmarkObj.note">
       <span style="white-space: pre;">{{ bookmarkObj.note }}</span>
     </div>
   </div>

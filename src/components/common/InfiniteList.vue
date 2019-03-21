@@ -8,13 +8,15 @@
                           @deleteEntryConfirmed="deleteEntry"
                           @bulkDeleteConfirmed="bulkDeleteEntries" />
     <update-tag-modal ref="updateTagModalRef" />
-    <list-menu :searchKeyword="searchKeyword"
-              :folder="folder"
-              :entryIds="bulkEditIds"
-              v-on:toggleBulkEdit="bulkEdit = !bulkEdit; bulkEditIds = []"
-              v-on:bulkSelection="bulkSelection"
-              v-on:refreshList="loadList(true)"
-              v-on:bulkDelete="openBulkDeleteConfirmModel(folder, bulkEditIds)" />
+    <div class="np-list-menu-bar">
+      <list-menu :searchKeyword="searchKeyword"
+                :folder="folder"
+                :entryIds="bulkEditIds"
+                v-on:toggleBulkEdit="bulkEdit = !bulkEdit; bulkEditIds = []"
+                v-on:bulkSelection="bulkSelection"
+                v-on:refreshList="loadList(true)"
+                v-on:bulkDelete="openBulkDeleteConfirmModel(folder, bulkEditIds)" />
+    </div>
     <!-- make sure the object is populated by checking the folder -->
     <empty :list=true v-if="entryList.folder !== null && entryList.isEmpty()" />
     <ul class="list-unstyled np-content-below-menu" id="EntryList">

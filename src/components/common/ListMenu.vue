@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-1 mb-2 np-list-menu-bar">
+  <div class="mt-1 mb-2">
     <move-to-folder-modal :moduleId="folder.moduleId"
                           ref="folderTreeModalRef"
                           @bulkMoveFolderSelected="performMoveEntries"

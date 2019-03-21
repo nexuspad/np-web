@@ -78,7 +78,7 @@
         </div>
         <div class="col" v-show="recurring()">
           <label for="RepeatEndDate">or end by</label>
-          <input class="form-control" type="date" id="RepeatEndDate" v-model="npEvent.recurrence.endDate" >
+          <input class="form-control" type="date" id="RepeatEndDate" :min="npEvent.localStartDate" v-model="npEvent.recurrence.endDate" >
         </div>
       </div>
       <div class="form-group row">
@@ -192,7 +192,6 @@ export default {
       }
 
       this.npEvent.folder = this.folder;
-      console.log('1 >', this.npEvent.folder);
     }
   },
   methods: {
@@ -232,6 +231,8 @@ export default {
       } else {
         return [1, 2, 3, 4, 5, 6, 6, 8, 9, 10, 11, 12];
       }
+    },
+    defaultRecurEndDateValue () {
     },
     recurring () {
       if (this.npEvent.recurrence && this.npEvent.recurrence.pattern !== Recurrence.NOREPEAT) {

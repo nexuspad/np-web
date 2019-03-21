@@ -40,7 +40,7 @@ textarea:focus, input:focus{
  * since a modal is wrapped inside the bar, it will be partially hidden if the z-index is less than 1030. 
  */
 .np-entry-menu-bar, .np-list-menu-bar {
-  position:sticky; top:65px; background-color:rgba(255, 255, 255, 0.5); z-index:1031;
+  position:sticky; top:60px; background-color:rgba(255, 255, 255, 0.7); z-index:1031; padding: 5px 0 5px 0;
 }
 
 .np-content-below-menu {

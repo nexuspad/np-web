@@ -7,13 +7,15 @@
                           @deleteEntryConfirmed="deleteEntry"
                           @bulkDeleteConfirmed="bulkDeleteEntries" />
     <update-tag-modal ref="updateTagModalRef" />
-    <list-menu :searchKeyword="searchKeyword"
-               :folder="folder"
-               :entryIds="bulkEditIds"
-               v-on:toggleBulkEdit="bulkEdit = !bulkEdit; bulkEditIds = []"
-               v-on:bulkSelection="bulkSelection"
-               v-on:refreshList="loadList(true)"
-               v-on:bulkDelete="openBulkDeleteConfirmModel(folder, bulkEditIds)" />
+    <div class="np-list-menu-bar">
+      <list-menu :searchKeyword="searchKeyword"
+                :folder="folder"
+                :entryIds="bulkEditIds"
+                v-on:toggleBulkEdit="bulkEdit = !bulkEdit; bulkEditIds = []"
+                v-on:bulkSelection="bulkSelection"
+                v-on:refreshList="loadList(true)"
+                v-on:bulkDelete="openBulkDeleteConfirmModel(folder, bulkEditIds)" />
+    </div>
     <div class="np-content-below-menu">
       <ul class="list-unstyled" v-if="listStyle === 'default'">
         <li v-for="item in entries" v-bind:key="item.entryId" class="mt-2">

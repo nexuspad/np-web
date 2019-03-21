@@ -30,7 +30,7 @@
           <div class="p-2 text-capitalize">
             {{ contactObj.address.country }}
           </div>
-          <div>
+          <div class="mt-2">
             <a :href="mapLink(contactObj.address.addressStr)" target="_blank"><i class="fa fa-map-marked-alt"></i></a>
           </div>
         </div>

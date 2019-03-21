@@ -79,7 +79,7 @@ export default class UserPreference {
     }
     let moduleCode = NPModule.codeForId(folderObj.moduleId);
 
-    if (this.viewPreferences[moduleCode]) {
+    if (this.viewPreferences[moduleCode] && this.viewPreferences[moduleCode].folders) {
       let folderIdArr = this.viewPreferences[moduleCode].folders.opened;
       let key = folderObj.folderId;
       if (!folderObj.isMyFolder()) {
