@@ -111,7 +111,6 @@ export default {
         }
         p.then(function (entryObj) {
             componentSelf.entryObj = entryObj;
-            console.log(entryObj);
             componentSelf.folderKey = NPFolder.key({folder: entryObj.folder});
           })
           .catch(function (error) {

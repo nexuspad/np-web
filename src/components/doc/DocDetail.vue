@@ -21,7 +21,7 @@
         </li>
       </ul>
       <span v-html="htmlNote" v-if="isHtml()"></span>
-      <span style="white-space: pre;" v-if="isPlainText()">{{ docObj.note }}</span>
+      <span style="white-space: pre-wrap;" v-if="isPlainText()">{{ docObj.note }}</span>
     </div>
     <ul class="list-group mt-4">
       <li class="list-unstyled" v-for="item in attachments" v-bind:key="item.entryId">

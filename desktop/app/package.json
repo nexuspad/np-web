@@ -2,11 +2,11 @@
   "name": "NexusApp",
   "description": "NexusPad desktop application",
   "author": "Ren Liu",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "main": "main.js",
   "license": "ISC",
   "dependencies": {
-    "electron-log": "*",
-    "electron-updater": "^4.0.0"
+    "electron-log": "^3.0.1",
+    "electron-updater": "^4.0.8"
   }
 }

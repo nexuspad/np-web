@@ -88,7 +88,13 @@ export default class NPFolder {
     }
 
     if (folderId === 0) {
-      folderObj.folderName = 'root folder';
+      if (moduleId === NPModule.CONTACT) {
+        folderObj.folderName = 'all contacts';
+      } else if (moduleId === NPModule.CALENDAR) {
+        folderObj.folderName = 'all events';
+      } else {
+        folderObj.folderName = 'root folder';
+      }
     }
 
     return folderObj;
