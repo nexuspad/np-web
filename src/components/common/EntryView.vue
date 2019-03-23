@@ -14,7 +14,7 @@
                 <i class="fas fa-level-up-alt flipH" data-fa-transform="flip-h"></i>
               </b-button>
             </b-button-group>
-            <entry-menu :entry="entryObj" v-if="entryObj.hasWritePermission()" />
+            <entry-menu :entry="entryObj" :folder="folder" v-if="entryObj.hasWritePermission()" />
           </b-button-toolbar>
         </div>
         <div class="np-content-below-menu">

@@ -4,22 +4,24 @@
     <delete-confirm-modal ref="deleteConfirmModalRef" @deleteEntryConfirmed="deleteEntry" />
     <update-tag-modal ref="updateTagModalRef" />
     <b-button-group>
-      <b-button v-b-tooltip.hover title="favorite" v-if="isAvailable('pin')" @click="togglePin(entry)">
+      <b-button v-b-tooltip.hover title="favorite" @click="togglePin(entry)"
+        v-if="actionIsAvailable('pin', entry)">
         <i class="far fa-star" v-bind:class="{fas:entry.pinned, far:!entry.pinned}"></i>
       </b-button>
-      <b-button v-b-tooltip.hover title="edit" @click="goEntryRoute(entry, 'edit', entry.folder, '')"  v-if="isAvailable('edit')">
+      <b-button v-b-tooltip.hover title="edit" @click="goEntryRoute(entry, 'edit', entry.folder, '')" 
+        v-if="actionIsAvailable('edit', entry)">
         <i class="far fa-edit"></i>
       </b-button>
-      <b-button v-b-tooltip.hover title="attach" @click="showUploader()" v-if="isAvailable('attach')">
+      <b-button v-b-tooltip.hover title="attach" @click="showUploader()" v-if="actionIsAvailable('attach', entry)">
         <i class="fas fa-paperclip"></i>
       </b-button>
-      <b-button v-b-tooltip.hover title="tags" v-if="isAvailable('tags')" @click="openUpdateTagModal(entry)">
+      <b-button v-b-tooltip.hover title="tags" v-if="actionIsAvailable('tags', entry)" @click="openUpdateTagModal(entry)">
         <i class="fas fa-tags"></i>
       </b-button>
-      <b-button v-b-tooltip.hover title="move" @click="openFolderTreeModal(entry)" v-if="isAvailable('move')">
+      <b-button v-b-tooltip.hover title="move" @click="openFolderTreeModal(entry)" v-if="actionIsAvailable('move', entry)">
         <i class="far fa-folder-open"></i>
       </b-button>
-      <b-button v-b-tooltip.hover title="delete" v-if="isAvailable('delete')" @click="openDeleteConfirmModel(entry)">
+      <b-button v-b-tooltip.hover title="delete" v-if="actionIsAvailable('delete', entry)" @click="openDeleteConfirmModel(entry)">
         <i class="far fa-trash-alt"></i>
       </b-button>
     </b-button-group>
@@ -37,7 +39,7 @@ import NPModule from '../../core/datamodel/NPModule';
 
 export default {
   name: 'EntryMenu',
-  props: ['entry'],
+  props: ['entry', 'folder'],
   mixins: [ EntryActionProvider ],
   components: {
     MoveToFolderModal, DeleteConfirmModal, UpdateTagModal
@@ -49,41 +51,6 @@ export default {
     showUploader () {
       // the event is handled in app.js
       EventManager.publishAppEvent(AppEvent.ofIntention(AppEvent.SHOW_UPLOADER, {folder: this.entry.folder, entry: this.entry}));
-    },
-    isAvailable (menuName) {
-      switch (menuName) {
-        case 'pin':
-          if (this.entry.isMine()) {
-            return true;
-          }
-          return false;
-        case 'edit':
-          if (this.entry.moduleId === NPModule.PHOTO) {
-            return false;
-          }
-          return true;
-        case 'tags':
-          return true;
-        case 'attach':
-          if (this.entry.moduleId === NPModule.DOC) {
-            return true;
-          }
-          return false;
-        case 'move':
-          if (this.entry.isMine()) {
-            return true;
-          }
-          return false;
-        case 'delete':
-          return true;
-        case 'download':
-          if (this.entry.moduleId === NPModule.PHOTO) {
-            return true;
-          }
-          return false;
-        default:
-          return false;
-      }
     }
   }
 }

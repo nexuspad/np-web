@@ -64,33 +64,27 @@ export default {
     return { bookmark: {} };
   },
   mounted () {
-    if (!this.$route.params.entryId) {
-      this.bookmark = NPBookmark.blankInstance(this.folder);
-      this.bookmark.folder = this.folder;
-      return;
+    this.bookmark = NPBookmark.blankInstance(this.folder);
+
+    if (this.$route.params.entryId) {
+      this.bookmark.entryId = this.$route.params.entryId;
+      let componentSelf = this;
+      AccountService.hello()
+        .then(function (response) {
+          EntryService.get(componentSelf.bookmark)
+            .then(function (entry) {
+              componentSelf.bookmark = entry;
+              // repoint the folder reference to the one in the component so changing folder would work
+              componentSelf.bookmark.folder = componentSelf.folder;
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
-
-    let entry = new NPEntry();
-    entry.moduleId = NPModule.BOOKMARK;
-    entry.entryId = this.$route.params.entryId;
-
-    let componentSelf = this;
-
-    AccountService.hello()
-      .then(function (response) {
-        EntryService.get(entry)
-          .then(function (entry) {
-            componentSelf.bookmark = entry;
-            // repoint the folder reference to the one in the component so changing folder would work
-            componentSelf.bookmark.folder = componentSelf.folder;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
   },
   methods: {
     collectTags () {

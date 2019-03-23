@@ -120,35 +120,29 @@ export default {
     };
   },
   mounted () {
-    if (!this.$route.params.entryId) {
-      this.contact = NPContact.blankInstance(this.folder);
-      this.contact.folder = this.folder;
-      this.initEmptyInput();
-      return;
+    this.contact = NPContact.blankInstance(this.folder);
+    this.initEmptyInput();
+
+    if (this.$route.params.entryId) {
+      this.contact.entryId = this.$route.params.entryId;
+      let componentSelf = this;
+      AccountService.hello()
+        .then(function (response) {
+          EntryService.get(componentSelf.contact)
+            .then(function (entry) {
+              componentSelf.contact = entry;
+              // repoint the folder reference to the one in the component so changing folder would work
+              componentSelf.contact.folder = componentSelf.folder;
+              componentSelf.initEmptyInput();
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
-
-    let entry = new NPContact();
-    entry.moduleId = NPModule.CONTACT;
-    entry.entryId = this.$route.params.entryId;
-
-    let componentSelf = this;
-
-    AccountService.hello()
-      .then(function (response) {
-        EntryService.get(entry)
-          .then(function (entry) {
-            componentSelf.contact = entry;
-            // repoint the folder reference to the one in the component so changing folder would work
-            componentSelf.contact.folder = componentSelf.folder;
-            componentSelf.initEmptyInput();
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
   },
   methods: {
     initEmptyInput () {

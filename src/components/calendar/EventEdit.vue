@@ -147,25 +147,17 @@ export default {
   },
   mounted () {
     if (this.$route.params.entryId) {
-      // an existing entry
-      let entry = new NPEvent();
-      entry.entryId = this.$route.params.entryId;
+      this.npEvent = NPEvent.blankInstance(this.folder, this.$route.params.entryId);
 
       if (this.$route.params.recurId) {
-        entry.recurId = this.$route.params.recurId;
+        this.npEvent.recurId = this.$route.params.recurId;
         this.updateOption = 1;
       }
 
-      // set the timezone if it's not there
-      if (!this.npEvent.timezone) {
-        this.npEvent.timezone = PreferenceService.getPreference().getTimezoneName();
-      }
-
       let componentSelf = this;
-
       AccountService.hello()
         .then(function (response) {
-          EventService.get(entry)
+          EventService.get(componentSelf.npEvent)
             .then(function (entry) {
               componentSelf.npEvent = entry;
               // repoint the folder reference to the one in the component so changing folder would work
@@ -191,7 +183,9 @@ export default {
         this.npEvent.colorLabel = this.folder.colorLabel;
       }
 
-      this.npEvent.folder = this.folder;
+      if (!this.npEvent.timezone) {
+        this.npEvent.timezone = PreferenceService.getPreference().getTimezoneName();
+      }
     }
   },
   methods: {

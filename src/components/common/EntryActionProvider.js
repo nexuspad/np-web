@@ -256,6 +256,47 @@ export default {
             params: { user: folder.owner.userId, folderId: folder.folderId } });
         }
       }
+    },
+    actionIsAvailable (actionName, entry) {
+      switch (actionName) {
+        case 'pin':
+          if (entry.isMine()) {
+            return true;
+          }
+          return false;
+        case 'edit':
+          if (entry.moduleId === NPModule.PHOTO) {
+            return false;
+          }
+          if (entry.hasWritePermission())
+            return true;
+          return false;
+        case 'tags':
+          if (entry.hasWritePermission())
+            return true;
+          return false;
+        case 'attach':
+          if (entry.moduleId === NPModule.DOC && entry.hasWritePermission()) {
+            return true;
+          }
+          return false;
+        case 'move':
+          if (entry.isMine()) {
+            return true;
+          }
+          return false;
+        case 'delete':
+          if (entry.hasWritePermission())
+            return true;
+          return false;
+        case 'download':
+          if (entry.moduleId === NPModule.PHOTO) {
+            return true;
+          }
+          return false;
+        default:
+          return false;
+      }
     }
   }
 }

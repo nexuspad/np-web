@@ -154,20 +154,16 @@ export default {
   },
   mounted () {
     this.autoSaver = new AutoSaver();
-    let componentSelf = this;
+
+    this.doc = NPDoc.blankInstance(this.folder);
 
     if (this.$route.params.entryId) {
-      let entry = new NPEntry();
-      entry.moduleId = NPModule.DOC;
-      entry.entryId = this.$route.params.entryId;
-      if (this.folder) {
-        entry.folder = this.folder;
-        entry.owner = this.folder.owner;
-      }
+      this.doc.entryId = this.$route.params.entryId;
 
+      let componentSelf = this;
       AccountService.hello()
         .then(function (response) {
-          EntryService.get(entry)
+          EntryService.get(componentSelf.doc)
             .then(function (docObj) {
               // make a copy here so locally in DocEdit a separate object is being referenced
               componentSelf.doc.copy(docObj);
@@ -186,10 +182,6 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
-
-    } else {
-      // a new doc
-      this.doc = NPDoc.blankInstance(this.folder);
     }
   },
   updated () {

@@ -7,7 +7,7 @@
             <i class="fas fa-level-up-alt flipH" data-fa-transform="flip-h"></i>
           </b-button>
         </b-button-group>
-        <entry-menu :entry="selectedPhoto" />
+        <entry-menu :entry="selectedPhoto" :folder="folder" />
       </b-button-toolbar>
     </div>
     <div class="np-content-below-menu">
@@ -37,7 +37,7 @@ import EntryActionProvider from '../common/EntryActionProvider';
 
 export default {
   name: 'Carousel',
-  props: ['images', 'imageIndex'],
+  props: ['images', 'imageIndex', 'folder'],
   mixins: [ EntryActionProvider ],
   components: {
     EntryMenu

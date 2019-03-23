@@ -156,9 +156,9 @@ export default {
     },
     openCarousel: function (imageIndex) {
       if (this.folder.folderId === 0) {
-        this.$router.push({name: 'photoHomeCarousel', params: {images: this.entryList.entries, imageIndex: imageIndex}});
+        this.$router.push({name: 'photoHomeCarousel', params: {images: this.entryList.entries, imageIndex: imageIndex, folder: this.folder}});
       } else {
-        this.$router.push({name: 'photoFolderCarousel', params: {images: this.entryList.entries, imageIndex: imageIndex}});
+        this.$router.push({name: 'photoFolderCarousel', params: {images: this.entryList.entries, imageIndex: imageIndex, folder: this.folder}});
       }
     },
     performMove (entry) {
