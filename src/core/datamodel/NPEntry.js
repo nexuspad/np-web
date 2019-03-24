@@ -37,12 +37,17 @@ export default class NPEntry {
       this.timelineKey = data['timelineKey'];
       this.updateTime = new Date(data['updateTime']);
       this.pinned = data['pinned'];
-      this.colorLabel = data['colorLabel'];
       this.tags = data['tags'];
       this.tagsInString = data['tagsInString'];
       this.note = data['note'];
       this.weight = data['weight'];
       this.status = data['status'];
+
+      this.colorLabel = data['colorLabel'];
+      if (this.colorLabel.length === 9) {
+        // remove the alpha channel information
+        this.colorLabel = '#' + this.colorLabel.substring(3);
+      }
 
       if (data['folder']) {
         this.folder = new NPFolder(data['folder']);
