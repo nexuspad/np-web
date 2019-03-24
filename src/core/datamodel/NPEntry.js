@@ -44,7 +44,7 @@ export default class NPEntry {
       this.status = data['status'];
 
       this.colorLabel = data['colorLabel'];
-      if (this.colorLabel.length === 9) {
+      if (this.colorLabel && this.colorLabel.length === 9) {
         // remove the alpha channel information
         this.colorLabel = '#' + this.colorLabel.substring(3);
       }
