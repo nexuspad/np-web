@@ -2,11 +2,14 @@
   <div class="card">
     <h1 class="card-header">{{ contactObj.title }}</h1>
     <div class="card-body">
-      <ul class="list-inline">
+      <ul class="list-inline" v-if="contactObj.tags.length > 0">
         <li v-for="tag in contactObj.tags" :key="tag" class="list-inline-item">
           <span class="badge badge-info">{{ tag }}</span>
         </li>
       </ul>
+      <h5 class="card-title" v-if="contactObj.fullName && contactObj.fullName !== contactObj.title">
+        {{ contactObj.fullName }}
+      </h5>
       <ul class="list-group list-group" v-if="contactObj.phones.length > 0 || contactObj.emails.length > 0">
         <li class="list-group-item" v-for="phone in contactObj.phones" :key="phone.value">
           <span>{{ phone.formattedValue }}</span>
@@ -17,9 +20,6 @@
           <span class="badge badge-info" v-if="email.label !== 'EMAIL'">{{ email.label }}</span>
         </li>
       </ul>
-      <h5 class="card-title" v-if="contactObj.fullName && contactObj.fullName !== contactObj.title">
-        {{ contactObj.fullName }}
-      </h5>
       <div v-if="contactObj.address && contactObj.address.addressStr">
         <div class="d-flex flex-wrap">
           <div class="p-2 text-capitalize" v-if="contactObj.address.streetAddress">{{ contactObj.address.streetAddress }},</div>
