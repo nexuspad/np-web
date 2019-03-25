@@ -2,7 +2,7 @@
   <div class="card">
     <h1 class="card-header">{{ contactObj.title }}</h1>
     <div class="card-body">
-      <ul class="list-inline" v-if="contactObj.tags.length > 0">
+      <ul class="list-inline" v-if="contactObj.tags && contactObj.tags.length > 0">
         <li v-for="tag in contactObj.tags" :key="tag" class="list-inline-item">
           <span class="badge badge-info">{{ tag }}</span>
         </li>
