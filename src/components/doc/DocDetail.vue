@@ -2,7 +2,9 @@
   <div class="card">
     <delete-confirm-modal ref="deleteConfirmModalRef" @deleteEntryConfirmed="deleteAttachment" />
     <h1 class="card-header" v-show="!editTitle">{{ docObj.title }}
+      <!-- edit title doesn't seem to be useful
       <button type="button" class="icon-button" @click="editTitle = !editTitle"><i class="fa fa-edit"></i></button>
+      -->
     </h1>
     <div class="row form-group mt-2" v-show="editTitle">
       <div class="col">
