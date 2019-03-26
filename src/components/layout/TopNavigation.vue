@@ -76,9 +76,9 @@ export default {
         this.isLoggedIn = true;
       })
       .catch(function (error) {
-        console.log(error);
+        console.error(error);
         if (error instanceof NPError) {
-          if (error.errorCode === 'NO_SESSION') {
+          if (error.errorCode === 'NO_SESSION' && this.$router.currentRoute.meta.requiresAuth === true) {
             console.log('TopNavigation: redirect to login page');
             componentSelf.$router.push({name: 'login'});
           }

@@ -240,13 +240,14 @@ export default class AccountService {
     if (currentPassword) {
       userServiceData.user.auth.currentPassword = currentPassword;
       sessionId = AccountService.currentSession();
+      var uri = ServiceHelper.password;
     } else if (verificationCode) {
       userServiceData.user.auth.passwordResetVerificationCode = verificationCode;
+      uri = ServiceHelper.resetPassword;
     }
 
     userServiceData.user.auth.password = password;
 
-    let uri = ServiceHelper.resetPassword;
     let p = new Promise((resolve, reject) => {
       RestClient.instance(sessionId).post(uri, userServiceData)
         .then(function (response) {

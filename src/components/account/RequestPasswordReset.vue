@@ -1,6 +1,6 @@
 <template>
   <div class="np-module-container np-slim-box">
-    <message :location="'ACCOUNT'" />
+    <message :location="'TOP_STICKY'" />
     <h2>reset password</h2>
     <p>provide your account email to receive a link to reset your password.</p>
     <form>
