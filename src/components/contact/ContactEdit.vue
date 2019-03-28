@@ -3,7 +3,7 @@
     <form autocomplete="off">
       <div class="form-group row">
         <div class="col">
-          <input type="text" class="form-control input-underline" placeholder="business name or title (optional)" v-model="contact.title" />
+          <input type="text" class="form-control input-underline" placeholder="title (optional)" v-model="contact.title" />
         </div>
       </div>
       <div class="row form-group">
@@ -15,6 +15,14 @@
         </div>
         <div class="col">
           <input class="form-control" type="text" v-model="contact.lastName" placeholder="last name" autocomplete="disabled" />
+        </div>
+      </div>
+      <div class="row form-group mb-5">
+        <div class="col">
+          <input class="form-control" type="text" v-model="contact.businessName" placeholder="business name" autocomplete="disabled" />
+        </div>
+        <div class="col">
+          <input class="form-control" type="text" v-model="contact.webAddress" placeholder="web address"  autocomplete="disabled" />
         </div>
       </div>
       <div class="row pb-2 form-group" v-for="(item, index) in contact.emails" v-bind:key="`email-${index}`">
@@ -30,7 +38,7 @@
           </button>
         </div>
       </div>
-      <div class="row pb-2 form-group" v-for="(item, phoneIndex) in contact.phones" v-bind:key="`phone-${phoneIndex}`">
+      <div class="row form-group mb-5" v-for="(item, phoneIndex) in contact.phones" v-bind:key="`phone-${phoneIndex}`">
         <div class="col">
           <input class="form-control" type="tel" v-model="item.value" placeholder="phone" autocomplete="disabled" />
         </div>

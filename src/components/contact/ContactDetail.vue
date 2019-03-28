@@ -1,6 +1,11 @@
 <template>
   <div class="card">
-    <h1 class="card-header">{{ contactObj.title }}</h1>
+    <h1 class="card-header">
+      {{ contactObj.title }}
+      <a :href="contactObj.webAddress" class="float-right font-weight-normal h5" target="_blank" v-if="contactObj.webAddress">
+        <i class="fa fa-external-link-alt"></i>
+      </a>
+    </h1>
     <div class="card-body">
       <ul class="list-inline" v-if="contactObj.tags && contactObj.tags.length > 0">
         <li v-for="tag in contactObj.tags" :key="tag" class="list-inline-item">
@@ -9,6 +14,9 @@
       </ul>
       <h5 class="card-title" v-if="contactObj.fullName && contactObj.fullName !== contactObj.title">
         {{ contactObj.fullName }}
+      </h5>
+      <h5 class="card-title" v-if="contactObj.businessName && contactObj.businessName !== contactObj.title">
+        {{ contactObj.businessName }}
       </h5>
       <ul class="list-group list-group" v-if="contactObj.phones.length > 0 || contactObj.emails.length > 0">
         <li class="list-group-item" v-for="phone in contactObj.phones" :key="phone.value">

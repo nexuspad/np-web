@@ -62,7 +62,7 @@ export default class AppManager {
     });
   }
 
-  static initClient () {
+  static initClient (clientType) {
     let p = PromiseManager.get('INIT_CLIENT');
     if (p) {
       return p;
@@ -75,14 +75,14 @@ export default class AppManager {
       if (window.requestIdleCallback) {
         requestIdleCallback(function () {
           Fingerprint2.get(options, function (components) {
-            AppManager.uuid = Fingerprint2.x64hash128(components.map((c) => c.value).join(''), 31);
+            AppManager.uuid = clientType + '_' + Fingerprint2.x64hash128(components.map((c) => c.value).join(''), 31);
             resolve(AppManager.uuid);
           });
         })
       } else {
         setTimeout(function () {
           Fingerprint2.get(options, function (components) {
-            AppManager.uuid = Fingerprint2.x64hash128(components.map((c) => c.value).join(''), 31);
+            AppManager.uuid = clientType + '_' + Fingerprint2.x64hash128(components.map((c) => c.value).join(''), 31);
             resolve(AppManager.uuid);
           });
         }, 500);

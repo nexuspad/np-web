@@ -96,7 +96,8 @@ export default {
     let componentSelf = this;
     if (this.$refs.searchInput) {
       this.$refs.searchInput.addEventListener('search', function() {
-        if('' == this.value) {
+        if(!this.value) {
+          componentSelf.searchKeyword = '';
           componentSelf.clearSearch();
         }
       });

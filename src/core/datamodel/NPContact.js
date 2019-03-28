@@ -8,6 +8,7 @@ export default class NPContact extends NPEntry {
   firstName;
   lastName;
   fullName;
+  businessName;
   addressbookDisplayName;
   sortKey;
 
@@ -24,6 +25,8 @@ export default class NPContact extends NPEntry {
       this.firstName = data['firstName'];
       this.lastName = data['lastName'];
       this.fullName = data['fullName'];
+      this.webAddress = data['webAddress'];
+      this.businessName = data['businessName'];
       this.addressbookDisplayName = data['addressbookDisplayName'];
       this.sortKey = data['sortKey'];
 
@@ -85,6 +88,8 @@ export default class NPContact extends NPEntry {
     data['firstName'] = this.firstName;
     data['lastName'] = this.lastName;
     data['middleName'] = this.middleName;
+    data['webAddress'] = this.webAddress;
+    data['businessName'] = this.businessName;
 
     if (this.address) {
       data['address'] = this.address.toJson();

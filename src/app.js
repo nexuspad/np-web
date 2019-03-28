@@ -57,7 +57,9 @@ const scrollBehavior = function (to, from, savedPosition) {
 };
 
 // window.DESKTOP is set in index.html. index.html is built in desktop/prebuild.js
+var clientType = 'browser';
 if (window.NP_DESKTOP) {
+  clientType = 'electronjs'
   console.log('[App] creating router for desktop...');
   router = new VueRouter({
     base: __dirname,
@@ -137,7 +139,7 @@ let errorInstance = new Vue({
   `
 });
 
-let initPromises = [AppManager.serviceLocate(), AppManager.initClient()];
+let initPromises = [AppManager.serviceLocate(), AppManager.initClient(clientType)];
 
 Promise.all(initPromises).then(() => {
   app.$mount('#app');

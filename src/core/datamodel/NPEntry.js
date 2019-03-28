@@ -18,6 +18,7 @@ export default class NPEntry {
   colorLabel;
   tags = [];
   tagsInString = '';
+  webAddress = '';
   note;
   weight;
   status;
