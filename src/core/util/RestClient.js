@@ -91,6 +91,11 @@ export default class RestClient {
     return this._axiosInstance;
   }
 
+  static changeServiceHost (serviceHost) {
+    this.apiUrl = 'https://' + serviceHost + '.nexuspad.com/api';
+    console.log('User service host is set to: ', this.apiUrl);
+  }
+
   static instanceForUploading () {
     const instance = axios.create();
     instance.CancelToken = axios.CancelToken;

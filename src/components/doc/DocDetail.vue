@@ -36,7 +36,7 @@
             <button type="button" class="icon-button" v-if="item.isImage() && item.showImage" @click="item.showImage = false">
               <i class="fas fa-angle-double-up mr-2"></i>
             </button>
-            <a :href="item.viewLink">{{ item.fileName }}</a>
+            <a :href="item.viewLink" target="_blank">{{ item.fileName }}</a>
           </div>
           <div class="col-md-auto">
             <span class="mr-4">

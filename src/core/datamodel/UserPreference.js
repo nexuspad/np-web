@@ -108,6 +108,10 @@ export default class UserPreference {
           'opened': []
         }
       };
+    } else if (!this.viewPreferences[moduleCode]['folders']) {
+      this.viewPreferences[moduleCode]['folders'] = {
+        'opened': []
+      };
     }
 
     let folderIdArr = this.viewPreferences[moduleCode].folders.opened;

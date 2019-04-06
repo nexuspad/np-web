@@ -6,8 +6,15 @@ export default class Account extends NPUser {
 
   constructor (data) {
     super(data);
-    if (data['preference']) {
-      this.preference = new UserPreference(data['preference']);
+
+    if (data) {
+      if (data['preference']) {
+        this.preference = new UserPreference(data['preference']);
+      }
+
+      if (data['servicehost']) {
+        this.servicehost = data['servicehost'];
+      }
     }
   }
 
