@@ -26,7 +26,10 @@
             <input type="checkbox" :value="item.entryId" v-model="bulkEditIds" v-show="bulkEdit === true" />
             <a v-bind:class="{ pinned: item.pinned }" @click="goEntryRoute(item, 'view', folder)">{{ item.title }}</a>
             <a :href="item.webAddress" target="_blank" v-if="item.webAddress">
+              <i class="fa fa-external-link-alt"></i>
+              <!-- cannot make call on click event. it's causing a weird blank menu bug
               <i class="fa fa-external-link-alt" @click="updateWeight(item)"></i>
+              -->
             </a>
             <div>
               <ul class="list-inline">
