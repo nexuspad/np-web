@@ -69,6 +69,7 @@ export default {
     }
   },
   mounted () {
+    EventManager.subscribe(AppEvent.ACCOUNT_CREATION_FAILURE, this.showErrorMessage);
     EventManager.subscribe(AppEvent.ACCOUNT_LOGIN_FAILURE, this.showErrorMessage);
     EventManager.subscribe(AppEvent.ACCOUNT_PASSWORD_UPDATE, this.showUpdateResult);
     EventManager.subscribe(AppEvent.ACCOUNT_TIMEZONE_UPDATE, this.showUpdateResult);
@@ -85,6 +86,7 @@ export default {
     EventManager.subscribe(AppEvent.LOADING, this.showLoadingIcon);
   },
   beforeDestroy () {
+    EventManager.unSubscribe(AppEvent.ACCOUNT_CREATION_FAILURE, this.showErrorMessage);
     EventManager.unSubscribe(AppEvent.ACCOUNT_LOGIN_FAILURE, this.showErrorMessage);
     EventManager.unSubscribe(AppEvent.ACCOUNT_PASSWORD_UPDATE, this.showUpdateResult);
     EventManager.unSubscribe(AppEvent.ACCOUNT_TIMEZONE_UPDATE, this.showUpdateResult);

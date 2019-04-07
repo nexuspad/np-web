@@ -1,7 +1,7 @@
 <template>
   <div class="np-module-container np-slim-box">
-    <h2>create an account</h2>
     <message :location="'TOP_STICKY'" />
+    <h2>create an account</h2>
     <form>
       <div class="form-group">
         <input type="text" class="form-control" placeholder="display name (optional)" v-model="displayName">
@@ -34,6 +34,8 @@ import AccountActionProvider from '../account/AccountActionProvider';
 import AccountService from '../../core/service/AccountService';
 import Message from '../common/Message';
 import WindowInfo from '../common/WindowInfo';
+import EventManager from '../../core/util/EventManager';
+import AppEvent from '../../core/util/AppEvent';
 import CommonUtils from '../../core/util/CommonUtils';
 
 export default {
@@ -92,6 +94,7 @@ export default {
             });
         })
         .catch(function (error) {
+          EventManager.publishAppEvent(AppEvent.ofFailure(AppEvent.ACCOUNT_CREATION_FAILURE, error));
           componentSelf.posting = false;
           console.log(error);
         });

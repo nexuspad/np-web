@@ -2,7 +2,7 @@
   "name": "NexusApp",
   "description": "NexusPad desktop application",
   "author": "Ren Liu",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "main": "main.js",
   "license": "ISC",
   "dependencies": {
