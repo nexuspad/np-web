@@ -20,10 +20,19 @@ export default class AccessPermission {
     }
   }
 
-  static ofOwnerDefault () {
+  static ofOwnerDefault (ownerId) {
     let ap = AccessPermission.instance();
+    ap.accessor = NPUser.newFromId(ownerId);
     ap.permission.read = true;
     ap.permission.write = true;
+    return ap;
+  }
+
+  static forAccessReadonly (accessorUserId) {
+    let ap = AccessPermission.instance();
+    ap.accessor = NPUser.newFromId(accessorUserId);
+    ap.permission.read = true;
+    ap.permission.write = false;
     return ap;
   }
 

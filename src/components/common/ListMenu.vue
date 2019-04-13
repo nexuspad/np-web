@@ -12,7 +12,7 @@
           <b-button class="pl-3 pr-3" variant="light" @click="navigateToParentFolder(folder)" v-if="folder.isMyFolder() && !folder.isRoot()">
             <i class="fas fa-level-up-alt flipH" data-fa-transform="flip-h"></i>
           </b-button>
-          <b-button class="pl-3 pr-3" variant="light" @click="navigateToParentFolder(folder)" v-if="!folder.isMyFolder() && !folder.parent.isRoot()">
+          <b-button class="pl-3 pr-3" variant="light" @click="navigateToParentFolder(folder)" v-if="!folder.isMyFolder() && folder.parent">
             <i class="fas fa-level-up-alt flipH" data-fa-transform="flip-h"></i>
           </b-button>
         </b-button-group>

@@ -156,10 +156,14 @@ export default {
           console.log(error);
         });
 
-      this.activeModule = AppRoute.module(this.$route);
-      if (this.activeModule !== NPModule.NOT_ASSIGNED) {
-        PreferenceService.getPreference().updateLastVisit(this.activeModule);
-        PreferenceService.updateViewPreference();
+      let module = AppRoute.module(this.$route);
+
+      if (this.activeModule !== module) {
+        this.activeModule = module;
+        if (this.activeModule !== NPModule.NOT_ASSIGNED) {
+          PreferenceService.getPreference().updateLastVisit(this.activeModule);
+          PreferenceService.updateViewPreference();
+        }
       }
     },
     '$route.query.keyword': function (value) {

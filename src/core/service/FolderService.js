@@ -13,11 +13,14 @@ export default class FolderService extends BaseService {
   static folders = null;
 
   static getAllFolders (moduleId, refresh = false) {
+    let root = NPFolder.of(moduleId, NPFolder.ROOT, AccountService.currentUser(),
+      AccessPermission.ofOwnerDefault(AccountService.currentUser().userId));
+
     if (refresh === false && FolderService.folders !== null) {
       if (FolderService.folders && FolderService.folders.length > 0 &&
           FolderService.folders[0].moduleId === moduleId) {
         let p = new Promise((resolve) => {
-          let folderTree = FolderUtil.convertToTree(FolderUtil.folderArrayCopy(FolderService.folders));
+          let folderTree = FolderUtil.convertToTree(FolderUtil.folderArrayCopy(FolderService.folders), root);
           resolve(folderTree);
         });
         return p;
@@ -39,7 +42,7 @@ export default class FolderService extends BaseService {
             } else {
               if (response.data.folders) {
                 FolderService.folders = response.data.folders.map(x => NPFolder.initWith(x));
-                let folderTree = FolderUtil.convertToTree(FolderUtil.folderArrayCopy(FolderService.folders));
+                let folderTree = FolderUtil.convertToTree(FolderUtil.folderArrayCopy(FolderService.folders), root);
                 resolve(folderTree);
               } else {
                 reject(new NPError(NPError.EMPTY_DATA));

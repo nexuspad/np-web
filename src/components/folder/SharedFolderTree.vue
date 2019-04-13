@@ -74,10 +74,6 @@ export default {
         });
     },
     onFolderSelectedInTree: function (folder) {
-      if (folder.folderId === 0) {
-        folder = NPFolder.of(folder.moduleId, NPFolder.ROOT);
-      }
-
       this.folderSelectionKey = NPFolder.key({folder: folder});
 
       if (this.usage === 'move') {

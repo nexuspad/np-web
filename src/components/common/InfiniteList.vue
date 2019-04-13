@@ -179,7 +179,10 @@ export default {
     }
   },
   watch: {
-    'folder.folderId': function (newFolderId, oldFolderId) {
+    'folder.folderId': function () {
+      this.loadList();
+    },
+    'folder.owner.userId': function (newValue) {
       this.loadList();
     }
   },

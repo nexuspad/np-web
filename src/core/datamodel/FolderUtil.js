@@ -5,7 +5,7 @@ export default class FolderUtil {
     return folderArr.map(f => NPFolder.makeCopy(f));
   }
 
-  static convertToTree (folderArr) {
+  static convertToTree (folderArr, root) {
     let folderTree = [];
 
     let allFolderIds = folderArr.map((f) => {
@@ -14,6 +14,12 @@ export default class FolderUtil {
 
     // Add all the level 1 folders first
     for (let i = folderArr.length - 1; i >= 0; i--) {
+      if (folderArr[i].folderId === 0) {
+        root = folderArr[i];
+        folderArr.splice(i, 1);
+        continue;
+      }
+
       if (!folderArr[i].parent || !folderArr[i].subFolders) {
         throw new Error('The folder object is not properly initialized');
       }
@@ -59,14 +65,12 @@ export default class FolderUtil {
       }
     }
 
-    // Add the remaining folders to the ROOT level.
-    // for (let i = folderArr.length - 1; i >= 0; i--) {
-    //   folderArr[i].parent.folderId = 0;
-    //   folderTree.push(folderArr[i]);
-    //   folderArr.splice(i, 1);
-    // }
-
     FolderUtil.sortFolderTree(folderTree);
+
+    if (root) {
+      root.subFolders = folderTree;
+      return root;
+    }
 
     return folderTree;
   }

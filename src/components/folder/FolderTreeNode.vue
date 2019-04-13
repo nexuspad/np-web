@@ -97,7 +97,7 @@ export default {
     },
     canSelect (folder) {
       if (this.usage === 'sidenav') {
-        if (folder instanceof NPShareRoot) {
+        if (folder.folderId < 0) {
           return false;
         }
         return true;

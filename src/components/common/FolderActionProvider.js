@@ -8,6 +8,7 @@ import AppEvent from '../../core/util/AppEvent';
 import NPFolder from '../../core/datamodel/NPFolder';
 import UserLookupService from '../../core/service/UserLookupService';
 import AccessPermission from '../../core/datamodel/AccessPermission';
+import NPUser from '../../core/datamodel/NPUser';
 
 export default {
   methods: {
@@ -62,12 +63,25 @@ export default {
               });
           }
         } else {
+          // folder id is 0
           if (routeParam.user) {
+            AccountService.hello()
+              .then(() => {
+                NPFolder.makeCopy(
+                  NPFolder.of(moduleId, NPFolder.ROOT, NPUser.newFromId(routeParam.user), AccessPermission.forAccessReadonly(AccountService.currentUser().userId)),
+                  componentSelf.folder);
+                resolve();
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
           } else {
             AccountService.hello()
               .then(() => {
-                NPFolder.makeCopy(NPFolder.of(moduleId, NPFolder.ROOT, AccountService.currentUser(),
-                  AccessPermission.ofOwnerDefault()), this.folder);
+                NPFolder.makeCopy(
+                  NPFolder.of(moduleId, NPFolder.ROOT, AccountService.currentUser(), AccessPermission.ofOwnerDefault(AccountService.currentUser().userId)),
+                  componentSelf.folder
+                );
                 resolve();
               })
               .catch(function (error) {

@@ -28,6 +28,9 @@
               </a>
               <div>
                 <ul class="list-inline">
+                  <li v-if="item.folder.folderName" class="list-inline-item">
+                    <span class="badge badge-secondary"><i class="far fa-folder mr-1"></i>{{item.folder.folderName}}</span>
+                  </li>
                   <li v-for="tag in item.tags" :key="tag" class="list-inline-item">
                     <span class="badge badge-info" v-html="tag"></span>
                   </li>

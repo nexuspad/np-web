@@ -81,6 +81,8 @@ export default class NPFolder {
 
     if (ownerObj) {
       folderObj.owner = ownerObj;
+    } else {
+      folderObj.owner = new NPUser;
     }
 
     if (accessPermission) {
@@ -120,6 +122,8 @@ export default class NPFolder {
     to.accessPermission = new AccessPermission(from.accessPermission);
     if (from.parent) {
       to.parent = NPFolder.makeCopy(from.parent);
+    } else {
+      to.parent = null;
     }
     to.sharingStatus = from.sharingStatus;
     to.sharing = from.sharing;
@@ -187,10 +191,6 @@ export default class NPFolder {
 
   // this is overriden in NPShareRoot
   isMyFolder () {
-    if (this.folderId === NPFolder.ROOT) {
-      return true;
-    }
-
     if (this.accessPermission.accessor && this.owner && this.accessPermission.accessor.userId !== this.owner.userId) {
       return false;
     }

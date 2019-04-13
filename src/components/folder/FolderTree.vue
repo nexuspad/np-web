@@ -58,9 +58,7 @@ export default {
         .then(function (response) {
           FolderService.getAllFolders(moduleId)
             .then(function (folderTree) {
-              let root = NPFolder.of(moduleId, NPFolder.ROOT, AccountService.currentUser());
-              root.subFolders = folderTree;
-              componentSelf.treeData = root;
+              componentSelf.treeData = folderTree;
               componentSelf.isLoaded = true;
             })
             .catch(function (error) {
