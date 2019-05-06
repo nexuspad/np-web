@@ -36,6 +36,27 @@ export default class AppRoute {
     return NPModule.NOT_ASSIGNED;
   }
 
+  static moduleHomeRouteName (moduleId) {
+    switch (moduleId) {
+      case NPModule.CONTACT:
+        routeName = 'contactHome';
+        break;
+      case NPModule.CALENDAR:
+        routeName = 'calendarHome';
+        break;
+      case NPModule.DOC:
+        routeName = 'docHome';
+        break;
+      case NPModule.BOOKMARK:
+        routeName = 'bookmarkHome';
+        break;
+      case NPModule.PHOTO:
+        routeName = 'photoHome';
+        break;
+    }
+    return routeName;
+  }
+
   static folderRouteName (folder) {
     let routeName = '';
     switch (folder.moduleId) {

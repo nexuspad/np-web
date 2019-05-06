@@ -290,7 +290,7 @@ export default {
             return true;
           return false;
         case 'download':
-          if (entry.moduleId === NPModule.PHOTO) {
+          if (entry.moduleId === NPModule.PHOTO && entry.downloadLink) {
             return true;
           }
           return false;

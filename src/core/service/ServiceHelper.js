@@ -13,6 +13,7 @@ let SERVICE_URIS = {
   'login'               : '/user/login',
   'logout'              : '/user/logout',
   'preference'          : '/user/account/preference',
+  'activities'          : '/user/activities',
 
   'disableGCalendar'    : '/user/account/external/google/service',
 

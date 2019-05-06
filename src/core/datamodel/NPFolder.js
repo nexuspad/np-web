@@ -25,7 +25,6 @@ export default class NPFolder {
       this.folderName = data['folderName'];
       this.module = data['module'];
       this.moduleId = data['moduleId'];
-      this.code = data['code'];
 
       this.colorLabel = data['colorLabel'];
 
@@ -116,7 +115,6 @@ export default class NPFolder {
     to.folderName = from.folderName;
     to.module = from.module;
     to.moduleId = from.moduleId;
-    to.code = from.code;
     to.colorLabel = from.colorLabel;
     to.owner = from.owner;
     to.accessPermission = new AccessPermission(from.accessPermission);
@@ -195,6 +193,13 @@ export default class NPFolder {
       return false;
     }
     return true;
+  }
+
+  isRootFolderAndShared () {
+    if (this.folderId === NPFolder.ROOT && this.accessPermission.permission) {
+      return true;
+    }
+    return false;
   }
 
   hasWritePermission () {

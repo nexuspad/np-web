@@ -3,6 +3,7 @@ import Login from './Login';
 import Register from './Register';
 import RequestPasswordReset from './RequestPasswordReset';
 import PasswordReset from './PasswordReset';
+import Activity from './Activity';
 
 export default class AccountModule {
   static routes () {
@@ -36,6 +37,11 @@ export default class AccountModule {
         name: 'account',
         path: '/account',
         component: Account
+      },
+      {
+        name: 'activity',
+        path: '/activities',
+        component: Activity
       }
     ];
   }

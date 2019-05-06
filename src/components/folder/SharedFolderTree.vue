@@ -10,7 +10,6 @@
 <script>
 import FolderTreeNode from './FolderTreeNode';
 import NPFolder from '../../core/datamodel/NPFolder';
-import NPShareRoot from '../../core/datamodel/NPShareRoot';
 import AppRoute from '../AppRoute';
 import AppEvent from '../../core/util/AppEvent.js';
 import EventManager from '../../core/util/EventManager';
@@ -50,18 +49,22 @@ export default {
     EventManager.unSubscribe(AppEvent.SHARED_FOLDER_RELOAD_EVENT, this.onFolderReloadEvent);
   },
   methods: {
-    loadTree: function (moduleId) {
+    loadTree: function (moduleId, refresh = false) {
       if (!moduleId) {
         return;
       }
+
+      while (this.treeData.length > 0) {
+        this.treeData.pop();
+      }
+
       let componentSelf = this;
       AccountService.hello()
         .then(function (response) {
-          SharedFolderService.getAllFolders(moduleId)
+          SharedFolderService.getAllFolders(moduleId, refresh)
             .then(function (folderTreeByUsers) {
               folderTreeByUsers.forEach((folderTree, userId) => {
-                componentSelf.treeData.push(
-                  NPShareRoot.instance(moduleId, userId, UserLookupService.getUserDisplayName(userId), folderTree));
+                componentSelf.treeData.push(folderTree);
               });
               componentSelf.isLoaded = true;
             })
@@ -86,7 +89,8 @@ export default {
     },
     onFolderReloadEvent: function () {
       // reload the folder tree
-      this.loadTree(this.moduleId);
+      console.log('reload shared folders');
+      this.loadTree(this.moduleId, true);
     }
   },
   watch: {

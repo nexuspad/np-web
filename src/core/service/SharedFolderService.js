@@ -27,7 +27,10 @@ export default class SharedFolderService extends BaseService {
       let p = new Promise((resolve) => {
         let folderTreeByUser = new Map();
         SharedFolderService._sharerFolderMap.forEach((folders, userId) => {
-          folderTreeByUser.set(userId, FolderUtil.convertToTree(FolderUtil.folderArrayCopy(folders)));
+          let shareRoot = NPFolder.of(moduleId, NPFolder.ROOT, NPUser.newFromId(userId));
+          shareRoot.folderName = UserLookupService.getUserDisplayName(userId);
+          shareRoot.accessPermission.permission = null;
+          folderTreeByUser.set(userId, FolderUtil.convertToTree(FolderUtil.folderArrayCopy(folders), shareRoot));
         });
         resolve(folderTreeByUser);
       });
@@ -69,7 +72,10 @@ export default class SharedFolderService extends BaseService {
 
                 let folderTreeByUser = new Map();
                 SharedFolderService._sharerFolderMap.forEach((folders, userId) => {
-                  folderTreeByUser.set(userId, FolderUtil.convertToTree(FolderUtil.folderArrayCopy(folders)));
+                  let shareRoot = NPFolder.of(moduleId, NPFolder.ROOT, NPUser.newFromId(userId));
+                  shareRoot.folderName = UserLookupService.getUserDisplayName(userId);
+                  shareRoot.accessPermission.permission = null;
+                  folderTreeByUser.set(userId, FolderUtil.convertToTree(FolderUtil.folderArrayCopy(folders), shareRoot));
                 });
                 resolve(folderTreeByUser);
               } else {

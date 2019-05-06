@@ -182,10 +182,6 @@ export default class BaseService {
     if (folderObj.folderId !== NPFolder.UNASSIGNED) {
       uri = uri + '/' + folderObj.folderId;
     }
-
-    if (folderObj.owner && AccountService.currentUser().userId !== folderObj.owner.userId) {
-      uri = uri + '?owner_id=' + folderObj.owner.userId;
-    }
     return uri;
   }
 

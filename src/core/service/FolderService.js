@@ -135,12 +135,12 @@ export default class FolderService extends BaseService {
     let access = new AccessPermission();
     access.setSharing(user, canRead, canWrite);
     accessPermissions.push(access);
-    folder.sharings = accessPermissions;
+    folder.sharing = accessPermissions;
     return FolderService.save(folder, BaseService.UPDATE_SHARINGS);
   }
 
-  static refreshSharings (folder, sharings) {
-    folder.sharings = sharings;
+  static refreshSharings (folder, sharing) {
+    folder.sharing = sharing;
     return FolderService.save(folder, BaseService.UPDATE_SHARINGS);
   }
 

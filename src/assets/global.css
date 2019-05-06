@@ -5,6 +5,13 @@
 }
 */
 
+a.unstyled {
+  color: inherit;
+}
+a.unstyled:hover {
+  color: inherit;
+}
+
 textarea:focus, input:focus{
   outline: none !important;
 }
@@ -59,7 +66,7 @@ textarea:focus, input:focus{
  * this overwrites bootstrap dropdown menu z-index because it will be partially hidden behind the np-list-menu-bar if it's <= 1039
  */
 div.dropdown-menu {
-  z-index: 1040 !important;
+  z-index: 1041 !important;
 }
 
 .pinned { font-weight: bold; }
@@ -209,4 +216,35 @@ div.gallery div.tag {
 @-webkit-keyframes spinHorizontal {
   0% { -webkit-transform: rotateY(0deg); }
   100% { -webkit-transform: rotateY(360deg); }
+}
+
+ul.timeline {
+  list-style-type: none;
+  position: relative;
+}
+ul.timeline:before {
+  content: ' ';
+  background: #d4d9df;
+  display: inline-block;
+  position: absolute;
+  left: 29px;
+  width: 2px;
+  height: 100%;
+  z-index: 400;
+}
+ul.timeline > li {
+  margin: 20px 0;
+  padding-left: 20px;
+}
+ul.timeline > li:before {
+  content: ' ';
+  background: white;
+  display: inline-block;
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid #22c0e8;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  z-index: 400;
 }

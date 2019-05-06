@@ -21,6 +21,9 @@
       <b-button v-b-tooltip.hover title="move" @click="openFolderTreeModal(entry)" v-if="actionIsAvailable('move', entry)">
         <i class="far fa-folder-open"></i>
       </b-button>
+      <b-button v-b-tooltip.hover title="download" v-if="actionIsAvailable('download', entry)">
+        <a class="fas fa-download unstyled" :href="entry.downloadLink" target="_blank" download></a>
+      </b-button>
       <b-button v-b-tooltip.hover title="delete" v-if="actionIsAvailable('delete', entry)" @click="openDeleteConfirmModel(entry)">
         <i class="far fa-trash-alt"></i>
       </b-button>

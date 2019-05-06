@@ -3,18 +3,15 @@ import NPModule from './NPModule';
 import NPFolder from './NPFolder';
 
 export default class NPPhoto extends NPEntry {
-  thumbnail;
   lightbox;
-  original;
+  downloadLink;
 
   constructor (data) {
     super(data);
 
     if (data) {
-      this.thumbnail = data['thumbnail'];
       this.lightbox = data['lightbox'];
-      this.original = data['original'];
-      this.downloadLink = this.original + '&download=1';
+      this.downloadLink = data['downloadLink'];
     }
 
     if (!this.folder) {

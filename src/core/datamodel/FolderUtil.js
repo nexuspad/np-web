@@ -14,8 +14,9 @@ export default class FolderUtil {
 
     // Add all the level 1 folders first
     for (let i = folderArr.length - 1; i >= 0; i--) {
+      // this is for shared folder list use case. a folder can be shared from root
       if (folderArr[i].folderId === 0) {
-        root = folderArr[i];
+        root.accessPermission = folderArr[i].accessPermission;
         folderArr.splice(i, 1);
         continue;
       }
@@ -67,12 +68,9 @@ export default class FolderUtil {
 
     FolderUtil.sortFolderTree(folderTree);
 
-    if (root) {
-      root.subFolders = folderTree;
-      return root;
-    }
+    root.subFolders = folderTree;
 
-    return folderTree;
+    return root;
   }
 
   static _addChildNodeToFolderTree (folderTree, folder) {

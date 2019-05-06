@@ -16,6 +16,11 @@
     <b-dropdown-item @click="openFolderTreeModal(entry)" v-if="actionIsAvailable('move', entry)">
       <i class="far fa-folder-open mr-1"></i>move
     </b-dropdown-item>
+    <b-dropdown-item v-if="actionIsAvailable('download', entry)">
+      <a class="unstyled" :href="entry.downloadLink" target="_blank" download>
+        <i class="fas fa-download mr-1"></i>download
+      </a>
+    </b-dropdown-item>
     <b-dropdown-item @click="openDeleteConfirmModel(entry)" class="text-danger" v-if="actionIsAvailable('delete', entry)">
       <i class="far fa-trash-alt mr-1"></i>delete
     </b-dropdown-item>

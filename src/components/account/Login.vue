@@ -14,6 +14,10 @@
         <button class="btn btn-primary" v-on:click="login($event, username, password)" :disabled="posting">login</button>
       </div>
     </form>
+    <b-alert :show="showLegacyAccountLink">
+      You might have an older account which can be accessed at:
+      <a href="https://legacy.nexuspad.com/account.htm#/login">https://legacy.nexuspad.com/account.htm#/login</a>.
+    </b-alert>
     <div v-if="user !== null && user.sessionId">
       {{ user.sessionId }}
       <div class="form-group">
@@ -44,7 +48,8 @@ export default {
       user: { },
       username: '',
       password: '',
-      posting: false
+      posting: false,
+      showLegacyAccountLink: false
     };
   },
   mounted () {
@@ -77,6 +82,7 @@ export default {
           console.log(error);
           EventManager.publishAppEvent(AppEvent.ofFailure(AppEvent.ACCOUNT_LOGIN_FAILURE, error));
           componentSelf.posting = false;
+          componentSelf.showLegacyAccountLink = true;
         });
     },
     cancel: function () {

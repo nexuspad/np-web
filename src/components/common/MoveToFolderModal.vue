@@ -36,7 +36,6 @@ export default {
 
       if (folder != null) {
         this.folderSelectionKey = NPFolder.key({folder: folder});
-        console.log('...', folder);
       }
     },
     hideModal () {

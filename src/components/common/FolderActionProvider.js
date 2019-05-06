@@ -63,14 +63,18 @@ export default {
               });
           }
         } else {
-          // folder id is 0
+          // ROOT folder
           if (routeParam.user) {
             AccountService.hello()
               .then(() => {
-                NPFolder.makeCopy(
-                  NPFolder.of(moduleId, NPFolder.ROOT, NPUser.newFromId(routeParam.user), AccessPermission.forAccessReadonly(AccountService.currentUser().userId)),
-                  componentSelf.folder);
-                resolve();
+                SharedFolderService.getFolderById(moduleId, 0, NPUser.newFromId(routeParam.user))
+                .then(function (folderObj) {
+                  NPFolder.makeCopy(folderObj, componentSelf.folder);
+                  resolve();
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
               })
               .catch(function (error) {
                 console.log(error);
@@ -152,10 +156,36 @@ export default {
           FolderService.delete(folder)
             .then(function (folder) {
               EventManager.publish(AppEvent.FOLDER_RELOAD_EVENT, folder);
-              console.log(folder);
               let parentFolder = folder.parent;
               if (parentFolder) {
                 componentSelf.$router.push({ name: AppRoute.folderRouteName(parentFolder), params: { folderId: parentFolder.folderId } });
+              } else {
+                componentSelf.$router.push({ name: AppRoute.moduleHomeRouteName(folder.moduleId) });
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    stopSharingFolder (folder, user) {
+      let componentSelf = this;
+      AccountService.hello()
+        .then(function () {
+          if (!user) {
+            user = AccountService.currentUser();
+          }
+          FolderService.updateSharing(folder, user, false, false)
+            .then(function (folder) {
+              EventManager.publish(AppEvent.SHARED_FOLDER_RELOAD_EVENT);
+              let parentFolder = folder.parent;
+              if (parentFolder) {
+                componentSelf.$router.push({ name: AppRoute.sharedFolderRouteName(parentFolder), params: { folderId: parentFolder.folderId } });
+              } else {
+                componentSelf.$router.push({ name: AppRoute.moduleHomeRouteName(folder.moduleId) });
               }
             })
             .catch(function (error) {

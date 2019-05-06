@@ -10,7 +10,7 @@
       </span>
       <span v-html="folderIcon(folderObj)" v-if="folderObj.folderId !== 0 && !hasSubFolder"></span>
       <a class="folder-name" @click="selectFolder(folderObj)" 
-        v-bind:class="{'folder-selected': isFolderSelected, 'disabled':!canSelect(folderObj) && folderObj.folderId !== 0}">
+        v-bind:class="{'folder-selected': isFolderSelected, 'disabled':!canSelect(folderObj)}">
         {{ folderObj.folderName }}
       </a>
     </div>
@@ -97,7 +97,7 @@ export default {
     },
     canSelect (folder) {
       if (this.usage === 'sidenav') {
-        if (folder.folderId < 0) {
+        if (folder.isRoot() && folder.isRootFolderAndShared() === false) {
           return false;
         }
         return true;

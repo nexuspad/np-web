@@ -4,7 +4,6 @@ import NPModule from './NPModule';
 import ListSetting from './ListSetting';
 import NPEntry from './NPEntry';
 import NPFolder from './NPFolder';
-import NPShareRoot from './NPShareRoot';
 
 export default class EntryList {
   folder = null;
@@ -26,15 +25,7 @@ export default class EntryList {
       }
 
       if (data.folder) {
-        if (this.listSetting.requester.userId === data.folder.owner.userId) {
-          this.folder = new NPFolder(data.folder);
-        } else {
-          if (data.folder.folderId === NPFolder.ROOT) {
-            this.folder = NPShareRoot.instance(data.folder.moduleId, this.listSetting.requester.userId);
-          } else {
-            this.folder = new NPFolder(data.folder);
-          }
-        }
+        this.folder = new NPFolder(data.folder);
       }
 
       this.moduleId = data.moduleId;
