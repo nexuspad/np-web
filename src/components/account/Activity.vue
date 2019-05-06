@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import DateRangePicker from 'vue2-daterange-picker'
 import AccountService from '../../core/service/AccountService';
 import TimelineListService from '../../core/service/TimelineListService';
 import Message from '../common/Message';
