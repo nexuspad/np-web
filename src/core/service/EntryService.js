@@ -322,7 +322,7 @@ export default class EntryService extends BaseService {
     if (!entryIdsArr || entryIdsArr.length === 0) {
       return;
     }
-    let uri = this.getBulkEditEndPoint(folder.moduleId, entryIdsArr.join());
+    let uri = this.getBulkActionEndPoint(folder.moduleId, entryIdsArr.join());
 
     let p = PromiseManager.get(uri, 'BULKDELETE');
 
@@ -370,7 +370,7 @@ export default class EntryService extends BaseService {
     if (!entryIdsArr || entryIdsArr.length === 0) {
       return;
     }
-    let uri = this.getBulkEditEndPoint(toFolder.moduleId, this.MOVE.toLowerCase());
+    let uri = this.getBulkActionEndPoint(toFolder.moduleId, this.MOVE.toLowerCase());
 
     let p = PromiseManager.get(uri, 'BULKMOVE');
 
@@ -420,6 +420,35 @@ export default class EntryService extends BaseService {
       });
 
       PromiseManager.set(p, uri, 'BULKMOVE');
+      return p;
+    }
+  }
+
+  static exportModule (moduleId) {
+    let uri = this.getBulkActionEndPoint(moduleId, 'export');
+
+    let p = PromiseManager.get(uri, 'EXPORT_' + moduleId);
+
+    if (p) {
+      return p;
+    } else {
+      p = new Promise((resolve, reject) => {
+        RestClient.instance(AccountService.currentSession(), this.getHeaders({})).post(uri)
+          .then(function (response) {
+            // Parse application level response data
+            if (response.data.errorCode) {
+              reject(NPError(response.data.errorCode));
+            } else {
+              resolve();
+            }
+          })
+          .catch(function (error) {
+            ErrorHandler.handleError(error);
+            reject(new NPError('error'));
+          });
+      });
+
+      PromiseManager.set(p, uri, 'EXPORT_' + moduleId);
       return p;
     }
   }

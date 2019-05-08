@@ -11,6 +11,7 @@ export default class UserPreference {
   locale = '';
   userName = '';
   timezoneName = '';
+  moduleSettings = null;
   viewPreferences = {};
 
   constructor (data) {
@@ -25,6 +26,19 @@ export default class UserPreference {
       if (data['viewPreferences']) {
         this.viewPreferences = data['viewPreferences'];
       }
+
+      if (data['moduleSettings']) {
+        this.moduleSettings = data['moduleSettings'];
+      }
+    }
+
+    if (this.moduleSettings === null) {
+      this.moduleSettings = {};
+      this.moduleSettings[NPModule.codeForId(NPModule.CONTACT)] = true;
+      this.moduleSettings[NPModule.codeForId(NPModule.CALENDAR)] = true;
+      this.moduleSettings[NPModule.codeForId(NPModule.DOC)] = true;
+      this.moduleSettings[NPModule.codeForId(NPModule.BOOKMARK)] = true;
+      this.moduleSettings[NPModule.codeForId(NPModule.PHOTO)] = true;
     }
   }
 

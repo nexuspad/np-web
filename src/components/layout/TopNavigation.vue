@@ -1,8 +1,10 @@
 <template>
   <b-navbar toggleable="md" fixed="top" type="dark" variant="dark">
     <b-navbar-toggle target="topnav_collapse"></b-navbar-toggle>
-    <b-navbar-brand href="/">
-      <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://davinci.nexuspad.com/images/np-logo.png"/>
+    <b-navbar-brand>
+      <router-link to="/activities">
+        <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://davinci.nexuspad.com/images/np-logo.png"/>
+      </router-link>
     </b-navbar-brand>
 
     <b-collapse is-nav id="topnav_collapse" v-if="isLoggedIn === false">
@@ -14,11 +16,9 @@
 
     <b-collapse is-nav id="topnav_collapse" v-if="isLoggedIn === true">
       <b-navbar-nav>
-        <b-nav-item to="/organize/contact" :active="activeModule === 1">contact</b-nav-item>
-        <b-nav-item to="/organize/calendar" :active="activeModule === 2">calendar</b-nav-item>
-        <b-nav-item to="/organize/doc" :active="activeModule === 4">doc</b-nav-item>
-        <b-nav-item to="/organize/bookmark" :active="activeModule === 3">bookmark</b-nav-item>
-        <b-nav-item to="/organize/photo" :active="activeModule === 6">photo</b-nav-item>
+        <b-nav-item v-for="m in availableModules" :to="m.link" v-bind:key="m.moduleId" :active="activeModule === m.moduleId">
+          {{ m.name }}
+        </b-nav-item>
         <b-nav-item></b-nav-item>
         <b-nav-form @submit="search">
           <input ref="searchInput" class="form-control mr-sm-2" type="search" v-model="searchKeyword"
@@ -29,7 +29,7 @@
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item to="/account">account</b-nav-item>
+        <b-nav-item to="/account">settings</b-nav-item>
         <b-nav-item @click="logout()">log out</b-nav-item>
         <!--
         <b-nav-item-dropdown text="Lang" right>
@@ -64,34 +64,24 @@ export default {
   data () {
     return {
       activeModule: 0,
+      availableModules: [],
       searchKeyword: '',
       isLoggedIn: AccountService.isLoggedIn(),
       loadingIcon: false
     };
   },
   beforeCreate () {
-    let componentSelf = this;
-    AccountService.hello()
-      .then(() => {
-        this.isLoggedIn = true;
-      })
-      .catch(function (error) {
-        console.error(error);
-        if (error instanceof NPError) {
-          if (error.errorCode === 'NO_SESSION' && componentSelf.$router.currentRoute.meta.requiresAuth === true) {
-            console.log('TopNavigation: redirect to login page');
-            componentSelf.$router.push({name: 'login'});
-          }
-        }
-      });
   },
   mounted () {
+    this.setModules();
+
     if (this.$route && this.$route.query['keyword']) {
       this.searchKeyword = this.$route.query['keyword'];
     } else {
       this.searchKeyword = '';
     }
     EventManager.subscribe(AppEvent.LOADING, this.showLoadingIcon);
+    EventManager.subscribe(AppEvent.ACCOUNT_MODULE_SETTINGS_UPDATE, this.setModules);
 
     let componentSelf = this;
     if (this.$refs.searchInput) {
@@ -107,6 +97,41 @@ export default {
     EventManager.unSubscribe(AppEvent.LOADING, this.showLoadingIcon);
   },
   methods: {
+    setModules () {
+      let componentSelf = this;
+      AccountService.hello()
+        .then((userObj) => {
+          componentSelf.isLoggedIn = true;
+          componentSelf.availableModules = [];
+          let moduleSetting = userObj.preference.moduleSettings;
+          for (var name in moduleSetting) {
+            if (moduleSetting[name] !== false) {
+              componentSelf.availableModules.push(
+                {
+                  id: NPModule.idForCode(name),
+                  name: name,
+                  link: '/organize/' + name
+                }
+              );
+            }
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+          if (error instanceof NPError) {
+            if (error.errorCode === 'NO_SESSION' && componentSelf.$router.currentRoute.meta.requiresAuth === true) {
+              console.log('TopNavigation: redirect to login page');
+              componentSelf.$router.push({name: 'login'});
+            }
+          }
+        });
+    },
+    isAvailable (moduleId) {
+      if (this.availableModules.indexOf(moduleId) !== -1) {
+        return true;
+      }
+      return false;
+    },
     search (event) {
       if (event) {
         event.preventDefault();

@@ -1,4 +1,5 @@
 import Account from './Account';
+import MyPad from './MyPad';
 import Login from './Login';
 import Register from './Register';
 import RequestPasswordReset from './RequestPasswordReset';
@@ -37,6 +38,11 @@ export default class AccountModule {
         name: 'account',
         path: '/account',
         component: Account
+      },
+      {
+        name: 'mypad',
+        path: '/mypad',
+        component: MyPad
       },
       {
         name: 'activity',

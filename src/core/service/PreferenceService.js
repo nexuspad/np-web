@@ -48,6 +48,43 @@ export default class PreferenceService {
     return '';
   }
 
+  static updateModuleSettings (moduleSettings) {
+    let uri = ServiceHelper.preference + '/modules';
+    let p = PromiseManager.get(uri);
+
+    let userObj = new NPUser(AccountService.currentUser());
+    let preference = new UserPreference();
+    preference.moduleSettings = moduleSettings;
+    userObj.preference = preference;
+    let userServiceData = UserServiceData.of(userObj);
+
+    if (p) {
+      return p;
+    } else {
+      p = new Promise((resolve, reject) => {
+        RestClient.instance(AccountService.currentSession()).post(uri, userServiceData)
+          .then(function (response) {
+            // Parse application level response data
+            if (response.data.errorCode) {
+              reject(Error(response.data.errorCode));
+            } else {
+              let userObj = new Account(response.data.user);
+              PreferenceService._preference = userObj.preference;
+              StorageUtils.saveToSession(StorageUtils.PREFERENCE, PreferenceService._preference);
+              resolve(userObj);
+            }
+          })
+          .catch(function (error) {
+            let rc = ErrorHandler.handleError(error);
+            reject(Error(rc));
+          });
+      });
+
+      PromiseManager.set(p, uri);
+      return p;
+    }
+  }
+
   static updateViewPreference () {
     let uri = ServiceHelper.preference + '/view';
     let p = PromiseManager.get(uri);
@@ -69,6 +106,7 @@ export default class PreferenceService {
               let userObj = new Account(response.data.user);
               PreferenceService._preference = userObj.preference;
               StorageUtils.saveToSession(StorageUtils.PREFERENCE, PreferenceService._preference);
+              resolve(userObj);
             }
           })
           .catch(function (error) {

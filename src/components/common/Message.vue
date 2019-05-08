@@ -77,6 +77,8 @@ export default {
     EventManager.subscribe(AppEvent.ACCOUNT_USERNAME_UPDATE, this.showUpdateResult);
     EventManager.subscribe(AppEvent.ACCOUNT_PASSWORD_RESET_REQUEST, this.showUpdateResult);
     EventManager.subscribe(AppEvent.ACCOUNT_DELETED, this.showUpdateResult);
+    EventManager.subscribe(AppEvent.MODULE_EXPORT_FAILED, this.showErrorMessage);
+    EventManager.subscribe(AppEvent.MODULE_EXPORT_IN_PROGRESS, this.showUpdateResult);
     EventManager.subscribe(AppEvent.ENTRY_UPDATE, this.showUpdateResult);
     EventManager.subscribe(AppEvent.ENTRY_MOVE, this.showUpdateResult);
     EventManager.subscribe(AppEvent.ENTRY_DELETE, this.showUpdateResult);
@@ -94,6 +96,8 @@ export default {
     EventManager.unSubscribe(AppEvent.ACCOUNT_USERNAME_UPDATE, this.showUpdateResult);
     EventManager.unSubscribe(AppEvent.ACCOUNT_PASSWORD_RESET_REQUEST, this.showUpdateResult);
     EventManager.unSubscribe(AppEvent.ACCOUNT_DELETED, this.showUpdateResult);
+    EventManager.unSubscribe(AppEvent.MODULE_EXPORT_FAILED, this.showErrorMessage);
+    EventManager.unSubscribe(AppEvent.MODULE_EXPORT_IN_PROGRESS, this.showUpdateResult);
     EventManager.unSubscribe(AppEvent.ENTRY_UPDATE, this.showUpdateResult);
     EventManager.unSubscribe(AppEvent.ENTRY_MOVE, this.showUpdateResult);
     EventManager.unSubscribe(AppEvent.ENTRY_DELETE, this.showUpdateResult);

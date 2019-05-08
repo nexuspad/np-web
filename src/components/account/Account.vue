@@ -1,6 +1,14 @@
 <template>
   <div class="np-module-container" :class="{ fadeOut: isDeleted }">
     <message :location="'TOP_STICKY'" />
+    <ul class="nav nav-tabs h5 pt-2 mb-3">
+      <li class="nav-item">
+        <a class="nav-link" :class="'active'">account</a>
+      </li>
+      <li class="nav-item" v-if="serviceInfo.substring('3.2') !== -1">
+        <router-link class="nav-link" to="/mypad">my pad</router-link>
+      </li>
+    </ul>
     <h2>email</h2>
     <div class="ml-4 mb-4">
       {{user.email}}

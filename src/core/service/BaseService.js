@@ -92,7 +92,7 @@ export default class BaseService {
     return uri;
   }
 
-  static getBulkEditEndPoint (moduleId, serviceAction) {
+  static getBulkActionEndPoint (moduleId, serviceAction) {
     let uri = '';
     switch (moduleId) {
       case NPModule.CONTACT:
