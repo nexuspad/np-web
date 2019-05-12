@@ -59,6 +59,11 @@ function createWindow () {
   });
 
   // open external link in browser window
+  win.webContents.on('will-navigate', (event, url) => {
+    event.preventDefault()
+    shell.openExternal(url)
+  });
+
   win.webContents.on('new-window', (e, url) => {
     if (url !== win.webContents.getURL()) {
       e.preventDefault();

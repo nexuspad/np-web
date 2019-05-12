@@ -76,6 +76,7 @@ export default {
       AccountService.login(userName, password)
         .then(function (userObj) {
           componentSelf.user = userObj;
+          EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_LOGIN_SUCCESS));
           componentSelf.goToLastVisit();
         })
         .catch(function (error) {

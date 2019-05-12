@@ -12,7 +12,6 @@ export default class CmsService {
     if (text.indexOf(' ') !== -1) {
       cmsKey = cmsKey.replace(/ /g, '_');
     }
-    console.log(cmsKey);
     if (this._cmsContent && this._cmsContent[cmsKey]) {
       return this._cmsContent[cmsKey];
     } else {

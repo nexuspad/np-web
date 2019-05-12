@@ -9,6 +9,8 @@ export default class NPModule {
   static PHOTO = 6;
   static UPLOAD = 5;
 
+  static ALL_MODULES = [NPModule.CONTACT, NPModule.CALENDAR, NPModule.DOC, NPModule.BOOKMARK, NPModule.PHOTO];
+
   static idForCode (code) {
     switch (code) {
       case 'bookmark':

@@ -81,6 +81,7 @@ export default {
       this.searchKeyword = '';
     }
     EventManager.subscribe(AppEvent.LOADING, this.showLoadingIcon);
+    EventManager.subscribe(AppEvent.ACCOUNT_LOGIN_SUCCESS, this.setModules);
     EventManager.subscribe(AppEvent.ACCOUNT_MODULE_SETTINGS_UPDATE, this.setModules);
 
     let componentSelf = this;
@@ -95,6 +96,7 @@ export default {
   },
   beforeDestroy () {
     EventManager.unSubscribe(AppEvent.LOADING, this.showLoadingIcon);
+    EventManager.unSubscribe(AppEvent.ACCOUNT_LOGIN_SUCCESS, this.setModules);
   },
   methods: {
     setModules () {
@@ -106,15 +108,27 @@ export default {
             componentSelf.availableModules.pop();
           }
           let moduleSetting = userObj.preference.moduleSettings;
-          for (var name in moduleSetting) {
-            if (moduleSetting[name] !== false) {
+          if (!moduleSetting || moduleSetting.length === 0) {
+            NPModule.ALL_MODULES.forEach(mid => {
               componentSelf.availableModules.push(
                 {
-                  id: NPModule.idForCode(name),
-                  name: name,
-                  link: '/organize/' + name
+                  id: mid,
+                  name: NPModule.codeForId(mid),
+                  link: '/organize/' + NPModule.codeForId(mid)
                 }
               );
+            })
+          } else {
+            for (var name in moduleSetting) {
+              if (moduleSetting[name] !== false) {
+                componentSelf.availableModules.push(
+                  {
+                    id: NPModule.idForCode(name),
+                    name: name,
+                    link: '/organize/' + name
+                  }
+                );
+              }
             }
           }
         })
