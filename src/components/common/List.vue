@@ -191,7 +191,6 @@ export default {
     },
     'entryList': function (entryList) {
       // entryList prop may be loaded with delay so need to watch it's content
-      console.log('here.....');
       this.buildPages(entryList);
     },
     '$route.query.page': function (value) {

@@ -5,7 +5,7 @@
       <li class="nav-item">
         <a class="nav-link" :class="'active'">account</a>
       </li>
-      <li class="nav-item" v-if="serviceInfo.substring('3.2') !== -1">
+      <li class="nav-item" v-if="onEdge">
         <router-link class="nav-link" to="/mypad">my pad</router-link>
       </li>
     </ul>
@@ -107,6 +107,7 @@ export default {
       timezoneNames: [],
       browserTimezone: '',
       serviceInfo: '',
+      onEdge: false,
       posting: false,
       isDeleted: false
     };
@@ -129,6 +130,9 @@ export default {
 
     RestClient.get(RestClient.apiUrl + '/health').then((result) => {
       componentSelf.serviceInfo = result.data;
+      if (componentSelf.serviceInfo.indexOf('3.2') !== -1) {
+        componentSelf.onEdge = true;
+      }
     });
   },
   methods: {

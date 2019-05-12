@@ -4,8 +4,11 @@
       <h4>{{formatDate(dateStr)}}</h4>
       <ul class="timeline">
         <li v-for="(item, idx) in data.itemsByDate[dateStr]" :key="idx">
-          <a @click="openEntry(item)">{{ item.title }}</a>
-          <div><small v-if="item.description">{{ item.description }}</small></div>
+          <a @click="openEntry(item)"><strong>{{ item.title }}</strong></a>
+          <div>
+            <small v-if="item.description">{{ item.description }}</small>
+            <job-result :jobObj="item" v-if="item.jobId" />
+          </div>
           <div>
             <span class="badge badge-pill badge-light">{{ time(item.updateTime) }}</span>
             <span class="badge badge-pill badge-info" v-if="status(item) === 0">in queue</span>
@@ -23,6 +26,7 @@
 <script>
 import { parse, format } from 'date-fns';
 import EntryActionProvider from './EntryActionProvider';
+import JobResult from './JobResult';
 import NPJob from '../../core/datamodel/NPJob';
 
 export default {
@@ -30,6 +34,7 @@ export default {
   mixins: [ EntryActionProvider ],
   props: ['data'],
   components: {
+    JobResult
   },
   mounted () {
   },

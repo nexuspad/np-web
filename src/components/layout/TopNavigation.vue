@@ -102,7 +102,9 @@ export default {
       AccountService.hello()
         .then((userObj) => {
           componentSelf.isLoggedIn = true;
-          componentSelf.availableModules = [];
+          while (componentSelf.availableModules.length) {
+            componentSelf.availableModules.pop();
+          }
           let moduleSetting = userObj.preference.moduleSettings;
           for (var name in moduleSetting) {
             if (moduleSetting[name] !== false) {
