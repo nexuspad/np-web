@@ -365,6 +365,24 @@ export default class AccountService {
     return p;
   }
 
+  static enableDataEncryption () {
+    let uri = '/user/enabledataencryption';
+    let p = new Promise((resolve, reject) => {
+      RestClient.instance(AccountService.currentSession()).post(uri)
+        .then(function (response) {
+          AccountService._currentUser = new Account(response.data.user);
+          resolve(AccountService._currentUser);
+        })
+        .catch(function (error) {
+          let rc = ErrorHandler.handleError(error);
+          reject(new NPError(rc));
+        });
+    });
+
+    PromiseManager.set(p, uri, 'POST');
+    return p;
+  }
+
   static rebuildSearchIndex () {
     let uri = '/search/rebuild';
     let p = new Promise((resolve, reject) => {

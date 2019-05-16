@@ -14,6 +14,7 @@ export default class NPUser {
     this.firstName = '';
     this.lastName = '';
     this.badge = {};
+    this.dataEncrypted = false;
 
     if (data) {
       this.userId = data['userId'];
@@ -25,6 +26,7 @@ export default class NPUser {
       this.lastName = data['lastName'];
       this.preference = new UserPreference(data['preference']);
       this.badge = data['badge'];
+      this.dataEncrypted = data['dataEncrypted'];
     }
   }
 
@@ -34,6 +36,7 @@ export default class NPUser {
       this.userName = otherUser.userName;
       this.displayName = otherUser.displayName;
       this.badge = otherUser.badge;
+      this.dataEncrypted = otherUser.dataEncrypted;
     }
   }
 

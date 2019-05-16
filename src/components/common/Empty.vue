@@ -21,7 +21,7 @@ export default {
     } else if (this.search) {
       this.message = 'nothing found for this keyword.'
     } else {
-      this.message = 'empty content.';
+      this.message = 'there is nothing here.';
     }
   },
 };

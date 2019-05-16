@@ -16,7 +16,8 @@
 
     <b-collapse is-nav id="topnav_collapse" v-if="isLoggedIn === true">
       <b-navbar-nav>
-        <b-nav-item v-for="m in availableModules" :to="m.link" v-bind:key="m.moduleId" :active="activeModule === m.moduleId">
+        <b-nav-item v-for="m in availableModules" :to="m.link" v-bind:key="m.id" :class="{'highlight' : activeModule == m.id}"
+          :active="activeModule == m.id">
           {{ m.name }}
         </b-nav-item>
         <b-nav-item></b-nav-item>
@@ -93,6 +94,8 @@ export default {
         }
       });
     }
+
+    this.setActiveModule();
   },
   beforeDestroy () {
     EventManager.unSubscribe(AppEvent.LOADING, this.showLoadingIcon);
@@ -141,6 +144,17 @@ export default {
             }
           }
         });
+    },
+    setActiveModule () {
+      let module = AppRoute.module(this.$route);
+
+      if (this.activeModule !== module) {
+        this.activeModule = module;
+        if (this.activeModule !== NPModule.NOT_ASSIGNED) {
+          PreferenceService.getPreference().updateLastVisit(this.activeModule);
+          PreferenceService.updateViewPreference();
+        }
+      }
     },
     isAvailable (moduleId) {
       if (this.availableModules.indexOf(moduleId) !== -1) {
@@ -197,15 +211,7 @@ export default {
           console.log(error);
         });
 
-      let module = AppRoute.module(this.$route);
-
-      if (this.activeModule !== module) {
-        this.activeModule = module;
-        if (this.activeModule !== NPModule.NOT_ASSIGNED) {
-          PreferenceService.getPreference().updateLastVisit(this.activeModule);
-          PreferenceService.updateViewPreference();
-        }
-      }
+      this.setActiveModule();
     },
     '$route.query.keyword': function (value) {
       if (!value) {
@@ -224,4 +230,5 @@ export default {
 </script>
 
 <style scoped>
+.highlight { color: #fff; }
 </style>

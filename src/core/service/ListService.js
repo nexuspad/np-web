@@ -178,8 +178,6 @@ export default class ListService extends BaseService {
     if (p) {
       return p;
     } else {
-      let regEx = new RegExp(keyword.replace(' ', '|'), 'ig');
-      let highlightKeyword = '<b>' + keyword + '</b>';
       p = new Promise((resolve, reject) => {
         RestClient.instance(AccountService.currentSession(), headers).get(uri)
           .then(function (response) {
@@ -194,14 +192,6 @@ export default class ListService extends BaseService {
                 resolve(searchItems);
               } else if (response.data.entryList) {
                 let searchResultList = ListService.initListObj(response.data.entryList);
-                searchResultList.entries.forEach(entry => {
-                  entry.title = entry.title.replace(regEx, highlightKeyword);
-                  if (entry.tags && entry.tags.length > 0) {
-                    entry.tags = entry.tags.map(tag => {
-                      return tag.replace(regEx, highlightKeyword);
-                    });
-                  }
-                });
                 resolve(searchResultList);
               }
             }

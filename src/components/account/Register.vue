@@ -1,7 +1,7 @@
 <template>
   <div class="np-module-container np-slim-box">
     <message :location="'TOP_STICKY'" />
-    <h2>create an account</h2>
+    <h2>create a free account</h2>
     <form>
       <div class="form-group">
         <input type="text" class="form-control" placeholder="display name (optional)" v-model="displayName">
@@ -68,7 +68,7 @@ export default {
       return true;
     },
     invalidEmail () {
-      return this.submissionEnabled() && !CommonUtils.isValidEmail(this.email);
+      return this.email && this.password && this.confirmPassword && !CommonUtils.isValidEmail(this.email);
     },
     invalidPass () {
       if (this.submissionEnabled()) {

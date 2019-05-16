@@ -1,7 +1,7 @@
 <template>
   <div class="np-module-container np-slim-box">
     <message :location="'TOP_STICKY'" />
-    <h2>log in or <router-link to="/register">{{ 'create an account' | npTranslate }}</router-link></h2>
+    <h2>log in or <router-link to="/register">{{ 'create a free account' | npTranslate }}</router-link></h2>
     <form v-if="user === null || !user.sessionId">
       <div class="form-group">
         <input type="text" class="form-control" placeholder="username or email" autocomplete="username" v-model="username">

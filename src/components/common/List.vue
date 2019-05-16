@@ -60,6 +60,7 @@
             :style="{ backgroundImage: 'url(' + image.lightbox + ')' }" @click="openCarousel(imageIndex)"></div>
         </div>
       </div>
+      <empty :search=searchKeyword v-if="entryList.isEmpty() === true" />
       <nav aria-label="Page navigation" class="np-pagination" v-if="allPageIds.length > 1">
         <ul class="pagination">
           <li class="page-item"><a class="page-link" href="#">previous</a></li>
@@ -79,6 +80,7 @@ import DeleteConfirmModal from './DeleteConfirmModal';
 import UpdateTagModal from './UpdateTagModal';
 import ListMenu from './ListMenu';
 import EntryListMenu from './EntryListMenu';
+import Empty from './Empty';
 import EntryActionProvider from './EntryActionProvider';
 import ListKey from '../../core/datamodel/ListKey';
 import ListServiceFactory from '../../core/service/ListServiceFactory';
@@ -88,7 +90,7 @@ export default {
   name: 'List',
   mixins: [ EntryActionProvider ],
   components: {
-    ListMenu, EntryListMenu, MoveToFolderModal, DeleteConfirmModal, UpdateTagModal
+    Empty, ListMenu, EntryListMenu, MoveToFolderModal, DeleteConfirmModal, UpdateTagModal
   },
   props: ['searchKeyword', 'folder', 'pageId', 'entryList', 'listStyle'],
   data () {

@@ -10,6 +10,13 @@
       </li>
     </ul>
     <h2>modules</h2>
+    <div v-if="user.dataEncrypted">
+      Your data is encrypted.
+    </div>
+    <div v-if="!user.dataEncrypted">
+      <button class="btn btn-primary" v-on:click="encryptData()" :disabled="posting === true">enable encryption</button>
+      <p><small>This is a permanent change.</small></p>
+    </div>
     <ul class="list-group mt-4">
       <li class="list-group-item">
         <div class="row mt-2 mb-2">
@@ -148,6 +155,22 @@ export default {
         .catch(function (error) {
           console.error(error);
           componentSelf.posting = false;
+        });
+    },
+    encryptData () {
+      let componentSelf = this;
+      AccountService.hello()
+        .then(function () {
+          AccountService.enableDataEncryption()
+            .then(function (userObj) {
+              componentSelf.user = userObj;
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
         });
     },
     exportModule (moduleId) {
