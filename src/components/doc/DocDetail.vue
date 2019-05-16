@@ -1,7 +1,8 @@
 <template>
   <div class="card">
     <delete-confirm-modal ref="deleteConfirmModalRef" @deleteEntryConfirmed="deleteAttachment" />
-    <h1 class="card-header" v-show="!editTitle">{{ docObj.title }}
+    <h1 class="card-header" v-show="!editTitle">
+      <span v-html="$options.filters.npHighlighter(docObj.title, keyword)" />
       <!-- edit title doesn't seem to be useful
       <button type="button" class="icon-button" @click="editTitle = !editTitle"><i class="fa fa-edit"></i></button>
       -->
@@ -22,7 +23,7 @@
           <span class="badge badge-info">{{ tag }}</span>
         </li>
       </ul>
-      <span v-html="htmlNote" v-if="isHtml()"></span>
+      <span v-html="$options.filters.npHighlighter(htmlNote, keyword)" v-if="isHtml()"></span>
       <span style="white-space: pre-wrap;" v-if="isPlainText()">{{ docObj.note }}</span>
     </div>
     <ul class="list-group mt-4">
@@ -76,7 +77,7 @@ import EntryService from '../../core/service/EntryService';
 
 export default {
   name: 'DocDetail',
-  props: ['docObj'],
+  props: ['docObj', 'keyword'],
   mixins: [ EntryActionProvider ],
   data: function () {
     return {

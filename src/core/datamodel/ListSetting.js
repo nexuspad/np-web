@@ -34,6 +34,7 @@ export default class ListSetting extends ListKey {
 
       this.templateId = data.templateId;
       this.keyword = data.keyword;
+      this.keywordSet = data.keywordSet;
 
       if (data.pages) {
         this.pages = data.pages;

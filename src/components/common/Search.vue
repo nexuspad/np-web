@@ -32,6 +32,7 @@ import ListKey from '../../core/datamodel/ListKey';
 import SharedFolderService from '../../core/service/SharedFolderService';
 import UserLookupService from '../../core/service/UserLookupService';
 import NPModule from '../../core/datamodel/NPModule';
+import Highlighter from '../../core/util/Highlighter.js';
 
 export default {
   name: 'Search',
@@ -72,12 +73,10 @@ export default {
   },
   methods: {
     doSearch (moduleId, keyword) {
-      let regEx = new RegExp(keyword.replace(' ', '|'), 'ig');
-      let highlightKeyword = '<span class="bg-warning">' + keyword + '</span>';
-
       while (this.searchResultAll.length > 0) {
         this.searchResultAll.pop();
       }
+
       let componentSelf = this;
       AccountService.hello().then(function (response) {
         componentSelf.folder = NPFolder.of(componentSelf.moduleId, NPFolder.ROOT, AccountService.currentUser());
@@ -91,13 +90,13 @@ export default {
               }
 
               entryList.entries.forEach(entry => {
-                entry.title = entry.title.replace(regEx, highlightKeyword);
+                entry.title = Highlighter.mark(entry.title, entryList.listSetting.keywordSet);
                 if (entry.description) {
-                  entry.description = entry.description.replace(regEx, highlightKeyword);
+                  entry.description = Highlighter.mark(entry.description, entryList.listSetting.keywordSet);
                 }
                 if (entry.tags && entry.tags.length > 0) {
                   entry.tags = entry.tags.map(tag => {
-                    return tag.replace(regEx, highlightKeyword);
+                    return Highlighter.mark(tag, entryList.listSetting.keywordSet);
                   });
                 }
               });

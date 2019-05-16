@@ -1,6 +1,8 @@
 <template>
   <div class="card">
-    <h1 class="card-header">{{ bookmarkObj.title }}</h1>
+    <h1 class="card-header">
+      <span v-html="$options.filters.npHighlighter(bookmarkObj.title, keyword)" />
+    </h1>
     <div class="card-body">
       <ul class="list-inline">
         <li v-for="tag in bookmarkObj.tags" :key="tag" class="list-inline-item">
@@ -20,6 +22,6 @@
 <script>
 export default {
   name: 'BookmarkDetail',
-  props: ['bookmarkObj']
+  props: ['bookmarkObj', 'keyword']
 };
 </script> 

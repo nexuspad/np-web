@@ -1,6 +1,8 @@
 <template>
   <div class="card">
-    <h1 class="card-header">{{ eventObj.title }}</h1>
+    <h1 class="card-header">
+      <span v-html="$options.filters.npHighlighter(eventObj.title, keyword)" />
+    </h1>
     <div class="card-body">
       <ul class="list-inline">
         <li v-for="tag in eventObj.tags" :key="tag" class="list-inline-item">
@@ -63,7 +65,7 @@ import WindowInfo from '../common/WindowInfo';
 
 export default {
   name: 'EventDetail',
-  props: ['eventObj'],
+  props: ['eventObj', 'keyword'],
   mixins: [ WindowInfo ],
   data () {
     return {

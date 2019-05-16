@@ -11,6 +11,7 @@ export default class ListKey {
   includeEntriesInAllFolders = false;
   templateId;
   keyword;
+  keywordSet;
   pageId = 0;   // this is only for querying
   countPerPage;
   startDate = '';

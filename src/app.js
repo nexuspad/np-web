@@ -25,6 +25,7 @@ import SideNavigation from './components/layout/SideNavigation';
 import SplitPanel from './components/layout/SplitPanel';
 import UploaderModal from './components/common/UploaderModal';
 import CmsService from './core/service/CmsService';
+import Highlighter from './core/util/Highlighter';
 
 Vue.component('TopNavigation', TopNavigation);
 Vue.component('SideNavigation', SideNavigation);
@@ -99,11 +100,15 @@ EventManager.subscribe(AppEvent.ACCOUNT_SESSION_INACTIVE, () => {
 });
 
 // -------------------------------------------------------------------------------------------
-// global filter
+// global filters
 // -------------------------------------------------------------------------------------------
 Vue.filter('npTranslate', function (value) {
   if (!value) return '';
   return CmsService.getCmsValue(value);
+})
+
+Vue.filter('npHighlighter', function (value, keyword) {
+  return Highlighter.mark(value, keyword);
 })
 
 //// create the instance

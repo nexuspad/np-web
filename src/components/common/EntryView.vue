@@ -18,10 +18,10 @@
           </b-button-toolbar>
         </div>
         <div class="np-content-below-menu">
-          <contact-detail :contactObj="entryObj" v-if="entryObj.moduleId === 1" />
-          <event-detail :eventObj="entryObj" v-if="entryObj.moduleId === 2" />
-          <bookmark-detail :bookmarkObj="entryObj" v-if="entryObj.moduleId === 3" />
-          <doc-detail :docObj="entryObj" v-if="entryObj.moduleId === 4" />
+          <contact-detail :contactObj="entryObj" :keyword=keyword v-if="entryObj.moduleId === 1" />
+          <event-detail :eventObj="entryObj" :keyword=keyword v-if="entryObj.moduleId === 2" />
+          <bookmark-detail :bookmarkObj="entryObj" :keyword=keyword v-if="entryObj.moduleId === 3" />
+          <doc-detail :docObj="entryObj" :keyword=keyword v-if="entryObj.moduleId === 4" />
         </div>
       </div>
     </split-panel>
@@ -64,7 +64,8 @@ export default {
     return {
       moduleId: 0,
       folderKey: '',
-      entryObj: new NPEntry()
+      entryObj: new NPEntry(),
+      keyword: ''
     };
   },
   beforeMount () {
@@ -122,6 +123,8 @@ export default {
       });
   },
   mounted () {
+    this.keyword = this.$route.query.keyword;
+
     EventManager.subscribe(AppEvent.ENTRY_DELETE, this.backToFolder);
     EventManager.subscribe(AppEvent.ENTRY_UPDATE, this.entryUpdated);
   },

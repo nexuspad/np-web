@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <h1 class="card-header">
-      {{ contactObj.title }}
+      <span v-html="$options.filters.npHighlighter(contactObj.title, keyword)" />
       <a :href="contactObj.webAddress" class="float-right font-weight-normal h5" target="_blank" v-if="contactObj.webAddress">
         <i class="fa fa-external-link-alt"></i>
       </a>
@@ -58,7 +58,7 @@ import WindowInfo from '../common/WindowInfo';
 
 export default {
   name: 'ContactDetail',
-  props: ['contactObj'],
+  props: ['contactObj', 'keyword'],
   mixins: [ WindowInfo ],
   methods: {
     mapLink (addressStr) {
