@@ -76,7 +76,6 @@ export default class AppManager {
       if (window.requestIdleCallback) {
         requestIdleCallback(function () {
           Fingerprint2.get(options, function (components) {
-            console.log(components);
             AppManager.uuid = clientType + '_' + Fingerprint2.x64hash128(components.map((c) => c.value).join(''), 31);
             resolve(AppManager.uuid);
           });
@@ -84,7 +83,6 @@ export default class AppManager {
       } else {
         setTimeout(function () {
           Fingerprint2.get(options, function (components) {
-            console.log(components);
             AppManager.uuid = clientType + '_' + Fingerprint2.x64hash128(components.map((c) => c.value).join(''), 31);
             resolve(AppManager.uuid);
           });
