@@ -163,10 +163,14 @@ export default {
       return false;
     },
     canNavigateUp (theFolder) {
-      if (theFolder.parent) {
+      if (theFolder.isMyFolder() && theFolder.parent) {
         return true;
+      } else {
+        if (theFolder.parent && theFolder.parent.folderId !== 0) {
+          return true;
+        }
+        return false;
       }
-      return false;
     },
     toggleBulkEdit () {
       // emit the event

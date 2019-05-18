@@ -70,11 +70,13 @@ export default class AppManager {
 
     p = new Promise((resolve, reject) => {
       let options = {
-        excludes: { userAgent: true, language: true, canvas: true, webgl: true, adBlock: true, audio: true, enumerateDevices: true }
+        excludes: { userAgent: true, language: true, canvas: true, webgl: true,
+                    adBlock: true, audio: true, enumerateDevices: true, plugins: true, fonts: true }
       }
       if (window.requestIdleCallback) {
         requestIdleCallback(function () {
           Fingerprint2.get(options, function (components) {
+            console.log(components);
             AppManager.uuid = clientType + '_' + Fingerprint2.x64hash128(components.map((c) => c.value).join(''), 31);
             resolve(AppManager.uuid);
           });
@@ -82,6 +84,7 @@ export default class AppManager {
       } else {
         setTimeout(function () {
           Fingerprint2.get(options, function (components) {
+            console.log(components);
             AppManager.uuid = clientType + '_' + Fingerprint2.x64hash128(components.map((c) => c.value).join(''), 31);
             resolve(AppManager.uuid);
           });
