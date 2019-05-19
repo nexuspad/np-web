@@ -8,7 +8,7 @@
       </div>
       <div class="form-group row">
         <div class="col">
-          <input type="text" class="form-control" placeholder="Web address" v-model="bookmark.webAddress">
+          <input type="text" class="form-control" placeholder="web address" v-model="bookmark.webAddress">
         </div>
       </div>
       <div class="form-group row">
