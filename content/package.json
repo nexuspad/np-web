@@ -1,7 +1,7 @@
 {
   "name": "np-web-content",
   "scripts": {
-    "deploy": "s3-deploy './*.html site.dat' --cwd './' --region us-east-1 --bucket nexuspad.com && s3-deploy './images/**' --cwd './' --region us-east-1 --bucket nexuspad.com"
+    "deploy": "s3-deploy './*.html' --cwd './' --region us-east-1 --bucket nexuspad.com && s3-deploy './images/**' --cwd './' --region us-east-1 --bucket nexuspad.com && s3-deploy './i18n/**' --cwd './' --region us-east-1 --bucket nexuspad.com"
   },
   "dependencies": {},
   "devDependencies": {
