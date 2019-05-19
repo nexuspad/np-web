@@ -86,7 +86,7 @@ export default class AppEvent {
   messageKey () {
     if (this.error) {
       if (!this.error.errorCode) {
-        return this.type.replace(/_/g, '.').toLowerCase() + '.' + this.error;
+        return this.type.replace(/_/g, '.').toLowerCase() + '.failure';
       } else {
         return this.type.replace(/_/g, '.').toLowerCase() + '.' + this.error.errorCode.replace(/_/g, '.').toLowerCase();
       }
