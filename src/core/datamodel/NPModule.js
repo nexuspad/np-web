@@ -44,4 +44,21 @@ export default class NPModule {
         return 'upload';
     }
   }
+
+  static entryName (id) {
+    switch (id) {
+      case NPModule.BOOKMARK:
+        return 'bookmark';
+      case NPModule.CONTACT:
+        return 'contact';
+      case NPModule.CALENDAR:
+        return 'event';
+      case NPModule.DOC:
+        return 'doc';
+      case NPModule.PHOTO:
+        return 'photo';
+      case NPModule.UPLOAD:
+        return 'upload';
+    }
+  }
 }

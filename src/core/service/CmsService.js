@@ -2,6 +2,7 @@ import ServiceHelper from './ServiceHelper'
 import PromiseManager from '../util/PromiseManager'
 import RestClient from '../util/RestClient'
 import ErrorHandler from '../util/ErrorHandler'
+import ContentHelper from './ContentHelper';
 
 export default class CmsService {
   static _timezoneHelperData;
@@ -50,8 +51,40 @@ export default class CmsService {
     }
   }
 
+  static getSiteContent () {
+    if (ContentHelper.siteContentInitialized()) {
+      let p = new Promise((resolve) => {
+        resolve();
+      });
+      return p;
+    }
+
+    let uri = 'https://nexuspad.com/content/site_en_us.json';
+    let p = PromiseManager.get(uri);
+
+    if (p) {
+      return p;
+    } else {
+      let self = this;
+      p = new Promise((resolve, reject) => {
+        RestClient.instance().get(uri)
+          .then(function (response) {
+            ContentHelper.setSiteContent(response.data);
+            resolve();
+          })
+          .catch(function (error) {
+            let rc = ErrorHandler.handleError(error);
+            reject(Error(rc));
+          });
+      });
+
+      PromiseManager.set(p, uri);
+      return p;
+    }
+  }
+
   static getCmsContent () {
-    if (this._cmsContent) {
+    if (this._cmsContent && this._cmsContent['login']) {
       let p = new Promise((resolve) => {
         resolve(this._cmsContent);
       });
@@ -65,11 +98,12 @@ export default class CmsService {
     if (p) {
       return p;
     } else {
+      let self = this;
       p = new Promise((resolve, reject) => {
         RestClient.instance().get(uri)
           .then(function (response) {
-            this._cmsContent = response.data;
-            resolve(this._cmsContent);
+            self._cmsContent = response.data;
+            resolve(self._cmsContent);
           })
           .catch(function (error) {
             let rc = ErrorHandler.handleError(error);

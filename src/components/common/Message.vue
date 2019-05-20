@@ -53,6 +53,7 @@
 import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import NPError from '../../core/datamodel/NPError';
+import ContentHelper from '../../core/service/ContentHelper';
 
 export default {
   props: ['location'],
@@ -110,23 +111,23 @@ export default {
     showErrorMessage (appEvent) {
       this.clearAll();
       this.showError = true;
-      this.failureMessage = appEvent.messageKey();
+      this.failureMessage = ContentHelper.appEventMessage(appEvent);
     },
     showUpdateResult (appEvent) {
       this.clearAll();
       if (appEvent.error && appEvent.error instanceof NPError) {
         this.showError = true;
-        this.failureMessage = appEvent.messageKey();
+        this.failureMessage = ContentHelper.appEventMessage(appEvent);
       } else {
         this.showSuccess = true;
         this.showSuccessWithCountDown = 2;
-        this.successMessage = appEvent.messageKey();
+        this.successMessage = ContentHelper.appEventMessage(appEvent);
       }
     },
     showGeneralMessage (appEvent) {
       this.clearAll();
       this.showInformation = true;
-      this.informationMessage = appEvent.messageKey();
+      this.informationMessage = ContentHelper.appEventMessage(appEvent);
     },
     showLoadingIcon (loading) {
       this.loadingIcon = loading;

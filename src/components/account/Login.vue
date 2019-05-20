@@ -76,12 +76,12 @@ export default {
       AccountService.login(userName, password)
         .then(function (userObj) {
           componentSelf.user = userObj;
-          EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_LOGIN_SUCCESS));
+          EventManager.publishAppEvent(AppEvent.ofInformation(AppEvent.ACCOUNT_LOGIN_SUCCESS));
           componentSelf.goToLastVisit();
         })
         .catch(function (error) {
           console.log(error);
-          EventManager.publishAppEvent(AppEvent.ofFailure(AppEvent.ACCOUNT_LOGIN_FAILURE, error));
+          EventManager.publishAppEvent(AppEvent.ofInformation(AppEvent.ACCOUNT_LOGIN_FAILURE, error));
           componentSelf.posting = false;
           componentSelf.showLegacyAccountLink = true;
         });

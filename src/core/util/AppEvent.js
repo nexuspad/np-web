@@ -1,8 +1,11 @@
-export default class AppEvent {
-  static ACCOUNT_LOGIN_FAILURE = 'ACCOUNT_LOGIN_FAILURE';
-  static ACCOUNT_CREATION_FAILURE = 'ACCOUNT_CREATION_FAILURE';
+import NPEntry from "../datamodel/NPEntry";
+import NPFolder from "../datamodel/NPFolder";
+import NPModule from "../datamodel/NPModule";
 
+export default class AppEvent {
+  static ACCOUNT_CREATION_FAILURE = 'ACCOUNT_CREATION_FAILURE';
   static ACCOUNT_LOGIN_SUCCESS = 'ACCOUNT_LOGIN_SUCCESS';
+  static ACCOUNT_LOGIN_FAILURE = 'ACCOUNT_LOGIN_FAILURE';
   static ACCOUNT_SESSION_ACTIVE = 'ACCOUNT_SESSION_ACTIVE';
   static ACCOUNT_SESSION_INACTIVE = 'ACCOUNT_SESSION_INACTIVE';
   static ACCOUNT_PASSWORD_UPDATE = 'ACCOUNT_PASSWORD_UPDATE';
@@ -84,15 +87,32 @@ export default class AppEvent {
   }
 
   messageKey () {
-    if (this.error) {
-      if (!this.error.errorCode) {
-        return this.type.replace(/_/g, '.').toLowerCase() + '.failure';
-      } else {
-        return this.type.replace(/_/g, '.').toLowerCase() + '.' + this.error.errorCode.replace(/_/g, '.').toLowerCase();
-      }
-    } else {
-      return this.type.replace(/_/g, '.').toLowerCase() + '.success';
+    let key;
+    if (this.affectedItem instanceof NPEntry) {
+      key = NPModule.entryName(this.affectedItem.moduleId);
+    } else if (this.affectedItem instanceof NPFolder) {
+      key = 'folder';
     }
+
+    if (key) {
+      key += '_' + this.type.toLowerCase();
+    } else {
+      key = this.type.toLowerCase();
+    }
+
+    if (this.affectedItem) {
+      if (this.error) {
+        if (!this.error.errorCode) {
+          key += '_failure';
+        } else {
+          key += this.error.errorCode.toLowerCase();
+        }
+      } else {
+        key += '_success';
+      }
+    }
+
+    return key;
   }
 
   isForEntry () {

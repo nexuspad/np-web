@@ -1,9 +1,12 @@
 <template>
   <b-navbar toggleable="md" fixed="top" type="dark" variant="dark">
     <b-navbar-toggle target="topnav_collapse"></b-navbar-toggle>
-    <b-navbar-brand>
+    <b-navbar-brand href="/" v-if="!onEdge">
+      <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://nexuspad.com/images/np-logo.png"/>
+    </b-navbar-brand>
+    <b-navbar-brand v-if="onEdge">
       <router-link to="/activities">
-        <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://davinci.nexuspad.com/images/np-logo.png"/>
+        <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://nexuspad.com/images/np-logo.png"/>
       </router-link>
     </b-navbar-brand>
 
@@ -55,13 +58,14 @@ import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import NPError from '../../core/datamodel/NPError';
 import AppRoute from '../AppRoute';
+import SiteProvider from '../common/SiteProvider';
 import AccountActionProvider from '../account/AccountActionProvider';
 import AccountService from '../../core/service/AccountService';
 import PreferenceService from '../../core/service/PreferenceService';
 
 export default {
   name: 'TopNavigation',
-  mixins: [ AccountActionProvider ],
+  mixins: [ SiteProvider, AccountActionProvider ],
   data () {
     return {
       activeModule: 0,
@@ -96,6 +100,7 @@ export default {
     }
 
     this.setActiveModule();
+    this.isEdgeApi();
   },
   beforeDestroy () {
     EventManager.unSubscribe(AppEvent.LOADING, this.showLoadingIcon);

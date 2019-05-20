@@ -95,7 +95,13 @@ export default class AppManager {
   }
 
   static initCms () {
-    return CmsService.getCmsContent();
+    return new Promise((resolve, reject) => {
+      CmsService.getCmsContent().then(() => {
+        resolve();
+      }).catch((error) => {
+        reject(error);
+      });  
+    });
   }
 
   static cleanup () {

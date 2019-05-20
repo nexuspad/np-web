@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import SiteProvider from '../common/SiteProvider';
 import AccountActionProvider from '../account/AccountActionProvider';
 import AccountService from '../../core/service/AccountService';
 import NPUser from '../../core/datamodel/NPUser';
@@ -95,7 +96,7 @@ import RestClient from '../../core/util/RestClient';
 
 export default {
   name: 'Account',
-  mixins: [ AccountActionProvider ],
+  mixins: [ SiteProvider, AccountActionProvider ],
   components: {
     Message
   },
@@ -107,7 +108,6 @@ export default {
       timezoneNames: [],
       browserTimezone: '',
       serviceInfo: '',
-      onEdge: false,
       posting: false,
       isDeleted: false
     };
@@ -128,12 +128,7 @@ export default {
     
     this.browserTimezone = PreferenceService.getActiveTimezone();
 
-    RestClient.get(RestClient.apiUrl + '/health').then((result) => {
-      componentSelf.serviceInfo = result.data;
-      if (componentSelf.serviceInfo.indexOf('3.2') !== -1) {
-        componentSelf.onEdge = true;
-      }
-    });
+    this.isEdgeApi();
   },
   methods: {
     updatePassword: function (event) {
@@ -144,7 +139,7 @@ export default {
           AccountService.changePassword({ currentPassword: componentSelf.currentPassword, password: componentSelf.newPassword })
             .then(function (result) {
               if (result === true) {
-                EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_PASSWORD_UPDATE));
+                EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_PASSWORD_UPDATE, userObj));
               }
             })
             .catch(function (error) {
@@ -164,7 +159,7 @@ export default {
           PreferenceService.updateTimePreference({timezone: componentSelf.user.preference.timezoneName})
             .then(function (userObj) {
               componentSelf.user = userObj;
-              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_TIMEZONE_UPDATE));
+              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_TIMEZONE_UPDATE, userObj));
             })
             .catch(function (error) {
               console.error(error);
@@ -183,7 +178,7 @@ export default {
           AccountService.changeDisplayname(componentSelf.user.displayName)
             .then(function (userObj) {
               componentSelf.user = userObj;
-              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_DISPLAYNAME_UPDATE));
+              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_DISPLAYNAME_UPDATE, userObj));
             })
             .catch(function (error) {
               console.error(error);
@@ -202,7 +197,7 @@ export default {
           AccountService.changeUsername(componentSelf.user.userName)
             .then(function (userObj) {
               componentSelf.user = userObj;
-              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_USERNAME_UPDATE));
+              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_USERNAME_UPDATE, userObj));
             })
             .catch(function (error) {
               console.error(error);
@@ -241,7 +236,7 @@ export default {
           AccountService.deleteAccount()
             .then(function () {
               componentSelf.posting = false;
-              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_DELETED));
+              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_DELETED, userObj));
               componentSelf.isDeleted = true;
               setTimeout(() => {
                 window.location.replace('/');
@@ -255,7 +250,7 @@ export default {
         })
         .catch(function (error) {
           console.error(error);
-          EventManager.publishAppEvent(AppEvent.ofFailure(AppEvent.ACCOUNT_DELETED));
+          EventManager.publishAppEvent(AppEvent.ofFailure(AppEvent.ACCOUNT_DELETED, error));
         });
     }
   }
