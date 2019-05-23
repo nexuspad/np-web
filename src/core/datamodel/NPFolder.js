@@ -155,7 +155,7 @@ export default class NPFolder {
       return 'error';
     }
     if (this.folderId === 0) {
-      return 'home';
+      return 'root folder';
     } else {
       return this.folderName;
     }

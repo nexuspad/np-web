@@ -3,16 +3,16 @@
     <form>
       <div class="row mb-4" v-if="!folder.isRoot()">
         <div class="col">
-          <input type="text" class="form-control input-underline display-4" placeholder="folder name" v-model="folder.folderName">
+          <input type="text" class="form-control input-underline display-4" :placeholder="npContent('folder name')" v-model="folder.folderName">
         </div>
         <div class="col-2">
           <input type="color" class="form-control color-label" :style="{background: folder.colorLabel}" v-model="folder.colorLabel">
         </div>
       </div>
-      <h2 class="display-6">sharing</h2>
+      <h2 class="display-6">{{npContent('sharing')}}</h2>
       <div class="row" v-if="!folder.sharing || folder.sharing.length === 0">
         <div class="col">
-          not shared to anyone.
+          {{npContent('not shared to anyone')}}.
         </div>
       </div>
       <div class="row" id="Sharing" v-for="(accessPermission, idx) in folder.sharing" :key="idx">
@@ -22,10 +22,10 @@
         </div>
         <div class="col">
           <input type="checkbox" v-model="accessPermission.permission.read" :disabled="accessPermission.permission.write === true" />
-          read
+          {{npContent('read')}}
           <input type="checkbox" v-model="accessPermission.permission.write"
                 @change="accessPermission.permission.read = accessPermission.permission.write" />
-          write
+          {{npContent('write')}}
         </div>
         <div class="col">
           <button type="button" class="icon-button" v-on:click="removeSharing(idx)">
@@ -40,10 +40,10 @@
         </div>
         <div class="col">
           <input type="checkbox" v-model="newSharing.permission.read" :disabled="newSharing.permission.write === true" />
-          read
+          {{npContent('read')}}
           <input type="checkbox" v-model="newSharing.permission.write"
                 @change="newSharing.permission.read = newSharing.permission.write" />
-          write
+          {{npContent('write')}}
         </div>
         <div class="col">
           <button type="button" class="icon-button" v-on:click="addNewSharing(newSharing)">
@@ -56,16 +56,16 @@
       <b-collapse is-nav id="editor_nav_menu_collapse">
         <b-navbar-nav>
           <b-nav-text class="mr-2"><message :location="'TOP_NAVBAR'" /></b-nav-text>
-          <b-nav-text v-if="folder.folderId === -1">new folder</b-nav-text>
-          <b-nav-text v-if="folder.folderId !== -1">update folder</b-nav-text>
+          <b-nav-text v-if="folder.folderId === -1">{{npContent('new folder')}}</b-nav-text>
+          <b-nav-text v-if="folder.folderId !== -1">{{npContent('update folder')}}</b-nav-text>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-button-group class="mx-1">
-            <b-button class="my-2 my-sm-0" type="button" v-on:click="cancel()">Cancel</b-button>
+            <b-button class="my-2 my-sm-0" type="button" v-on:click="cancel()">{{npContent('cancel')}}</b-button>
           </b-button-group>
           <b-button-group class="mx-1">
-            <button class="btn btn-primary" v-on:click="save($event)">Save</button>
+            <button class="btn btn-primary" v-on:click="save($event)">{{npContent('save')}}</button>
           </b-button-group>
         </b-navbar-nav>
       </b-collapse>
@@ -83,12 +83,14 @@ import AccessPermission from '../../core/datamodel/AccessPermission';
 import Message from '../common/Message';
 import AppEvent from '../../core/util/AppEvent.js';
 import EventManager from '../../core/util/EventManager';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'FolderDetail',
   components: {
     Message
   },
+  mixins: [ SiteProvider ],
   props: ['parentFolder'],
   data () {
     return {

@@ -12,7 +12,7 @@
     "debug": "babel-node --inspect-brk test/run.js",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "build": "node build/build.js",
-    "deploy": "s3-deploy './dist/**' --cwd './dist/' --region us-east-1 --bucket nexuspad.com"
+    "deploy": "s3-deploy './dist/**' --cwd './dist/' --region us-east-1 --bucket davinci.nexuspad.com"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^11.2.0",

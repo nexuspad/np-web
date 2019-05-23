@@ -4,7 +4,7 @@
     <shared-folder-tree :moduleId="moduleId" :active-folder-key=activeFolderKey :usage="'sidenav'" />
     <div>
       <i class="fas fa-trash-alt mr-1"></i>
-      <a @click="openTrash()" v-bind:class="{ 'folder-selected': isTrashPage() }">trash</a>
+      <a @click="openTrash()" v-bind:class="{ 'folder-selected': isTrashPage() }">{{npContent('trash')}}</a>
     </div>
   </div>
 </template>
@@ -15,6 +15,7 @@ import SharedFolderTree from '../folder/SharedFolderTree';
 import AppRoute from '../AppRoute';
 import NPFolder from '../../core/datamodel/NPFolder';
 import AccountService from '../../core/service/AccountService';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'SideNavigation',
@@ -24,6 +25,7 @@ export default {
       activeFolderKey: ''
     };
   },
+  mixins: [ SiteProvider ],
   components: {
     FolderTree, SharedFolderTree
   },

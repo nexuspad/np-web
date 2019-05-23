@@ -10,7 +10,7 @@
         </div>
         <div class="col align-bottom">
           <span v-bind:class="{'text-danger': fileObj.status === 'failed', 'text-success': fileObj.status === 'completed'}">
-            {{ fileObj.status }}
+            {{ npContent(fileObj.status) }}
           </span>
           <span v-if="fileObj.status !== 'completed' && fileObj.status !== 'cancelled'">
             <span class="badge float-right" @click="cancelUpload(index, fileObj)">

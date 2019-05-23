@@ -13,7 +13,7 @@
                     @event-created="eventCreated" />
     </div>
     <div>
-      <span class="small float-right">timezone: <strong>{{ config.timzone }}</strong></span>
+      <span class="small float-right">{{npContent('timezone')}}: <strong>{{ config.timzone }}</strong></span>
     </div>
   </div>
 </template>
@@ -36,13 +36,14 @@ import TimeUtil from '../../core/util/TimeUtil';
 import NPEvent from '../../core/datamodel/NPEvent';
 import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'CalendarViews',
   components: {
     ListMenu, Message, FolderTree, EntryModal
   },
-  mixins: [ FolderActionProvider, EntryActionProvider ],
+  mixins: [ FolderActionProvider, EntryActionProvider, SiteProvider ],
   props: ['mode'],
   data () {
     return {

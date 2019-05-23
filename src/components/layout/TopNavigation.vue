@@ -1,10 +1,13 @@
 <template>
   <b-navbar toggleable="md" fixed="top" type="dark" variant="dark">
     <b-navbar-toggle target="topnav_collapse"></b-navbar-toggle>
-    <b-navbar-brand href="/" v-if="!onEdge">
+    <b-navbar-brand href="/about.html" v-if="!isLoggedIn">
       <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://nexuspad.com/images/np-logo.png"/>
     </b-navbar-brand>
-    <b-navbar-brand v-if="onEdge">
+    <b-navbar-brand href="/" v-if="isLoggedIn && !onEdge">
+      <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://nexuspad.com/images/np-logo.png"/>
+    </b-navbar-brand>
+    <b-navbar-brand v-if="isLoggedIn && onEdge">
       <router-link to="/activities">
         <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://nexuspad.com/images/np-logo.png"/>
       </router-link>
@@ -21,32 +24,20 @@
       <b-navbar-nav>
         <b-nav-item v-for="m in availableModules" :to="m.link" v-bind:key="m.id" :class="{'highlight' : activeModule == m.id}"
           :active="activeModule == m.id">
-          {{ m.name }}
+          {{npContent('m' + m.id)}}
         </b-nav-item>
         <b-nav-item></b-nav-item>
         <b-nav-form @submit="search">
           <input ref="searchInput" class="form-control mr-sm-2" type="search" v-model="searchKeyword"
             v-on:keyup.enter="search($event)" v-on:keyup.delete="clearSearch($event)" />
-          <b-button class="my-2 my-sm-0" v-on:click="search($event)">search</b-button>
+          <b-button class="my-2 my-sm-0" v-on:click="search($event)">{{npContent('search')}}</b-button>
         </b-nav-form>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item to="/account">settings</b-nav-item>
-        <b-nav-item @click="logout()">log out</b-nav-item>
-        <!--
-        <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#">EN</b-dropdown-item>
-        </b-nav-item-dropdown>
-        <b-nav-item-dropdown right>
-          <template slot="button-content">
-            User
-          </template>
-          <b-dropdown-item @click="accountPage()" href="#">account</b-dropdown-item>
-          <b-dropdown-item @click="logout()">signout</b-dropdown-item>
-        </b-nav-item-dropdown>
-        -->
+        <b-nav-item to="/account">{{npContent('settings')}}</b-nav-item>
+        <b-nav-item @click="logout()">{{npContent('log_out')}}</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -92,6 +83,7 @@ export default {
     let componentSelf = this;
     if (this.$refs.searchInput) {
       this.$refs.searchInput.addEventListener('search', function() {
+        console.log('search value', this.value)
         if (!this.value || this.value.length === 0) {
           componentSelf.searchKeyword = '';
           componentSelf.clearSearch();

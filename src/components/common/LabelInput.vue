@@ -10,7 +10,7 @@
       </li>
     </ul>
     <form @submit.prevent="addLabel">
-      <input class="form-control ac-input" ref="theLabelInput" placeholder="add tags, multiple ones" tabindex="1" />
+      <input class="form-control ac-input" ref="theLabelInput" :placeholder="npContent('add tags')" tabindex="1" />
       <button type="submit" class="icon-button" tabindex="2">
         <i class="fa fa-plus fa-lg text-primary"></i>
       </button>
@@ -21,10 +21,12 @@
 <script>
 import Awesomplete from 'Awesomplete';
 import '../../../node_modules/awesomplete/awesomplete.css';
+import SiteProvider from './SiteProvider';
 
 export default {
   name: 'LabelInput',
   props: ['initialValues'],
+  mixins: [ SiteProvider ],
   data () {
     return {
       labels: [],

@@ -15,6 +15,9 @@ export default class ContentHelper {
   }
 
   static translate (original) {
+    if (this._siteContent && this._siteContent[original]) {
+      return this._siteContent[original];
+    }
     let key = original.replace(/^a-zA-Z0-9 /g, '').replace(/\s/g, '_');
     let value = this.value(key);
     if (value === key) {
@@ -36,6 +39,6 @@ export default class ContentHelper {
   }
 
   static appEventMessage (appEvent) {
-    return this.message(appEvent.messageKey());
+    return this.value(appEvent.messageKey());
   }
 }

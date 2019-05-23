@@ -1,5 +1,5 @@
 <template>
-  <b-modal ref="stopSharingConfirmModalRef" title="confirm sharing change">
+  <b-modal ref="stopSharingConfirmModalRef" :title="npContent('confirm sharing change')">
     <div class="h6">{{ itemTitle }}</div>
     <div>{{npContent('will not longer be shared to you')}}</div>
     <div slot="modal-footer">

@@ -4,16 +4,16 @@
     <h2>{{npContent('create a free account')}}</h2>
     <form>
       <div class="form-group">
-        <input type="text" class="form-control" :placeholder="npContent.message('display_name_optional')" v-model="displayName">
+        <input type="text" class="form-control" :placeholder="npContent('display_name_optional')" v-model="displayName">
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" :placeholder="npContent.message('email')" v-bind:class="{ 'is-invalid': invalidEmail() }" v-model="email">
+        <input type="text" class="form-control" :placeholder="npContent('email')" v-bind:class="{ 'is-invalid': invalidEmail() }" v-model="email">
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" :placeholder="npContent.message('password')" v-bind:class="{ 'is-invalid': invalidPass() }" v-model="password">
+        <input type="password" class="form-control" :placeholder="npContent('password')" v-bind:class="{ 'is-invalid': invalidPass() }" v-model="password">
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" :placeholder="npContent.translate('confirm password')" v-bind:class="{ 'is-invalid': invalidPass() }" v-model="confirmPassword">
+        <input type="password" class="form-control" :placeholder="npContent('confirm password')" v-bind:class="{ 'is-invalid': invalidPass() }" v-model="confirmPassword">
       </div>
       <div class="form-group">
         By clicking creating account, you agree to our
@@ -21,7 +21,7 @@
         <a href="https://nexuspad.com/privacy.html" target="_blank">Data and Cookies Policy</a>.
       </div>
       <div class="form-group">
-        <button class="btn btn-primary" v-on:click="register($event)" :disabled="!submissionEnabled()">{{npContent.translate('create account')}}</button>
+        <button class="btn btn-primary" v-on:click="register($event)" :disabled="!submissionEnabled()">{{npContent('create account')}}</button>
       </div>
     </form>
     <cookie-law theme="dark-lime" v-if="!isDesktopApp()"></cookie-law>

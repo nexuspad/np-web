@@ -3,13 +3,13 @@
     <message :location="'TOP_STICKY'" />
     <ul class="nav nav-tabs h5 pt-2 mb-3">
       <li class="nav-item">
-        <router-link class="nav-link" to="/account">account</router-link>
+        <router-link class="nav-link" to="/account">{{npContent('account')}}</router-link>
       </li>
       <li class="nav-item">
-        <a class="nav-link" :class="'active'">my pad</a>
+        <a class="nav-link" :class="'active'">{{npContent('my pad')}}</a>
       </li>
     </ul>
-    <h2>modules</h2>
+    <h2>{{npContent('modules')}}</h2>
     <div v-if="user.dataEncrypted">
       Your data is encrypted.
     </div>
@@ -21,70 +21,70 @@
       <li class="list-group-item">
         <div class="row mt-2 mb-2">
           <div class="col">
-            <span :class="{ 'text-muted': !isActive(1) }">CONTACT</span>
+            <span :class="{ 'text-muted': !isActive(1) }">{{npContent('m1')}}</span>
           </div>
           <div class="col-md-auto">
-            <button class="btn btn-primary" v-on:click="exportModule(1)" :disabled="posting === true">export</button>
+            <button class="btn btn-primary" v-on:click="exportModule(1)" :disabled="posting === true">{{npContent('export')}}</button>
           </div>
           <div class="col-md-auto">
-            <button class="btn btn-danger" v-if="isActive(1)" v-on:click="changeStatus(1, false)" :disabled="posting === true">de-activate</button>
-            <button class="btn btn-primary" v-if="!isActive(1)" v-on:click="changeStatus(1, true)" :disabled="posting === true">activate</button>
+            <button class="btn btn-danger" v-if="isActive(1)" v-on:click="changeStatus(1, false)" :disabled="posting === true">{{npContent('de-activate')}}</button>
+            <button class="btn btn-primary" v-if="!isActive(1)" v-on:click="changeStatus(1, true)" :disabled="posting === true">{{npContent('activate')}}</button>
           </div>
         </div>
       </li>
       <li class="list-group-item">
         <div class="row mt-2 mb-2">
           <div class="col">
-            <span :class="{ 'text-muted': !isActive(2) }">CALENDAR</span>
+            <span :class="{ 'text-muted': !isActive(2) }">{{npContent('m2')}}</span>
           </div>
           <div class="col-md-auto">
-            <button class="btn btn-primary" v-on:click="exportModule(2)" :disabled="!isActive(2) || posting === true">export</button>
+            <button class="btn btn-primary" v-on:click="exportModule(2)" :disabled="!isActive(2) || posting === true">{{npContent('export')}}</button>
           </div>
           <div class="col-md-auto">
-            <button class="btn btn-danger" v-if="isActive(2)" v-on:click="changeStatus(2, false)" :disabled="posting === true">de-activate</button>
-            <button class="btn btn-primary" v-if="!isActive(2)" v-on:click="changeStatus(2, true)" :disabled="posting === true">activate</button>
+            <button class="btn btn-danger" v-if="isActive(2)" v-on:click="changeStatus(2, false)" :disabled="posting === true">{{npContent('de-activate')}}</button>
+            <button class="btn btn-primary" v-if="!isActive(2)" v-on:click="changeStatus(2, true)" :disabled="posting === true">{{npContent('activate')}}</button>
           </div>
         </div>
       </li>
       <li class="list-group-item">
         <div class="row mt-2 mb-2">
           <div class="col">
-            <span :class="{ 'text-muted': !isActive(4) }">DOC</span>
+            <span :class="{ 'text-muted': !isActive(4) }">{{npContent('m4')}}</span>
           </div>
           <div class="col-md-auto">
-            <button class="btn btn-primary" v-on:click="exportModule(4)" :disabled="!isActive(4) || posting === true">export</button>
+            <button class="btn btn-primary" v-on:click="exportModule(4)" :disabled="!isActive(4) || posting === true">{{npContent('export')}}</button>
           </div>
           <div class="col-md-auto">
-            <button class="btn btn-danger" v-if="isActive(4)" v-on:click="changeStatus(4, false)" :disabled="posting === true">de-activate</button>
-            <button class="btn btn-primary" v-if="!isActive(4)" v-on:click="changeStatus(4, true)" :disabled="posting === true">activate</button>
+            <button class="btn btn-danger" v-if="isActive(4)" v-on:click="changeStatus(4, false)" :disabled="posting === true">{{npContent('de-activate')}}</button>
+            <button class="btn btn-primary" v-if="!isActive(4)" v-on:click="changeStatus(4, true)" :disabled="posting === true">{{npContent('activate')}}</button>
           </div>
         </div>
       </li>
       <li class="list-group-item">
         <div class="row mt-2 mb-2">
           <div class="col">
-            <span :class="{ 'text-muted': !isActive(3) }">BOOKMARK</span>
+            <span :class="{ 'text-muted': !isActive(3) }">{{npContent('m3')}}</span>
           </div>
           <div class="col-md-auto">
-            <button class="btn btn-primary" v-on:click="exportModule(3)" :disabled="!isActive(3) || posting === true">export</button>
+            <button class="btn btn-primary" v-on:click="exportModule(3)" :disabled="!isActive(3) || posting === true">{{npContent('export')}}</button>
           </div>
           <div class="col-md-auto">
-            <button class="btn btn-danger" v-if="isActive(3)" v-on:click="changeStatus(3, false)" :disabled="posting === true">de-activate</button>
-            <button class="btn btn-primary" v-if="!isActive(3)" v-on:click="changeStatus(3, true)" :disabled="posting === true">activate</button>
+            <button class="btn btn-danger" v-if="isActive(3)" v-on:click="changeStatus(3, false)" :disabled="posting === true">{{npContent('de-activate')}}</button>
+            <button class="btn btn-primary" v-if="!isActive(3)" v-on:click="changeStatus(3, true)" :disabled="posting === true">{{npContent('activate')}}</button>
           </div>
         </div>
       </li>
       <li class="list-group-item">
         <div class="row mt-2 mb-2">
           <div class="col">
-            <span :class="{ 'text-muted': !isActive(6) }">PHOTO</span>
+            <span :class="{ 'text-muted': !isActive(6) }">{{npContent('m6')}}</span>
           </div>
           <div class="col-md-auto">
-            <button class="btn btn-primary" v-on:click="exportModule(6)" :disabled="!isActive(6) || posting === true">export</button>
+            <button class="btn btn-primary" v-on:click="exportModule(6)" :disabled="!isActive(6) || posting === true">{{npContent('export')}}</button>
           </div>
           <div class="col-md-auto">
-            <button class="btn btn-danger" v-if="isActive(6)" v-on:click="changeStatus(6, false)" :disabled="posting === true">de-activate</button>
-            <button class="btn btn-primary" v-if="!isActive(6)" v-on:click="changeStatus(6, true)" :disabled="posting === true">activate</button>
+            <button class="btn btn-danger" v-if="isActive(6)" v-on:click="changeStatus(6, false)" :disabled="posting === true">{{npContent('de-activate')}}</button>
+            <button class="btn btn-primary" v-if="!isActive(6)" v-on:click="changeStatus(6, true)" :disabled="posting === true">{{npContent('activate')}}</button>
           </div>
         </div>
       </li>
@@ -101,10 +101,11 @@ import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import EntryService from '../../core/service/EntryService';
 import PreferenceService from '../../core/service/PreferenceService';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'Account',
-  mixins: [],
+  mixins: [ SiteProvider ],
   components: {
     Message
   },
