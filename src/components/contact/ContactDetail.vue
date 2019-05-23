@@ -54,12 +54,12 @@
 </template>
 
 <script>
-import WindowInfo from '../common/WindowInfo';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'ContactDetail',
   props: ['contactObj', 'keyword'],
-  mixins: [ WindowInfo ],
+  mixins: [ SiteProvider ],
   methods: {
     mapLink (addressStr) {
       return 'https://www.google.com/maps/search/?api=1&query=' + addressStr;

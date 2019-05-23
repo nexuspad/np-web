@@ -26,6 +26,7 @@ import SplitPanel from './components/layout/SplitPanel';
 import UploaderModal from './components/common/UploaderModal';
 import CmsService from './core/service/CmsService';
 import Highlighter from './core/util/Highlighter';
+import ContentHelper from './core/service/ContentHelper';
 
 Vue.component('TopNavigation', TopNavigation);
 Vue.component('SideNavigation', SideNavigation);
@@ -104,7 +105,7 @@ EventManager.subscribe(AppEvent.ACCOUNT_SESSION_INACTIVE, () => {
 // -------------------------------------------------------------------------------------------
 Vue.filter('npTranslate', function (value) {
   if (!value) return '';
-  return CmsService.getCmsValue(value);
+  return ContentHelper.translate(value);
 })
 
 Vue.filter('npHighlighter', function (value, keyword) {
@@ -144,7 +145,7 @@ let errorInstance = new Vue({
   `
 });
 
-let initPromises = [AppManager.serviceLocate(), AppManager.initClient(clientType)];
+let initPromises = [AppManager.serviceLocate(), AppManager.initCms(), AppManager.initClient(clientType)];
 
 Promise.all(initPromises).then(() => {
   app.$mount('#app');

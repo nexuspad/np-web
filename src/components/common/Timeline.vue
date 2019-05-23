@@ -11,11 +11,11 @@
           </div>
           <div>
             <span class="badge badge-pill badge-light">{{ time(item.updateTime) }}</span>
-            <span class="badge badge-pill badge-info" v-if="status(item) === 0">in queue</span>
-            <span class="badge badge-pill badge-info" v-if="status(item) === 1">running</span>
-            <span class="badge badge-pill badge-warning" v-if="status(item) === 4">canceled</span>
-            <span class="badge badge-pill badge-success" v-if="status(item) === 5">successful</span>
-            <span class="badge badge-pill badge-danger" v-if="status(item) === 6">failed</span>
+            <span class="badge badge-pill badge-info" v-if="status(item) === 0">{{npContent('in queue')}}</span>
+            <span class="badge badge-pill badge-info" v-if="status(item) === 1">{{npContent('running')}}</span>
+            <span class="badge badge-pill badge-warning" v-if="status(item) === 4">{{npContent('canceled')}}</span>
+            <span class="badge badge-pill badge-success" v-if="status(item) === 5">{{npContent('successful')}}</span>
+            <span class="badge badge-pill badge-danger" v-if="status(item) === 6">{{npContent('failed')}}</span>
           </div>
         </li>
       </ul>
@@ -28,10 +28,11 @@ import { parse, format } from 'date-fns';
 import EntryActionProvider from './EntryActionProvider';
 import JobResult from './JobResult';
 import NPJob from '../../core/datamodel/NPJob';
+import SiteProvider from './SiteProvider';
 
 export default {
   name: 'Timeline',
-  mixins: [ EntryActionProvider ],
+  mixins: [ EntryActionProvider, SiteProvider ],
   props: ['data'],
   components: {
     JobResult

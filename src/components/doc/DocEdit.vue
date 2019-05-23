@@ -2,7 +2,7 @@
   <div>
     <div class="row form-group">
       <div class="col">
-        <input type="text" class="form-control input-underline" placeholder="title (optional)" v-model="doc.title" />
+        <input type="text" class="form-control input-underline" :placeholder="npContent('title_optional')" v-model="doc.title" />
       </div>
       <div class="col-md-auto align-bottom">
         <button type="button" class="icon-button" @click="showTagForm=!showTagForm">
@@ -17,7 +17,7 @@
     </div>
     <div class="row">
       <div class="col" v-if="doc.format === 'TEXT'">
-        <textarea-autosize class="form-control" placeholder="notes" :min-height="editorHeight()" v-model="doc.note"></textarea-autosize>
+        <textarea-autosize class="form-control" :placeholder="npContent('notes')" :min-height="editorHeight()" v-model="doc.note"></textarea-autosize>
       </div>
       <div class="col" v-show="doc.format === 'HTML'">
         <textarea id="DocCKEditor"></textarea>
@@ -27,8 +27,8 @@
       <b-collapse is-nav id="editor_nav_menu_collapse">
         <b-navbar-nav>
           <b-nav-text class="mr-2"><message :location="'TOP_NAVBAR'" /></b-nav-text>
-          <b-nav-text v-if="!doc.entryId">new doc</b-nav-text>
-          <b-nav-text v-if="doc.entryId">edit doc</b-nav-text>
+          <b-nav-text v-if="!doc.entryId">{{npContent('new doc')}}</b-nav-text>
+          <b-nav-text v-if="doc.entryId">{{npContent('edit doc')}}</b-nav-text>
         </b-navbar-nav>
         <b-navbar-nav v-if="doc.format === 'TEXT'">
           <b-dropdown :text="docFormat()" class="ml-4" size="sm">
@@ -42,10 +42,10 @@
         <!-- right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-button-group class="mx-1">
-            <button class="btn btn-primary" v-on:click="collectTags(); save($event, doc)">save</button>
+            <button class="btn btn-primary" v-on:click="collectTags(); save($event, doc)">{{npContent('save')}}</button>
           </b-button-group>
           <b-button-group class="mx-1">
-            <b-button class="my-2 my-sm-0" type="button" v-on:click="cancel()">close</b-button>
+            <b-button class="my-2 my-sm-0" type="button" v-on:click="cancel()">{{npContent('close')}}</b-button>
           </b-button-group>
         </b-navbar-nav>
       </b-collapse>
@@ -67,11 +67,12 @@ import Message from '../common/Message';
 import EntryActionProvider from '../common/EntryActionProvider';
 import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'DocEdit',
   props: ['folder'],
-  mixins: [ EntryActionProvider ],
+  mixins: [ EntryActionProvider, SiteProvider ],
   data: function () {
     return {
       showTagForm: false,

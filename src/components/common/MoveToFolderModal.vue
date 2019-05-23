@@ -1,5 +1,5 @@
 <template>
-  <b-modal ref="moveToFolderModalRef" size="md" hide-footer title="choose a folder">
+  <b-modal ref="moveToFolderModalRef" size="md" hide-footer :title="npContent('choose a folder')">
     <folder-tree :moduleId="moduleId" :active-folder-key="folderSelectionKey" usage="move" @folderSelected="onFolderSelected" />
   </b-modal>
 </template>
@@ -9,9 +9,11 @@ import FolderTree from '../folder/FolderTree';
 import NPEntry from '../../core/datamodel/NPEntry';
 import NPFolder from '../../core/datamodel/NPFolder';
 import NPUser from '../../core/datamodel/NPUser';
+import SiteProvider from './SiteProvider';
 
 export default {
   name: 'MoveToFolderModal',
+  mixins: [ SiteProvider ],
   props: ['moduleId'],
   data () {
     return {

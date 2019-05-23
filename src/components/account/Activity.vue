@@ -1,7 +1,7 @@
 <template>
   <div class="np-module-container np-slim-box">
     <message :location="'TOP_STICKY'" />
-    <h2>activites</h2>
+    <h2>{{npContent('activites')}}</h2>
     <timeline :data="timelineList" />
   </div>
 </template>
@@ -14,10 +14,11 @@ import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import CommonUtils from '../../core/util/CommonUtils';
 import Timeline from '../common/Timeline';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'Activity',
-  mixins: [ ],
+  mixins: [SiteProvider ],
   components: {
     Message, Timeline
   },

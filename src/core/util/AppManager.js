@@ -47,14 +47,7 @@ export default class AppManager {
         if (workingInstances.length > 0) {
           RestClient.apiUrl = serviceEndpoints[Math.min(...workingInstances)];
           console.log('[RestClient] ', RestClient.apiUrl);
-
-          // retrieve CMS content
-          CmsService.getCmsContent().then(() => {
-            resolve();
-          }).catch((error) => {
-            reject(error);
-          });
-
+          resolve();
         } else {
           reject(Error('service endpoint not found'));
         }
@@ -95,13 +88,7 @@ export default class AppManager {
   }
 
   static initCms () {
-    return new Promise((resolve, reject) => {
-      CmsService.getCmsContent().then(() => {
-        resolve();
-      }).catch((error) => {
-        reject(error);
-      });  
-    });
+    return CmsService.getSiteContent();
   }
 
   static cleanup () {

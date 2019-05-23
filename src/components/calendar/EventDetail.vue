@@ -61,12 +61,12 @@
 import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import TimeUtil from '../../core/util/TimeUtil';
-import WindowInfo from '../common/WindowInfo';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'EventDetail',
   props: ['eventObj', 'keyword'],
-  mixins: [ WindowInfo ],
+  mixins: [ SiteProvider ],
   data () {
     return {
       eventDisplay: {

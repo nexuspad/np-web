@@ -1,27 +1,27 @@
 <template>
   <div class="np-module-container np-slim-box">
     <message :location="'TOP_STICKY'" />
-    <h2>create a free account</h2>
+    <h2>{{npContent('create a free account')}}</h2>
     <form>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="display name (optional)" v-model="displayName">
+        <input type="text" class="form-control" :placeholder="npContent.message('display_name_optional')" v-model="displayName">
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="email" v-bind:class="{ 'is-invalid': invalidEmail() }" v-model="email">
+        <input type="text" class="form-control" :placeholder="npContent.message('email')" v-bind:class="{ 'is-invalid': invalidEmail() }" v-model="email">
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" placeholder="password" v-bind:class="{ 'is-invalid': invalidPass() }" v-model="password">
+        <input type="password" class="form-control" :placeholder="npContent.message('password')" v-bind:class="{ 'is-invalid': invalidPass() }" v-model="password">
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" placeholder="confirm password" v-bind:class="{ 'is-invalid': invalidPass() }" v-model="confirmPassword">
+        <input type="password" class="form-control" :placeholder="npContent.translate('confirm password')" v-bind:class="{ 'is-invalid': invalidPass() }" v-model="confirmPassword">
       </div>
       <div class="form-group">
         By clicking creating account, you agree to our
-        <a href="https://davinci.nexuspad.com/termsofuse.html" target="_blank">Terms of Use</a>,
-        <a href="https://davinci.nexuspad.com/privacy.html" target="_blank">Data and Cookies Policy</a>.
+        <a href="https://nexuspad.com/termsofuse.html" target="_blank">Terms of Use</a>,
+        <a href="https://nexuspad.com/privacy.html" target="_blank">Data and Cookies Policy</a>.
       </div>
       <div class="form-group">
-        <button class="btn btn-primary" v-on:click="register($event)" :disabled="!submissionEnabled()">create account</button>
+        <button class="btn btn-primary" v-on:click="register($event)" :disabled="!submissionEnabled()">{{npContent.translate('create account')}}</button>
       </div>
     </form>
     <cookie-law theme="dark-lime" v-if="!isDesktopApp()"></cookie-law>
@@ -33,14 +33,14 @@ import CookieLaw from 'vue-cookie-law';
 import AccountActionProvider from '../account/AccountActionProvider';
 import AccountService from '../../core/service/AccountService';
 import Message from '../common/Message';
-import WindowInfo from '../common/WindowInfo';
 import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import CommonUtils from '../../core/util/CommonUtils';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'Register',
-  mixins: [ AccountActionProvider, WindowInfo ],
+  mixins: [ AccountActionProvider, SiteProvider ],
   components: {
     CookieLaw, Message
   },

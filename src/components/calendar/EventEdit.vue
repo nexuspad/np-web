@@ -3,7 +3,7 @@
     <form>
       <div class="row form-group">
         <div class="col">
-          <input type="text" class="form-control input-underline" v-model="npEvent.title" placeholder="title" />
+          <input type="text" class="form-control input-underline" v-model="npEvent.title" :placeholder="npContent('title')" />
         </div>
         <div class="col-2">
           <input type="color" class="form-control color-label" :style="{background: getColorLabel()}" v-model="npEvent.colorLabel">
@@ -27,22 +27,22 @@
       </div>
       <div class="row form-group pt-2">
         <div class="col">
-          <label class="mr-2">reminder</label>
+          <label class="mr-2">{{npContent('reminder')}}</label>
           <div class="custom-control custom-radio custom-control-inline">
             <input type="radio" id="reminderYes" name="reminderToggle" class="custom-control-input"
                   :checked="hasReminder()" v-on:change="toggleReminder(true)">
-            <label class="custom-control-label" for="reminderYes">yes</label>
+            <label class="custom-control-label" for="reminderYes">{{npContent('yes')}}</label>
           </div>
           <div class="custom-control custom-radio custom-control-inline">
             <input type="radio" id="reminderNo" name="reminderToggle" class="custom-control-input"
                   :checked="!hasReminder()" v-on:change="toggleReminder(false)">
-            <label class="custom-control-label" for="reminderNo">no</label>
+            <label class="custom-control-label" for="reminderNo">{{npContent('no')}}</label>
           </div>
         </div>
       </div>
       <div class="row form-group" v-if="hasReminder()">
         <div class="col-6">
-          <label for="ReminderAddress">deliver to</label>
+          <label for="ReminderAddress">{{npContent('deliver to')}}</label>
           <input class="form-control" id="ReminderAddress" v-model="npEvent.eventReminders[0].deliverAddress" >
         </div>
         <div class="col">
@@ -54,9 +54,9 @@
         <div class="col">
           <label>&nbsp;</label>
           <select class="form-control" v-model="npEvent.eventReminders[0].unit" v-on:change="reminderUnitUpdated()">
-            <option value="MINUTE">minute</option>
-            <option value="HOUR">hour</option>
-            <option value="DAY">day</option>
+            <option value="MINUTE">{{npContent('minute')}}</option>
+            <option value="HOUR">{{npContent('hour')}}</option>
+            <option value="DAY">{{npContent('day')}}</option>
           </select>
         </div>
       </div>
@@ -64,20 +64,20 @@
         <div class="col">
           <label>repeat</label>
           <select class="form-control" id="RepeatPattern" v-model="npEvent.recurrence.pattern">
-            <option value="NOREPEAT">no</option>
-            <option value="DAILY">daily</option>
-            <option value="WEEKDAILY">every weekday</option>
-            <option value="WEEKLY">weekly</option>
-            <option value="MONTHLY">monthly</option>
-            <option value="YEARLY">yearly</option>
+            <option value="NOREPEAT">{{npContent('no')}}</option>
+            <option value="DAILY">{{npContent('daily')}}</option>
+            <option value="WEEKDAILY">{{npContent('every weekday')}}</option>
+            <option value="WEEKLY">{{npContent('weekly')}}</option>
+            <option value="MONTHLY">{{npContent('monthly')}}</option>
+            <option value="YEARLY">{{npContent('yearly')}}</option>
           </select>
         </div>
         <div class="col" v-show="recurring()">
-          <label for="RepeatTimes">times</label>
+          <label for="RepeatTimes">{{npContent('times')}}</label>
           <input class="form-control" size="3" id="RepeatTimes" v-model="npEvent.recurrence.recurrenceTimes" >
         </div>
         <div class="col" v-show="recurring()">
-          <label for="RepeatEndDate">or end by</label>
+          <label for="RepeatEndDate">{{npContent('or end by')}}</label>
           <input class="form-control" type="date" id="RepeatEndDate" :min="npEvent.localStartDate" v-model="npEvent.recurrence.endDate" >
         </div>
       </div>
@@ -88,7 +88,7 @@
       </div>
       <div class="form-group row">
         <div class="col">
-          <textarea-autosize class="form-control input-underline" placeholder="notes" v-model="npEvent.note"></textarea-autosize>
+          <textarea-autosize class="form-control input-underline" :placeholder="npContent('notes')" v-model="npEvent.note"></textarea-autosize>
         </div>
       </div>
     </form>
@@ -96,8 +96,8 @@
       <b-collapse is-nav id="editor_nav_menu_collapse">
         <b-navbar-nav>
           <b-nav-text class="mr-2"><message :location="'TOP_NAVBAR'" /></b-nav-text>
-          <b-nav-text v-if="!npEvent.entryId">new event</b-nav-text>
-          <b-nav-text v-if="npEvent.entryId">update event</b-nav-text>
+          <b-nav-text v-if="!npEvent.entryId">{{npContent('new event')}}</b-nav-text>
+          <b-nav-text v-if="npEvent.entryId">{{npContent('update event')}}</b-nav-text>
         </b-navbar-nav>
         <b-navbar-nav v-if="npEvent.recurring">
           <b-dropdown :text="whatsUpdateOption(updateOption)" class="ml-4" size="sm">
@@ -109,10 +109,10 @@
         <!-- right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-button-group class="mx-1">
-            <button class="btn btn-primary" v-on:click="collectTags(); saveEvent($event, npEvent)">save</button>
+            <button class="btn btn-primary" v-on:click="collectTags(); saveEvent($event, npEvent)">{{npContent('save')}}</button>
           </b-button-group>
           <b-button-group class="mx-1">
-            <b-button class="my-2 my-sm-0" type="button" v-on:click="cancel()">cancel</b-button>
+            <b-button class="my-2 my-sm-0" type="button" v-on:click="cancel()">{{npContent('cancel')}}</b-button>
           </b-button-group>
         </b-navbar-nav>
       </b-collapse>
@@ -131,10 +131,11 @@ import TimeUtil from '../../core/util/TimeUtil';
 import EntryActionProvider from '../common/EntryActionProvider';
 import Reminder from '../../core/datamodel/Reminder';
 import Recurrence from '../../core/datamodel/Recurrence';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'EventEdit',
-  mixins: [ EntryActionProvider ],
+  mixins: [ EntryActionProvider, SiteProvider ],
   components: {
     LabelInput, Message
   },

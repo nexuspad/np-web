@@ -1,13 +1,13 @@
 <template>
   <div class="np-module-container np-slim-box">
     <message :location="'TOP_STICKY'" />
-    <h2>reset password</h2>
+    <h2>{{npContent('reset password')}}</h2>
     <form>
       <div class="row form-group">
         <div class="col">
-          <label for="CurrentPassword">new password</label>
+          <label for="CurrentPassword">{{npContent('new password')}}</label>
           <input type="password" class="form-control" v-bind:class="{ 'is-invalid': passwordsDoNotMatch() }" v-model="newPassword">
-          <label for="newPassword">confirm new password</label>
+          <label for="newPassword">{{npContent('confirm new password')}}</label>
           <input type="password" class="form-control" v-bind:class="{ 'is-invalid': passwordsDoNotMatch() }" v-model="newPassword2">
         </div>
       </div>
@@ -15,7 +15,9 @@
         <div class="col">
         </div>
         <div class="col-auto">
-          <button class="btn btn-primary" v-on:click="updatePassword($event)" :disabled="posting || !readyToSubmit">update</button>
+          <button class="btn btn-primary" v-on:click="updatePassword($event)" :disabled="posting || !readyToSubmit">
+            {{npContent('update')}}
+          </button>
         </div>
       </div>
     </form>
@@ -29,10 +31,11 @@ import Message from '../common/Message';
 import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import CommonUtils from '../../core/util/CommonUtils';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'PasswordReset',
-  mixins: [ AccountActionProvider ],
+  mixins: [ AccountActionProvider, SiteProvider ],
   components: {
     Message
   },

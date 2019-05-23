@@ -1,10 +1,10 @@
 <template>
   <b-modal ref="stopSharingConfirmModalRef" title="confirm sharing change">
     <div class="h6">{{ itemTitle }}</div>
-    <div>will not longer be shared to you.</div>
+    <div>{{npContent('will not longer be shared to you')}}</div>
     <div slot="modal-footer">
-      <b-btn variant="secondary" @click="hideModal">cancel</b-btn>
-      <b-btn variant="danger" @click="confirmed">confirm</b-btn>
+      <b-btn variant="secondary" @click="hideModal">{{npContent('cancel')}}</b-btn>
+      <b-btn variant="danger" @click="confirmed">{{npContent('confirm')}}</b-btn>
     </div>
   </b-modal>
 </template>
@@ -12,10 +12,11 @@
 <script>
 import FolderActionProvider from '../common/FolderActionProvider.js';
 import NPFolder from '../../core/datamodel/NPFolder.js';
+import SiteProvider from './SiteProvider';
 
 export default {
   name: 'StopSharingConfirmModal',
-  mixins: [ FolderActionProvider ],
+  mixins: [ FolderActionProvider, SiteProvider ],
   data () {
     return {
       item: Object,

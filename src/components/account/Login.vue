@@ -1,17 +1,19 @@
 <template>
   <div class="np-module-container np-slim-box">
     <message :location="'TOP_STICKY'" />
-    <h2>log in or <router-link to="/register">{{ 'create a free account' | npTranslate }}</router-link></h2>
+    <h2>{{npContent('log in')}} or 
+      <router-link to="/register">{{npContent('create a free account')}}</router-link>
+    </h2>
     <form v-if="user === null || !user.sessionId">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="username or email" autocomplete="username" v-model="username">
+        <input type="text" class="form-control" :placeholder="npContent('email or username')" autocomplete="username" v-model="username">
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" placeholder="password" autocomplete="current-password" v-model="password">
-        <p style="margin:1em;"><a href="javascript:" @click="$router.push({name: 'reqpasswordreset'})">reset password</a></p>
+        <input type="password" class="form-control" :placeholder="npContent('password')" autocomplete="current-password" v-model="password">
+        <p style="margin:1em;"><a href="javascript:" @click="$router.push({name: 'reqpasswordreset'})">{{npContent('reset password')}}</a></p>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary" v-on:click="login($event, username, password)" :disabled="posting">login</button>
+        <button class="btn btn-primary" v-on:click="login($event, username, password)" :disabled="posting">{{npContent('login')}}</button>
       </div>
     </form>
     <b-alert :show="showLegacyAccountLink">
@@ -33,13 +35,13 @@ import CookieLaw from 'vue-cookie-law';
 import AccountActionProvider from '../account/AccountActionProvider';
 import AccountService from '../../core/service/AccountService';
 import Message from '../common/Message';
-import WindowInfo from '../common/WindowInfo';
 import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
+import SiteProvider from '../common/SiteProvider';
 
 export default {
   name: 'Login',
-  mixins: [ AccountActionProvider, WindowInfo ],
+  mixins: [ AccountActionProvider, SiteProvider ],
   components: {
     CookieLaw, Message
   },

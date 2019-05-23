@@ -1,23 +1,23 @@
 <template>
-  <b-modal ref="deleteConfirmModalRef" title="confirm deletion">
+  <b-modal ref="deleteConfirmModalRef" :title="npContent('confirm deletion')">
     <div class="h6">{{ itemTitle }}</div>
     <div v-if="isEventAndRecurring()">
       <div class="custom-control custom-radio">
         <input type="radio" id="customRadio1" name="eventDeleteOption" class="custom-control-input" value="0" v-model="eventDeleteOption">
-        <label class="custom-control-label" for="customRadio1">delete all recurring events</label>
+        <label class="custom-control-label" for="customRadio1">{{npContent('delete all recurring events')}}</label>
       </div>
       <div class="custom-control custom-radio">
         <input type="radio" id="customRadio2" name="eventDeleteOption" class="custom-control-input" value="1" v-model="eventDeleteOption">
-        <label class="custom-control-label" for="customRadio2">delete this occurrence only</label>
+        <label class="custom-control-label" for="customRadio2">{{npContent('delete this occurrence only')}}</label>
       </div>
       <div class="custom-control custom-radio">
         <input type="radio" id="customRadio3" name="eventDeleteOption" class="custom-control-input" value="2" v-model="eventDeleteOption">
-        <label class="custom-control-label" for="customRadio3">delete this and all future one(s)</label>
+        <label class="custom-control-label" for="customRadio3">{{npContent('delete this and all future one(s)')}}</label>
       </div>
     </div>
     <div slot="modal-footer">
-      <b-btn variant="secondary" @click="hideModal">cancel</b-btn>
-      <b-btn variant="danger" @click="handleDelete">delete</b-btn>
+      <b-btn variant="secondary" @click="hideModal">{{npContent('cancel')}}</b-btn>
+      <b-btn variant="danger" @click="handleDelete">{{npContent('delete')}}</b-btn>
     </div>
   </b-modal>
 </template>
@@ -29,10 +29,11 @@ import NPEntry from '../../core/datamodel/NPEntry.js';
 import NPFolder from '../../core/datamodel/NPFolder.js';
 import BulkDelete from '../../core/datamodel/BulkDelete.js';
 import NPEvent from '../../core/datamodel/NPEvent.js';
+import SiteProvider from './SiteProvider';
 
 export default {
   name: 'DeleteConfirmModal',
-  mixins: [ EntryActionProvider, FolderActionProvider ],
+  mixins: [ EntryActionProvider, FolderActionProvider, SiteProvider ],
   data () {
     return {
       item: Object,

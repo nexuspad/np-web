@@ -5,7 +5,7 @@
       <b-button-toolbar variant="light">
         <b-button-group class="mr-1">
           <b-button variant="danger" @click="emptyTrash" :disabled="isEmpty">
-            empty all
+            {{npContent('empty all')}}
           </b-button>
           <b-button class="pl-3 pr-3" variant="light" @click="loadList()">
             <i class="fas fa-sync" v-bind:class="{ 'fa-spin': loading || deleting }"></i>
@@ -13,7 +13,7 @@
         </b-button-group>
       </b-button-toolbar>
     </div>
-    <div v-if="deleting" class="alert alert-light"><small>* it may take a few seconds to delete all items</small></div>
+    <div v-if="deleting" class="alert alert-light"><small>* {{npContent('it may take a few seconds to delete all items')}}</small></div>
     <empty :list=true v-if="isEmpty" />
     <div class="np-content-below-menu trash">
       <div v-if="entryList.folder && entryList.folder.subFolders.length > 0">
@@ -24,7 +24,7 @@
                 <template slot="button-content">
                   <i class="far fa-folder pr-1"></i>{{ folder.folderName }}
                 </template>
-                <b-dropdown-item @click="restoreFolder(folder)">restore</b-dropdown-item>
+                <b-dropdown-item @click="restoreFolder(folder)">{{npContent('restore')}}</b-dropdown-item>
               </b-dropdown>
             </div>
           </div>
@@ -35,7 +35,7 @@
           <div class="col" v-for="entry in entryList.entries.slice((group - 1) * 3, group * 3)" v-bind:key="entry.entryId">
             <div class="row m-2">
               <b-dropdown variant="link" :text=entry.title no-caret>
-                <b-dropdown-item @click="restoreEntry(entry)">restore</b-dropdown-item>
+                <b-dropdown-item @click="restoreEntry(entry)">{{npContent('restore')}}</b-dropdown-item>
               </b-dropdown>
             </div>
           </div>
@@ -58,10 +58,11 @@ import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import NPFolder from '../../core/datamodel/NPFolder';
 import AppRoute from '../AppRoute';
+import SiteProvider from './SiteProvider';
 
 export default {
   name: 'Trashed',
-  mixins: [ EntryActionProvider, FolderActionProvider ],
+  mixins: [ EntryActionProvider, FolderActionProvider, SiteProvider ],
   components: {
     Message, Empty
   },

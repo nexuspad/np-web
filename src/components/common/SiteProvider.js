@@ -1,12 +1,19 @@
 import RestClient from '../../core/util/RestClient';
+import ContentHelper from '../../core/service/ContentHelper';
 
 export default {
   data () {
     return {
+      window: window,
       onEdge: false
     };
   },
+  computed: {
+  },
   methods: {
+    npContent (str) {
+      return ContentHelper.translate(str);
+    },
     isEdgeApi () {
       let componentSelf = this;
       RestClient.get(RestClient.apiUrl + '/health').then((result) => {
@@ -15,6 +22,18 @@ export default {
           componentSelf.onEdge = true;
         }
       });
+    },
+    debuggingEnabled () {
+      if (this.window.npDebugging) {
+        return true;
+      }
+      return false;
+    },
+    isDesktopApp () {
+      if (this.window.NP_DESKTOP) {
+        return true;
+      }
+      return false;
     }
   }
 }

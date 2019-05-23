@@ -13,7 +13,7 @@
     <b-collapse is-nav id="topnav_collapse" v-if="isLoggedIn === false">
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item to="/login">log in</b-nav-item>
+        <b-nav-item to="/login">{{npContent('log in')}}</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
 

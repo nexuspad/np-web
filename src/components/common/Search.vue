@@ -3,7 +3,7 @@
     <div v-if="sharers.length > 0">
       <ul class="nav nav-tabs h6 mt-2 mb-3" v-if="sharers.length > 0">
         <li class="nav-item">
-          <a class="nav-link" :class="{ active: !$route.hash || $route.hash === '#mine' }" href="#mine">mine</a>
+          <a class="nav-link" :class="{ active: !$route.hash || $route.hash === '#mine' }" href="#mine">{{npContent('mine')}}</a>
         </li>
         <li class="nav-item" v-for="(user, index) in sharers" v-bind:key="index">
           <a class="nav-link" :class="{ active: $route.hash === '#' + user.userName }" :href="'#' + user.userName">{{ user.displayName }}</a>
@@ -33,10 +33,11 @@ import SharedFolderService from '../../core/service/SharedFolderService';
 import UserLookupService from '../../core/service/UserLookupService';
 import NPModule from '../../core/datamodel/NPModule';
 import Highlighter from '../../core/util/Highlighter.js';
+import SiteProvider from './SiteProvider';
 
 export default {
   name: 'Search',
-  mixins: [ EntryActionProvider ],
+  mixins: [ EntryActionProvider, SiteProvider ],
   data () {
     return {
       moduleId: 0,

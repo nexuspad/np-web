@@ -24,16 +24,18 @@
       <div class="btn-toolbar justify-content-between" role="toolbar">
         <div class="btn-group">
           <label class="btn btn-primary">
-            select file
+            {{npContent('select file')}}
             <input type="file" style="display: none;" ref="fileInput" @change="fileSelected($event)" multiple>
           </label>
-          <label class="btn btn-secondary" style="margin-left:1px;" v-on:click="clearAll()" v-if="files.length > 0">clear all</label>
+          <label class="btn btn-secondary" style="margin-left:1px;" v-on:click="clearAll()" v-if="files.length > 0">
+            {{npContent('clear all')}}
+          </label>
         </div>
         <div class="btn-group" v-show="hasFileWaiting()">
-          <label class="btn btn-primary" v-on:click="upload()">upload</label>
+          <label class="btn btn-primary" v-on:click="upload()">{{npContent('upload')}}</label>
         </div>
         <div class="btn-group" v-show="!hasFileWaiting()">
-          <label class="btn btn-outline-danger" v-on:click="close()">close</label>
+          <label class="btn btn-outline-danger" v-on:click="close()">{{npContent('close')}}</label>
         </div>
       </div>
     </form>
@@ -45,10 +47,12 @@ import UploadService from '../../core/service/UploadService';
 import FileWrapper from '../../core/datamodel/FileWrapper';
 import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
+import SiteProvider from './SiteProvider';
 
 export default {
   name: 'Uploader',
   props: ['folder', 'entry'],
+  mixins: [ SiteProvider ],
   data: function () {
     return {
       files: [],

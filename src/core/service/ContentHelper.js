@@ -1,3 +1,5 @@
+import NPModule from "../datamodel/NPModule";
+
 export default class ContentHelper {
   static _siteContent;
 
@@ -13,20 +15,24 @@ export default class ContentHelper {
   }
 
   static translate (original) {
-    let key = original.replace(/\W/g, '').replace(' ', '_');
-    let value = this.message(key);
+    let key = original.replace(/^a-zA-Z0-9 /g, '').replace(/\s/g, '_');
+    let value = this.value(key);
     if (value === key) {
-      return original;
-    } else {
       return key;
+    } else {
+      return value;
     }
   }
 
-  static message (key) {
+  static value (key) {
     if (this._siteContent && this._siteContent[key]) {
       return this._siteContent[key];
     }
     return key;
+  }
+
+  static entryPrefixMessage (moduleId, key) {
+    return NPModule.entryName(moduleId) + '_' + key;
   }
 
   static appEventMessage (appEvent) {
