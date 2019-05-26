@@ -1,7 +1,7 @@
 <template>
   <b-navbar toggleable="md" fixed="top" type="dark" variant="dark">
     <b-navbar-toggle target="topnav_collapse"></b-navbar-toggle>
-    <b-navbar-brand href="/about.html" v-if="!isLoggedIn">
+    <b-navbar-brand href="https://nexuspad.com/about.html" v-if="!isLoggedIn">
       <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://nexuspad.com/images/np-logo.png"/>
     </b-navbar-brand>
     <b-navbar-brand href="/" v-if="isLoggedIn && !onEdge">
