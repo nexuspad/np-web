@@ -4,7 +4,8 @@
       <h4>{{formatDate(dateStr)}}</h4>
       <ul class="timeline">
         <li v-for="(item, idx) in data.itemsByDate[dateStr]" :key="idx">
-          <a @click="openEntry(item)"><strong>{{ item.title }}</strong></a>
+          <a @click="openEntry(item)" v-if="item.entryId"><strong>{{ item.title }}</strong></a>
+          <strong v-if="item.jobId">{{npContent(item.title)}}</strong>
           <div>
             <small v-if="item.description">{{ item.description }}</small>
             <job-result :jobObj="item" v-if="item.jobId" />

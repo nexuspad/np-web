@@ -27,7 +27,7 @@ import EntryActionProvider from '../common/EntryActionProvider.js';
 import FolderActionProvider from '../common/FolderActionProvider.js';
 import NPEntry from '../../core/datamodel/NPEntry.js';
 import NPFolder from '../../core/datamodel/NPFolder.js';
-import BulkDelete from '../../core/datamodel/BulkDelete.js';
+import BulkOperation from '../../core/datamodel/BulkOperation.js';
 import NPEvent from '../../core/datamodel/NPEvent.js';
 import SiteProvider from './SiteProvider';
 
@@ -65,7 +65,7 @@ export default {
         this.itemTitle = this.item.title;
       } else if (this.item instanceof NPFolder) {
         this.itemTitle = this.item.folderName;
-      } else if (this.item instanceof BulkDelete) {
+      } else if (this.item instanceof BulkOperation) {
         this.itemTitle = 'selected entries will be deleted';
       }
     },
@@ -91,7 +91,7 @@ export default {
         } else if (this.item instanceof NPFolder) {
           this.$emit('deleteFolderConfirmed', this.item);
           componentSelf.hideModal();
-        } else if (this.item instanceof BulkDelete) {
+        } else if (this.item instanceof BulkOperation) {
           this.$emit('bulkDeleteConfirmed', this.item);
           componentSelf.hideModal();
         }

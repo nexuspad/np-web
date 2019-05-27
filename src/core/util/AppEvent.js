@@ -1,6 +1,7 @@
 import NPEntry from "../datamodel/NPEntry";
 import NPFolder from "../datamodel/NPFolder";
 import NPModule from "../datamodel/NPModule";
+import BulkOperation from "../datamodel/BulkOperation";
 
 export default class AppEvent {
   static ACCOUNT_CREATION_FAILURE = 'ACCOUNT_CREATION_FAILURE';
@@ -92,6 +93,9 @@ export default class AppEvent {
       key = NPModule.entryName(this.affectedItem.moduleId);
     } else if (this.affectedItem instanceof NPFolder) {
       key = 'folder';
+    } else if (this.affectedItem instanceof BulkOperation) {
+      // plural form for the entries
+      key = NPModule.entryName(this.affectedItem.folder.moduleId) + 's';
     }
 
     if (key) {

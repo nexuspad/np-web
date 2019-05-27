@@ -1,4 +1,4 @@
-export default class BulkDelete {
+export default class BulkOperation {
   folder;
   entryIdsArr;
 

@@ -6,7 +6,7 @@ import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import AppRoute from '../AppRoute';
 import NPEntry from '../../core/datamodel/NPEntry';
-import BulkDelete from '../../core/datamodel/BulkDelete';
+import BulkOperation from '../../core/datamodel/BulkOperation';
 import NPEvent from '../../core/datamodel/NPEvent';
 
 export default {
@@ -41,7 +41,7 @@ export default {
       this.$refs.deleteConfirmModalRef.showModal(entry);
     },
     openBulkDeleteConfirmModel: function (folder, entryIdsArr) {
-      this.$refs.deleteConfirmModalRef.showModal(new BulkDelete(folder, entryIdsArr));
+      this.$refs.deleteConfirmModalRef.showModal(new BulkOperation(folder, entryIdsArr));
     },
     openUpdateTagModal: function (entry) {
       this.$refs.updateTagModalRef.showModal(entry);
@@ -189,13 +189,13 @@ export default {
         .then(function () {
           EntryService.bulkDelete(folder, entryIdsArr)
             .then(function () {
+              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ENTRY_DELETE, bulkDeleteObj));
               while (componentSelf.bulkEditIds.length > 0) {
                 componentSelf.bulkEditIds.pop();
               }
-              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ENTRY_DELETE, entryIdsArr));
             })
             .catch(function (error) {
-              EventManager.publishAppEvent(AppEvent.ofFailure(AppEvent.ENTRY_DELETE, error));
+              EventManager.publishAppEvent(AppEvent.ofFailure(AppEvent.ENTRY_DELETE, error, bulkDeleteObj));
               console.log(error);
             });
         })
@@ -226,13 +226,13 @@ export default {
           .then(function () {
             EntryService.bulkMove(itemToMove, fromFolder, toFolder)
               .then(function () {
+                EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ENTRY_MOVE, new BulkOperation(toFolder, itemToMove)));
                 while (itemToMove.length > 0) {
                   itemToMove.pop();
                 }
-                EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ENTRY_MOVE, itemToMove));
               })
               .catch(function (error) {
-                EventManager.publishAppEvent(AppEvent.ofFailure(AppEvent.ENTRY_MOVE, error));
+                EventManager.publishAppEvent(AppEvent.ofFailure(AppEvent.ENTRY_MOVE, error, new BulkOperation(toFolder, itemToMove)));
                 console.log(error);
               });
           })
