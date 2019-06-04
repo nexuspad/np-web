@@ -14,6 +14,9 @@ export default {
     npContent (str) {
       return ContentHelper.translate(str);
     },
+    kickToLogin () {
+      this.$router.push({name: 'login'});
+    },
     isEdgeApi () {
       let componentSelf = this;
       RestClient.get(RestClient.apiUrl + '/health').then((result) => {

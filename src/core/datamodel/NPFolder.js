@@ -18,6 +18,7 @@ export default class NPFolder {
 
   subFolders = [];
   sharing = [];
+  isShared = false;
 
   constructor (data) {
     if (data) {
@@ -45,6 +46,10 @@ export default class NPFolder {
       }
 
       this.subFolders = data['subFolders'];
+
+      if (data['isShared']) {
+        this.isShared = data['isShared'];
+      }
     }
 
     if (!this.colorLabel) {

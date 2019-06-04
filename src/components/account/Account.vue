@@ -43,22 +43,22 @@
         <button class="btn btn-primary" v-on:click="updateTimezone($event)">update</button>
       </div>
     </div>
-    <h2>display name</h2>
+    <h2>{{npContent('display_name')}}</h2>
     <div class="row form-group">
       <div class="col">
         <input class="form-control" type="text" v-model="user.displayName" placeholder="display name" />
       </div>
       <div class="col-auto">
-        <button class="btn btn-primary" v-on:click="updateDisplayName($event)">update</button>
+        <button class="btn btn-primary" v-on:click="updateDisplayName($event)">{{npContent('update')}}</button>
       </div>
     </div>
-    <h2>user name</h2>
+    <h2>{{npContent('username')}}</h2>
     <div class="row form-group">
       <div class="col">
         <input class="form-control" type="text" v-model="user.userName" placeholder="user name" />
       </div>
       <div class="col-auto">
-        <button class="btn btn-primary" v-on:click="updateUserName($event)">update</button>
+        <button class="btn btn-primary" v-on:click="updateUserName($event)">{{npContent('update')}}</button>
       </div>
     </div>
     <h2>service</h2>
@@ -236,7 +236,7 @@ export default {
           AccountService.deleteAccount()
             .then(function () {
               componentSelf.posting = false;
-              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_DELETED, userObj));
+              EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_DELETED, null));
               componentSelf.isDeleted = true;
               setTimeout(() => {
                 window.location.replace('/');

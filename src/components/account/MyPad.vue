@@ -9,6 +9,18 @@
         <a class="nav-link" :class="'active'">{{npContent('my pad')}}</a>
       </li>
     </ul>
+    <h2>{{npContent('dropbox')}}</h2>
+    <div class="row form-group">
+      <div class="col">
+        <input class="form-control" type="text" v-model="user.userName" placeholder="dropbox id" :disabled=true />
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary" v-on:click="updateDropBoxId($event)">{{npContent('update')}}</button>
+      </div>
+    </div>
+    <div class="row form-group">
+      <small>Forward your emails to {{user.userName}}@dropbox.nexuuspad.com to save a copy in NexusPad.</small>
+    </div>
     <h2>{{npContent('modules')}}</h2>
     <div v-if="user.dataEncrypted">
       Your data is encrypted.
@@ -89,6 +101,7 @@
         </div>
       </li>
     </ul>
+    <div class="mb-2">&nbsp;</div>
   </div>
 </template>
 

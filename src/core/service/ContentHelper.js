@@ -34,6 +34,9 @@ export default class ContentHelper {
     return key;
   }
 
+  static concatValues (...keys) {
+  }
+
   static entryPrefixMessage (moduleId, key) {
     return NPModule.entryName(moduleId) + '_' + key;
   }

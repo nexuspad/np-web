@@ -37,6 +37,7 @@ import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import CommonUtils from '../../core/util/CommonUtils';
 import SiteProvider from '../common/SiteProvider';
+import AppManager from '../../core/util/AppManager';
 
 export default {
   name: 'Register',
@@ -83,7 +84,7 @@ export default {
 
       this.posting = true;
       let componentSelf = this;
-      AccountService.register(componentSelf.email, componentSelf.password, componentSelf.displayName, componentSelf.timezoneName)
+      AccountService.register(componentSelf.email, componentSelf.password, componentSelf.displayName, componentSelf.timezoneName, AppManager.uuid)
         .then(function (userObj) {
           AccountService.hello(userObj.sessionId)
             .then(function () {
@@ -91,6 +92,7 @@ export default {
             })
             .catch(function (error) {
               console.log(error);
+              componentSelf.kickToLogin();
             });
         })
         .catch(function (error) {

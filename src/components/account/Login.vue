@@ -38,6 +38,7 @@ import Message from '../common/Message';
 import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import SiteProvider from '../common/SiteProvider';
+import AppManager from '../../core/util/AppManager';
 
 export default {
   name: 'Login',
@@ -75,7 +76,7 @@ export default {
 
       this.posting = true;
       let componentSelf = this;
-      AccountService.login(userName, password)
+      AccountService.login(userName, password, AppManager.uuid)
         .then(function (userObj) {
           componentSelf.user = userObj;
           EventManager.publishAppEvent(AppEvent.ofInformation(AppEvent.ACCOUNT_LOGIN_SUCCESS));

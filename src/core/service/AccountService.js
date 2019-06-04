@@ -97,7 +97,7 @@ export default class AccountService {
     }
   }
 
-  static login (login, password) {
+  static login (login, password, uuid) {
     let uri = ServiceHelper.login;
     let p = PromiseManager.get(uri, 'POST');
 
@@ -106,6 +106,7 @@ export default class AccountService {
 
     userServiceData.user.auth.login = login;
     userServiceData.user.auth.password = password;
+    userServiceData.user.auth.uuid = uuid;
 
     if (p) {
       return p;
