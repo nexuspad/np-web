@@ -36,11 +36,16 @@ export default {
         folder = this.item;
       }
 
+      console.log('item to move', itemToMove);
+      console.log('item folder', folder);
+      
       if (folder != null) {
         this.folderSelectionKey = NPFolder.key({folder: folder});
       }
     },
     hideModal () {
+      this.folderSelectionKey = '';
+      this.item = {};
       this.$refs.moveToFolderModalRef.hide();
     },
     onFolderSelected: function (folder) {
