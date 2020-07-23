@@ -191,7 +191,7 @@ export default {
       AccountService.hello()
         .then(function () {
           EntryService.exportModule(moduleId)
-            .then(function (response) {
+            .then(function () {
               EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.MODULE_EXPORT_IN_PROGRESS));
             })
             .catch(function (error) {

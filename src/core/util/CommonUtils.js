@@ -26,7 +26,9 @@ export default class CommonUtils {
   }
 
   static isValidPassword (inputText) {
-    return true;
+    if (inputText.length > 0)
+      return true;
+    return false
   }
 
   static addParamToUrl (url, key, value) {

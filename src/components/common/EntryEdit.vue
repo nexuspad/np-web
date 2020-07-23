@@ -18,7 +18,6 @@
 <script>
 import FolderTree from '../folder/FolderTree';
 import SharedFolderTree from '../folder/SharedFolderTree';
-import Message from './Message';
 import ContactEdit from '../contact/ContactEdit';
 import BookmarkEdit from '../bookmark/BookmarkEdit';
 import DocEdit from '../doc/DocEdit';
@@ -40,7 +39,7 @@ export default {
   },
   props: ['entry'],
   components: {
-    Message, FolderTree, SharedFolderTree, ContactEdit, EventEdit, BookmarkEdit, DocEdit
+    FolderTree, SharedFolderTree, ContactEdit, EventEdit, BookmarkEdit, DocEdit
   },
   created () {
     this.moduleId = AppRoute.module(this.$route);

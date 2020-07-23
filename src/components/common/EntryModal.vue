@@ -34,7 +34,7 @@ export default {
     hideModal () {
       this.$refs.entryModalRef.hide();
     },
-    onDismiss (event) {
+    onDismiss () {
       // event.preventDefault();
     }
   }

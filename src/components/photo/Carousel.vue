@@ -54,7 +54,7 @@ export default {
   mounted () {
   },
   methods: {
-    onSlideStart (slide) {
+    onSlideStart () {
       this.sliding = true;
     },
     onSlideEnd (slide) {

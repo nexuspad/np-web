@@ -11,7 +11,6 @@
 
 <script>
 import FolderActionProvider from '../common/FolderActionProvider.js';
-import NPFolder from '../../core/datamodel/NPFolder.js';
 import SiteProvider from './SiteProvider';
 
 export default {

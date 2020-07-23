@@ -6,7 +6,7 @@ import ErrorHandler from '../util/ErrorHandler'
 import TimelineList from '../datamodel/TimelineList';
 
 export default class TimelineListService extends BaseService {
-  static activities () {
+  static activities (refresh = false) {
     var uri = '/user/activities';
 
     let listQuery;

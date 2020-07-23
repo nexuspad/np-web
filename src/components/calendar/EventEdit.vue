@@ -157,7 +157,7 @@ export default {
 
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           EventService.get(componentSelf.npEvent)
             .then(function (entry) {
               componentSelf.npEvent = entry;

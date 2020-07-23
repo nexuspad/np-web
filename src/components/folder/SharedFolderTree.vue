@@ -15,8 +15,6 @@ import AppEvent from '../../core/util/AppEvent.js';
 import EventManager from '../../core/util/EventManager';
 import AccountService from '../../core/service/AccountService';
 import SharedFolderService from '../../core/service/SharedFolderService';
-import UserLookupService from '../../core/service/UserLookupService';
-import PreferenceService from '../../core/service/PreferenceService';
 
 export default {
   name: 'SharedFolderTree',
@@ -60,10 +58,10 @@ export default {
 
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           SharedFolderService.getAllFolders(moduleId, refresh)
             .then(function (folderTreeByUsers) {
-              folderTreeByUsers.forEach((folderTree, userId) => {
+              folderTreeByUsers.forEach((folderTree) => {
                 componentSelf.treeData.push(folderTree);
               });
               componentSelf.isLoaded = true;
@@ -94,7 +92,7 @@ export default {
     }
   },
   watch: {
-    moduleId: function (newVal, oldVal) {
+    moduleId: function () {
       this.loadTree(this.moduleId);
     },
     activeFolderKey: function (value) {

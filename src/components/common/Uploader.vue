@@ -65,7 +65,7 @@ export default {
   mounted () {
   },
   methods: {
-    fileSelected (event) {
+    fileSelected () {
       for (let file of this.$refs.fileInput.files) {
         if (!this.alreadySelected(file)) {
           this.files.push(new FileWrapper(file));

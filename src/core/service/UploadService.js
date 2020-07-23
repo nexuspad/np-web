@@ -46,7 +46,7 @@ export default class UploadService extends BaseService {
 
               // ============ II. upload the file to the cloud ============
               self._uploadToCloud(uploadEntry, file, progressCallback)
-                .then(function (response) {
+                .then(function () {
                   // ============ III. complete the rest ============
                   self._completeUpload(uploadEntry)
                     .then(function (response) {
@@ -179,7 +179,7 @@ export default class UploadService extends BaseService {
   mockUploadFile (folder, entryId, file, progressCallback) {
     let self = this;
     let mockEntry = new NPUpload();
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       progressCallback({ completed: 50 });
       let randomSeconds = 6 + Math.floor(Math.random() * 10);
       setTimeout(() => {

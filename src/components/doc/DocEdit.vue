@@ -57,10 +57,8 @@
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CKEditorUploadAdapter from '../../core/util/CKEditorUploadAdapter.js';
 import LabelInput from '../common/LabelInput';
-import NPEntry from '../../core/datamodel/NPEntry';
 import AccountService from '../../core/service/AccountService';
 import EntryService from '../../core/service/EntryService';
-import NPModule from '../../core/datamodel/NPModule';
 import NPDoc from '../../core/datamodel/NPDoc';
 import AutoSaver from '../../core/util/AutoSaver';
 import Message from '../common/Message';
@@ -100,7 +98,7 @@ export default {
 
         if (this.htmlEditorInstance == null) {
           let componentSelf = this;
-          this.initHtmlEditor().then(function (editor) {
+          this.initHtmlEditor().then(function () {
             componentSelf.htmlEditorInstance.setData(componentSelf.doc.note);
           });
         } else {
@@ -162,14 +160,14 @@ export default {
 
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           EntryService.get(componentSelf.doc)
             .then(function (docObj) {
               // make a copy here so locally in DocEdit a separate object is being referenced
               componentSelf.doc.copy(docObj);
               // repoint the folder reference to the one in the component so changing folder would work
               componentSelf.doc.folder = componentSelf.folder;
-              componentSelf.initHtmlEditor().then(function (editor) {
+              componentSelf.initHtmlEditor().then(function () {
                 if (componentSelf.doc.format === 'HTML') {
                   componentSelf.htmlEditorInstance.setData(componentSelf.doc.note);
                 }
@@ -188,7 +186,7 @@ export default {
     this.autoSave = true;
   },
   watch: {
-    'doc.note': function (newVal, oldVal) {
+    'doc.note': function (newVal) {
       if (!this.autoSave) {
         return;
       }

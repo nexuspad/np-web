@@ -72,7 +72,7 @@ export default {
   name: 'InfiniteList',
   mixins: [ EntryActionProvider ],
   components: {
-    InfiniteScroll, Message, Empty, ListMenu, EntryListMenu, MoveToFolderModal, DeleteConfirmModal, UpdateTagModal
+    Message, Empty, ListMenu, EntryListMenu, MoveToFolderModal, DeleteConfirmModal, UpdateTagModal
   },
   props: ['searchKeyword', 'folder'],
   data () {
@@ -103,7 +103,7 @@ export default {
 
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           componentSelf.listQueryKey = ListKey.ofPaging(componentSelf.folder.moduleId, componentSelf.folder.folderId,
             componentSelf.folder.getOwnerId(), pageId);
           componentSelf.listService.getEntries(componentSelf.listQueryKey, refresh)
@@ -148,9 +148,9 @@ export default {
 
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           componentSelf.listService.getEntries(componentSelf.listQueryKey)
-            .then(function (entryList) {
+            .then(function () {
             })
             .catch(function (error) {
               console.log(error);
@@ -182,7 +182,7 @@ export default {
     'folder.folderId': function () {
       this.loadList();
     },
-    'folder.owner.userId': function (newValue) {
+    'folder.owner.userId': function () {
       this.loadList();
     }
   },

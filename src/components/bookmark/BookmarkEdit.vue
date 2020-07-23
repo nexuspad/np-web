@@ -46,9 +46,7 @@
 <script>
 import LabelInput from '../common/LabelInput';
 import AccountService from '../../core/service/AccountService';
-import NPEntry from '../../core/datamodel/NPEntry';
 import EntryService from '../../core/service/EntryService';
-import NPModule from '../../core/datamodel/NPModule';
 import NPBookmark from '../../core/datamodel/NPBookmark';
 import Message from '../common/Message';
 import EntryActionProvider from '../common/EntryActionProvider';
@@ -71,7 +69,7 @@ export default {
       this.bookmark.entryId = this.$route.params.entryId;
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           EntryService.get(componentSelf.bookmark)
             .then(function (entry) {
               componentSelf.bookmark = entry;

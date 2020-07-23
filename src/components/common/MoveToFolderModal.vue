@@ -8,7 +8,6 @@
 import FolderTree from '../folder/FolderTree';
 import NPEntry from '../../core/datamodel/NPEntry';
 import NPFolder from '../../core/datamodel/NPFolder';
-import NPUser from '../../core/datamodel/NPUser';
 import SiteProvider from './SiteProvider';
 
 export default {

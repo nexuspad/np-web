@@ -100,7 +100,7 @@ export default class SharedFolderService extends BaseService {
 
     if (SharedFolderService._moduleId === moduleId && SharedFolderService._sharerFolderMap &&
         SharedFolderService._sharerFolderMap.has(ownerObj.userId)) {
-      SharedFolderService._sharerFolderMap.get(ownerObj.userId).forEach(function (f, index, theArray) {
+      SharedFolderService._sharerFolderMap.get(ownerObj.userId).forEach(function (f) {
         if (f.folderId === folderId) {
           folderObj = f;
         }

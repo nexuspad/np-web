@@ -107,6 +107,7 @@ export default {
     if (this.entryList === false) {
       this.loadList();
     } else if (this.entryList === null || typeof this.entryList === 'undefined') {
+      // nothing here
     } else if (this.entryList.entries && this.entryList.entries.length > 0 && this.entryList.hasEntriesInPage(this.selectedPage)) {
       this.buildPages(this.entryList);
     }
@@ -141,7 +142,7 @@ export default {
 
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           componentSelf.listService.getList(listQuery, refresh)
             .then(function (entryList) {
               componentSelf.buildPages(entryList);
@@ -188,7 +189,7 @@ export default {
     },
   },
   watch: {
-    'folder.folderId': function (newFolder) {
+    'folder.folderId': function () {
       // this.loadList();
     },
     'entryList': function (entryList) {

@@ -208,7 +208,7 @@ export default class EntryList {
     entries.map(entry => {
       this.deleteEntry(entry);
     });
-  };
+  }
 
   /*
    * update the entries array, pages array and total count.

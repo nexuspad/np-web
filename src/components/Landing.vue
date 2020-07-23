@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import TopNavigation from './layout/TopNavigation';
 import NPError from '../core/datamodel/NPError';
 import AccountService from '../core/service/AccountService';
 import AccountActionProvider from './account/AccountActionProvider';
@@ -17,7 +16,6 @@ export default {
   name: 'Landing',
   mixins: [ AccountActionProvider, SiteProvider ],
   components: {
-    TopNavigation
   },
   data () {
     return {

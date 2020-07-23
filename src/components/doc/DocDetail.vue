@@ -97,6 +97,7 @@ export default {
           return this.docObj.note.replace(/(\r\n|\n|\r)/gm, '<br/>');
         }
       }
+      return ''
     }
   },
   mounted () {
@@ -166,7 +167,7 @@ export default {
   watch: {
     // watch the change of the doc object.
     // use case: after attaching a file, the attachment list needs to be updated on the page.
-    'docObj': function (newDocObj) {
+    'docObj': function () {
       this._updateAttachments(this.docObj);
     }
   },

@@ -71,7 +71,7 @@ export default {
     };
   },
   components: {
-    InfiniteScroll, ListMenu, EntryListMenu, Message, Empty, MoveToFolderModal, DeleteConfirmModal, UpdateTagModal
+    ListMenu, EntryListMenu, Message, Empty, MoveToFolderModal, DeleteConfirmModal, UpdateTagModal
   },
   created () {
     this.locateRouteFolder(NPModule.PHOTO, this.$route.params).then(() => {
@@ -92,7 +92,7 @@ export default {
 
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           let listQuery = ListKey.ofPaging(NPModule.PHOTO, componentSelf.folder.folderId, componentSelf.folder.getOwnerId(), 1);
           componentSelf.listService.getEntries(listQuery, refresh)
             .then(function (entryList) {
@@ -142,9 +142,9 @@ export default {
 
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           componentSelf.listService.getEntries(componentSelf.listQueryKey)
-            .then(function (entryList) {
+            .then(function () {
             })
             .catch(function (error) {
               console.log(error);

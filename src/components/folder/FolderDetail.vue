@@ -113,7 +113,7 @@ export default {
     let componentSelf = this;
 
     AccountService.hello()
-      .then(function (response) {
+      .then(function () {
         FolderService.get(NPFolder.of(AppRoute.module(componentSelf.$route), componentSelf.$route.params.folderId))
           .then(function (folder) {
             if (folder.folderId === 0) {
@@ -147,7 +147,7 @@ export default {
       if (!noGo) {
         let componentSelf = this;
         AccountService.hello()
-          .then(function (response) {
+          .then(function () {
             UserLookupService.searchUser(ap.accessor)
               .then(function (user) {
                 ap.accessor.userId = user.userId;
@@ -189,7 +189,7 @@ export default {
 
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           FolderService.save(componentSelf.folder, action)
             .then(function (folderObj) {
               EventManager.publish(AppEvent.FOLDER_RELOAD_EVENT, folderObj);

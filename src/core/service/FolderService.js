@@ -223,7 +223,7 @@ export default class FolderService extends BaseService {
 
     if (FolderService.folders && FolderService.folders.length > 0 &&
         FolderService.folders[0].moduleId === moduleId) {
-      FolderService.folders.forEach(function (item, index, theArray) {
+      FolderService.folders.forEach(function (item) {
         if (item.folderId === folderId) {
           folderObj = item;
         }

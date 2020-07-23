@@ -159,7 +159,7 @@ export default class AccountService {
     // send request to logout
     return new Promise((resolve, reject) => {
       RestClient.instance(sessionId).get(ServiceHelper.logout)
-        .then(function (response) {
+        .then(function () {
           AppManager.cleanup();
           resolve();
         })
@@ -405,7 +405,7 @@ export default class AccountService {
     // send request to logout
     return new Promise((resolve, reject) => {
       RestClient.instance(AccountService.currentSession()).delete(ServiceHelper.acct)
-        .then(function (response) {
+        .then(function () {
           AppManager.cleanup();
           resolve();
         })

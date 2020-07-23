@@ -15,8 +15,6 @@ import AppEvent from '../../core/util/AppEvent.js';
 import EventManager from '../../core/util/EventManager';
 import AccountService from '../../core/service/AccountService';
 import FolderService from '../../core/service/FolderService';
-import PreferenceService from '../../core/service/PreferenceService';
-import Account from '../../core/datamodel/Account';
 
 export default {
   name: 'FolderTree',
@@ -55,7 +53,7 @@ export default {
       }
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           FolderService.getAllFolders(moduleId)
             .then(function (folderTree) {
               componentSelf.treeData = folderTree;
@@ -90,7 +88,7 @@ export default {
     }
   },
   watch: {
-    moduleId: function (newVal, oldVal) {
+    moduleId: function () {
       this.loadTree(this.moduleId);
     },
     activeFolderKey: function (value) {

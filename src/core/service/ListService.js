@@ -18,7 +18,7 @@ export default class ListService extends BaseService {
 
   entryList = null;
 
-  constructor ({ moduleId, folderId, ownerId = 0, startDate = '', endDate = '' }) {
+  constructor ({ moduleId, folderId }) {
     super();
     this.moduleId = moduleId;
     this.folderId = folderId;
@@ -164,7 +164,7 @@ export default class ListService extends BaseService {
     }
   }
 
-  _search ({ moduleId, folderId, ownerId = 0, startDate = '', endDate = '', keyword }) {
+  _search ({ moduleId, ownerId = 0, keyword }) {
     let uri = BaseService.getSearchEndPoint(moduleId, 0, keyword);
 
     let headers = {
@@ -186,7 +186,7 @@ export default class ListService extends BaseService {
             } else {
               let searchItems = [];
               if (response.data.searchResult) {
-                response.data.searchResult.forEach(function (elem, index, theArray) {
+                response.data.searchResult.forEach(function (elem) {
                   searchItems.push(new SearchItem(elem));
                 })
                 resolve(searchItems);

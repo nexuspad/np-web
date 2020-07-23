@@ -1,7 +1,6 @@
 import BaseService from './BaseService'
 import AccountService from './AccountService'
 import PromiseManager from '../util/PromiseManager'
-import CommonUtils from '../util/CommonUtils';
 import RestClient from '../util/RestClient'
 import ErrorHandler from '../util/ErrorHandler'
 import EntryServiceData from './EntryServiceData';

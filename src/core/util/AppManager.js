@@ -8,6 +8,8 @@ import FolderService from '../service/FolderService'
 import SharedFolderService from '../service/SharedFolderService'
 import AccountService from '../service/AccountService';
 import CmsService from '../service/CmsService';
+import EventManager from './EventManager'
+import AppEvent from './AppEvent'
 
 /**
  * Handles the browser data and initial bootstrapping and cleanup.
@@ -17,9 +19,9 @@ export default class AppManager {
   static p;
 
   static serviceEndpoints () {
-    // this is in config/env.js
+    // this is in .env file
     return [
-      process.env.API_ENDPOINT
+      process.env.VUE_APP_API_URL
     ];
   }
 
@@ -61,7 +63,7 @@ export default class AppManager {
       return p;
     }
 
-    p = new Promise((resolve, reject) => {
+    p = new Promise((resolve) => {
       let options = {
         excludes: { userAgent: true, language: true, canvas: true, webgl: true,
                     adBlock: true, audio: true, enumerateDevices: true, plugins: true, fonts: true }

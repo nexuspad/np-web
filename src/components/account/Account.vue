@@ -94,7 +94,6 @@ import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import PreferenceService from '../../core/service/PreferenceService';
 import CmsService from '../../core/service/CmsService';
-import RestClient from '../../core/util/RestClient';
 
 export default {
   name: 'Account',
@@ -141,7 +140,7 @@ export default {
           AccountService.changePassword({ currentPassword: componentSelf.currentPassword, password: componentSelf.newPassword })
             .then(function (result) {
               if (result === true) {
-                EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_PASSWORD_UPDATE, userObj));
+                EventManager.publishAppEvent(AppEvent.ofSuccess(AppEvent.ACCOUNT_PASSWORD_UPDATE, null));
               }
             })
             .catch(function (error) {

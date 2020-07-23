@@ -37,6 +37,7 @@ export default class AppRoute {
   }
 
   static moduleHomeRouteName (moduleId) {
+    let routeName = ''
     switch (moduleId) {
       case NPModule.CONTACT:
         routeName = 'contactHome';

@@ -31,7 +31,6 @@
 <script>
 import NPFolder from '../../core/datamodel/NPFolder';
 import PreferenceService from '../../core/service/PreferenceService';
-import NPShareRoot from '../../core/datamodel/NPShareRoot';
 
 export default {
   name: 'FolderTreeNode',
@@ -123,7 +122,7 @@ export default {
     }
   },
   watch: {
-    'folderSelectionKey': function (value) {
+    'folderSelectionKey': function () {
       this.markSelection();
     }
   }

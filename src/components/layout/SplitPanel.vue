@@ -54,7 +54,7 @@ export default {
         this.$emit('resize');
       }
     },
-    onDown (e) {
+    onDown () {
       this.active = true;
       this.hasMoved = false;
     },

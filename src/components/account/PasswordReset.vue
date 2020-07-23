@@ -51,7 +51,7 @@ export default {
   mounted () {
     this.posting = false;
     AccountService.checkResetPasswordVerificationCode(this.verificationCode)
-      .then(function (result) {
+      .then(function () {
       })
       .catch(function (error) {
         console.log(error);

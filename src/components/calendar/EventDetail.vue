@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import EventManager from '../../core/util/EventManager';
-import AppEvent from '../../core/util/AppEvent';
 import TimeUtil from '../../core/util/TimeUtil';
 import SiteProvider from '../common/SiteProvider';
 

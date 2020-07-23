@@ -110,7 +110,6 @@ import NPContact from '../../core/datamodel/NPContact';
 import NPItem from '../../core/datamodel/NPItem';
 import AccountService from '../../core/service/AccountService';
 import EntryService from '../../core/service/EntryService';
-import NPModule from '../../core/datamodel/NPModule';
 import Message from '../common/Message';
 import EntryActionProvider from '../common/EntryActionProvider';
 import LabelInput from '../common/LabelInput';
@@ -136,7 +135,7 @@ export default {
       this.contact.entryId = this.$route.params.entryId;
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           EntryService.get(componentSelf.contact)
             .then(function (entry) {
               componentSelf.contact = entry;

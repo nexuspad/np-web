@@ -22,7 +22,6 @@
 import $ from 'jquery';
 import Message from '../common/Message';
 import ListMenu from '../common/ListMenu';
-import FolderTree from '../folder/FolderTree';
 import AccountService from '../../core/service/AccountService';
 import PreferenceService from '../../core/service/PreferenceService';
 import EntryActionProvider from '../common/EntryActionProvider';
@@ -41,7 +40,7 @@ import SiteProvider from '../common/SiteProvider';
 export default {
   name: 'CalendarViews',
   components: {
-    ListMenu, Message, FolderTree, EntryModal
+    ListMenu, Message, EntryModal
   },
   mixins: [ FolderActionProvider, EntryActionProvider, SiteProvider ],
   props: ['mode'],
@@ -56,7 +55,7 @@ export default {
         customButtons: {
           monthButton: {
             text: 'month',
-            click: function (event) {
+            click: function () {
               let view = $('#calendar').fullCalendar('getView');
               if (view.name.startsWith('list')) {
                 $('#calendar').fullCalendar('changeView', 'listMonth');
@@ -67,7 +66,7 @@ export default {
           },
           weekButton: {
             text: 'week',
-            click: function (event) {
+            click: function () {
               let view = $('#calendar').fullCalendar('getView');
               if (view.name.startsWith('list')) {
                 $('#calendar').fullCalendar('changeView', 'listWeek');
@@ -78,7 +77,7 @@ export default {
           },
           dayButton: {
             text: 'day',
-            click: function (event) {
+            click: function () {
               let view = $('#calendar').fullCalendar('getView');
               if (view.name.startsWith('list')) {
                 $('#calendar').fullCalendar('changeView', 'listDay');
@@ -89,7 +88,7 @@ export default {
           },
           toggleListButton: {
             text: 'list',
-            click: function (event) {
+            click: function () {
               let view = $('#calendar').fullCalendar('getView');
               if (view.name.startsWith('list')) {
                 $(this).removeClass('fc-state-active');
@@ -120,7 +119,7 @@ export default {
           right: 'monthButton,weekButton,dayButton toggleListButton'
         },
         defaultView: 'month',
-        viewRender: (view, element) => {
+        viewRender: () => {
           let calendarYmd = $('#calendar').fullCalendar('getDate').format('YYYY-MM-DD');
           PreferenceService.getPreference().setCalendarDefaultDate(calendarYmd);
         },
@@ -129,17 +128,17 @@ export default {
           let npEvent = this.entryList.getEvent(event.id, event.npRecurId);    // get the NP event object and pass it to modal
           this.goEntryRoute(npEvent, 'view', this.folder);
         },
-        dayClick: (moment, jsEvent, view) => {
+        dayClick: (moment) => {
           let eventObj = NPEvent.of(this.folder, TimeUtil.npLocalDate(moment.local().toDate()));
           this.$router.push({name: 'newEvent', params: {entry: eventObj, folder: this.folder}});
         },
-        select: (mStart, mEnd, jsEvent, view) => {
+        select: (mStart, mEnd) => {
           let d1 = mStart.local().toDate();
           let d2 = mEnd.local().toDate();
           let eventObj = NPEvent.of(this.folder, TimeUtil.npLocalDate(d1), TimeUtil.npLocalTime(d1), TimeUtil.npLocalDate(d2), TimeUtil.npLocalTime(d2));
           this.$router.push({name: 'newEvent', params: {entry: eventObj, folder: this.folder}});
         },
-        eventDrop: (event, delta) => {
+        eventDrop: (event) => {
           let npEvent = this.entryList.getEvent(event.id, event.npRecurId);
           /*
            * here we have to use format() function from momentjs to produce a date-time string with timezone offset (iso8601) first,
@@ -152,8 +151,6 @@ export default {
             npEvent.timezone = PreferenceService.getActiveTimezone();
           }
           this.save(null, npEvent);
-        },
-        drop: (...args) => {
         }
       }
     }
@@ -183,7 +180,7 @@ export default {
             });
 
             AccountService.hello()
-              .then(function (response) {
+              .then(function () {
                 componentSelf.listService.getEntriesInDateRange(listQuery)
                   .then(function (entryList) {
                     componentSelf.entryList = entryList;

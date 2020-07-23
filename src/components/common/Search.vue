@@ -73,13 +73,13 @@ export default {
     }
   },
   methods: {
-    doSearch (moduleId, keyword) {
+    doSearch () {
       while (this.searchResultAll.length > 0) {
         this.searchResultAll.pop();
       }
 
       let componentSelf = this;
-      AccountService.hello().then(function (response) {
+      AccountService.hello().then(function () {
         componentSelf.folder = NPFolder.of(componentSelf.moduleId, NPFolder.ROOT, AccountService.currentUser());
         componentSelf.allRequests().then((allRequestPromises) => {
           Promise.all(allRequestPromises).then((entryListArr) => {

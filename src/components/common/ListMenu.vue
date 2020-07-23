@@ -141,6 +141,7 @@ export default {
         default:
           break;
       }
+      return ''
     },
     bulkEditCount: function () {
       if (this.entryIds) {

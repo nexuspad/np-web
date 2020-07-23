@@ -71,10 +71,4 @@ export default class TimeUtil {
     }
     return timeStr;
   }
-
-  static roundupTime (dateObj) {
-  }
-
-  static calculateEndDate (startDate, interval, repeatingTimes) {
-  }
 }

@@ -1,4 +1,4 @@
-import { parse, format } from 'date-fns';
+import { format } from 'date-fns';
 import NPJob from "./NPJob";
 import EntryService from "../service/EntryService";
 

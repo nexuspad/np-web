@@ -17,7 +17,7 @@ export default {
       this.$router.push({ name: AppRoute.folderRouteName(folder), params: { folderId: folder.folderId } });
     },
     locateRouteFolder (moduleId, routeParam) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         let componentSelf = this;
         if (routeParam.folderId) {
           // to-do need to check if the user is current user

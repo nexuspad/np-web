@@ -89,7 +89,7 @@ export default {
       }
       let componentSelf = this;
       AccountService.hello()
-        .then(function (response) {
+        .then(function () {
           componentSelf.listService = ListServiceFactory.locate({
             moduleId: componentSelf.moduleId,
             folderId: NPFolder.TRASH

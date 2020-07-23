@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Awesomplete from 'Awesomplete';
+import Awesomplete from 'awesomplete';
 import '../../../node_modules/awesomplete/awesomplete.css';
 import SiteProvider from './SiteProvider';
 
@@ -42,7 +42,7 @@ export default {
     input.addEventListener('awesomplete-select', function (event) {
       componentSelf.addLabel(null, event.text.value);
     });
-    input.addEventListener('awesomplete-selectcomplete', function (event) {
+    input.addEventListener('awesomplete-selectcomplete', function () {
       this.value = '';
     });
 
@@ -68,7 +68,7 @@ export default {
       }
 
       let foundInArray = false;
-      this.labels.forEach(function (item, index, theArray) {
+      this.labels.forEach(function (item) {
         if (item === value) {
           foundInArray = true;
         }
@@ -92,7 +92,7 @@ export default {
       let value = this.acInput.input.value;
       if (value) {
         let foundInArray = false;
-        this.labels.forEach(function (item, index, theArray) {
+        this.labels.forEach(function (item) {
           if (item === value) {
             foundInArray = true;
           }

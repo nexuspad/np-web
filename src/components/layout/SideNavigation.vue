@@ -43,7 +43,7 @@ export default {
         let componentSelf = this;
         // must wrap this for page refresh.
         AccountService.hello()
-          .then(function (response) {
+          .then(function () {
             componentSelf.activeFolderKey = 
               NPFolder.key({moduleId: componentSelf.moduleId, folderId: componentSelf.$route.params.folderId, ownerId: AccountService.currentUser().userId});
           })
@@ -60,7 +60,7 @@ export default {
     }
   },
   watch: {
-    '$route.params': function (params) {
+    '$route.params': function () {
       this.makeKey();
     }
   }

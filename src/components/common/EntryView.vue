@@ -103,7 +103,7 @@ export default {
 
     let componentSelf = this;
     AccountService.hello()
-      .then(function (response) {
+      .then(function () {
         let p;
         if (entryObj instanceof NPEvent) {
           p = EventService.get(entryObj);

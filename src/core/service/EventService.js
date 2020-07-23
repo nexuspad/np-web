@@ -22,7 +22,7 @@ export default class EventService extends EntryService {
     EventService.save(event);
   }
 
-  static updateDuration (event, newDuration) {
+  static updateDuration (event) {
     EventService.save(event);
   }
 

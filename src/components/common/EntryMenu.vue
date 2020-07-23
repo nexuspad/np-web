@@ -38,7 +38,6 @@ import UpdateTagModal from './UpdateTagModal';
 import EntryActionProvider from './EntryActionProvider';
 import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
-import NPModule from '../../core/datamodel/NPModule';
 
 export default {
   name: 'EntryMenu',
