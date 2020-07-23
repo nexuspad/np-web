@@ -123,8 +123,7 @@ export default {
           })
           .then(editor => {
             componentSelf.htmlEditorInstance = editor;
-
-            editor.ui.view.editable.editableElement.style.height = componentSelf.editorHeight(true);
+            editor.ui.view.editable.element.style.height = componentSelf.editorHeight(true);
 
             // https://docs.ckeditor.com/ckeditor5/latest/api/module_engine_model_document-Document.html#event-change
             editor.model.document.on('change', () => {

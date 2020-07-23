@@ -15,13 +15,13 @@
     "deploy": "s3-deploy './dist/**' --cwd './dist/' --region us-east-1 --bucket nexuspad.com"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^11.2.0",
+    "@ckeditor/ckeditor5-build-classic": "^19.0.2",
     "awesomplete": "^1.1.4",
-    "axios": "^0.18.1",
+    "axios": "^0.19.2",
     "bootstrap-vue": "^2.0.0-rc.23",
     "date-fns": "^1.30.1",
     "fingerprintjs2": "^2.1.0",
-    "form-data": "^2.3.3",
+    "form-data": "^3.0.0",
     "infinite-scroll": "^3.0.6",
     "jquery": "^3.4.1",
     "js-cookie": "^2.2.0",

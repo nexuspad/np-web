@@ -5,9 +5,11 @@
       <li class="nav-item">
         <a class="nav-link" :class="'active'">account</a>
       </li>
+      <!--
       <li class="nav-item" v-if="onEdge">
         <router-link class="nav-link" to="/mypad">my pad</router-link>
       </li>
+      -->
     </ul>
     <h2>email</h2>
     <div class="ml-4 mb-4">
