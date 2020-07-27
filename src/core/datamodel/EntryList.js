@@ -69,7 +69,7 @@ export default class EntryList {
   }
 
   set30MinutesExpiration () {
-    this.expiration = TimeUtil.addMinutes(Date(), 29);
+    this.expiration = TimeUtil.addMinutes(new Date(), 29);
   }
 
   isExpired () {

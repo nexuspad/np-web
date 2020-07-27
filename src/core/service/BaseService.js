@@ -1,7 +1,6 @@
 import ServiceHelper from './ServiceHelper'
 import NPModule from '../datamodel/NPModule'
 import CommonUtils from '../util/CommonUtils'
-import TimeUtil from '../util/TimeUtil';
 import AccountService from './AccountService';
 import NPFolder from '../datamodel/NPFolder';
 import PreferenceService from './PreferenceService';
@@ -143,23 +142,23 @@ export default class BaseService {
     return uri;
   }
 
-  static getTimelineEndPoint (moduleId, folderOption, startDate, endDate) {
+  static getTimelineEndPoint (moduleId, folderOption, startYmd, endYmd) {
     let uri = '';
     switch (moduleId) {
       case NPModule.CONTACT:
-        uri = CommonUtils.sprintf(ServiceHelper.contactTimeline, TimeUtil.npLocalDate(startDate), TimeUtil.npLocalDate(endDate));
+        uri = CommonUtils.sprintf(ServiceHelper.contactTimeline, startYmd, endYmd);
         break;
       case NPModule.CALENDAR:
-        uri = CommonUtils.sprintf(ServiceHelper.eventList, folderOption, TimeUtil.npLocalDate(startDate), TimeUtil.npLocalDate(endDate));
+        uri = CommonUtils.sprintf(ServiceHelper.eventList, folderOption, startYmd, endYmd);
         break;
       case NPModule.DOC:
-        uri = CommonUtils.sprintf(ServiceHelper.docTimeline, TimeUtil.npLocalDate(startDate), TimeUtil.npLocalDate(endDate));
+        uri = CommonUtils.sprintf(ServiceHelper.docTimeline, startYmd, endYmd);
         break;
       case NPModule.PHOTO:
-        uri = CommonUtils.sprintf(ServiceHelper.photoTimeline, TimeUtil.npLocalDate(startDate), TimeUtil.npLocalDate(endDate));
+        uri = CommonUtils.sprintf(ServiceHelper.photoTimeline, startYmd, endYmd);
         break;
       case NPModule.BOOKMARK:
-        uri = CommonUtils.sprintf(ServiceHelper.bookmarkTimeline, TimeUtil.npLocalDate(startDate), TimeUtil.npLocalDate(endDate));
+        uri = CommonUtils.sprintf(ServiceHelper.bookmarkTimeline, startYmd, endYmd);
         break;
     }
 

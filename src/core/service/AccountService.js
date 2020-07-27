@@ -77,7 +77,7 @@ export default class AccountService {
             } else {
               AccountService._currentUser = new Account(response.data.user);
               StorageUtils.saveCookie(StorageUtils.SESSION_COOKIE_NAME, AccountService._currentUser.sessionId);
-              PreferenceService.init(AccountService._currentUser.preference);
+              // PreferenceService.init(AccountService._currentUser.preference);
               
               if (AccountService._currentUser.servicehost) {
                 RestClient.changeServiceHost(AccountService._currentUser.servicehost);

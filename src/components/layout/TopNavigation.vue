@@ -149,7 +149,7 @@ export default {
         this.activeModule = module;
         if (this.activeModule !== NPModule.NOT_ASSIGNED) {
           PreferenceService.getPreference().updateLastVisit(this.activeModule);
-          PreferenceService.updateViewPreference();
+          // PreferenceService.updateViewPreference();
         }
       }
     },

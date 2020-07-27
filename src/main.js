@@ -1,12 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import BootstrapVue from 'bootstrap-vue'
-import FullCalendar from 'vue-full-calendar';
 import VueTextareaAutosize from 'vue-textarea-autosize';
 
 import './assets/global.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../node_modules/fullcalendar/dist/fullcalendar.min.css';
+import '@fortawesome/fontawesome-free/css/all.css'
 
 import AppManager from './core/util/AppManager';
 import AppRoute from './components/AppRoute';
@@ -36,7 +35,6 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(ErrorPage);
-Vue.use(FullCalendar);
 Vue.use(VueTextareaAutosize);
 
 // -------------------------------------------------------------------------------------------

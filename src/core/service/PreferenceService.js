@@ -34,7 +34,7 @@ export default class PreferenceService {
 
   static setCalendarDefaultDate (ymd) {
     this.getPreference().setCalendarDefaultDate(ymd);
-    console.log('in set', this._preference);
+    StorageUtils.saveToSession(StorageUtils.PREFERENCE, PreferenceService._preference);
   }
 
   static getActiveTimezone () {

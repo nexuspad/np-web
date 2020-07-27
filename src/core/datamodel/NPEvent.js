@@ -135,8 +135,8 @@ export default class NPEvent extends NPEntry {
     return false;
   }
 
-  setTime (startDateObj, endDateObj) {
-    if (this.allDay || this.noStartingTime) {
+  setTime (startDateObj, endDateObj, allDay) {
+    if (allDay) {
       if (startDateObj) {
         this.localStartDate = TimeUtil.npLocalDate(startDateObj);
       }

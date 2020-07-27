@@ -1,7 +1,4 @@
-import { parse, format } from 'date-fns'
-import addSeconds from 'date-fns/add_seconds'
-import addMinutes from 'date-fns/add_minutes'
-import differenceInSeconds from 'date-fns/difference_in_seconds'
+import { toDate, format, parseISO, formatISO, addSeconds, addMinutes, addDays, differenceInSeconds } from 'date-fns'
 
 export default class TimeUtil {
   /* -------------------------------------------------------------
@@ -9,24 +6,24 @@ export default class TimeUtil {
    * -------------------------------------------------------------
    */
   static npLocalDate (dateObj) {
-    return format(parse(dateObj), 'YYYY-MM-DD');
+    return format(toDate(dateObj), 'yyyy-MM-dd');
   }
 
   static npLocalTime (dateObj) {
-    return format(parse(dateObj), 'HH:mm');
+    return format(toDate(dateObj), 'HH:mm');
   }
 
   static iso8601ToDate (iso8601Str) {
-    return parse(iso8601Str);
+    return toDate(iso8601Str);
   }
 
   static iso8601Format (dateObj) {
-    return format(dateObj);
+    return formatISO(dateObj);
   }
 
   // The dateTimeStr should be in ISO8601 format
   static toDateObj (dateTimeStr) {
-    return parse(dateTimeStr);
+    return parseISO(dateTimeStr);
   }
 
   static isDateObj (dateObj) {
@@ -39,7 +36,7 @@ export default class TimeUtil {
       timestamp = timestamp * 1000;
     }
 
-    let d = parse(timestamp);
+    let d = toDate(timestamp);
     return format(d, 'YYYY-MM-DD');
   }
 
@@ -47,6 +44,10 @@ export default class TimeUtil {
    * General utilities
    * -------------------------------------------------------------
    */
+  static addDays(dateObj, days) {
+    return addDays(dateObj, days)
+  }
+
   static addSeconds (dateObj, seconds) {
     return addSeconds(dateObj, seconds);
   }

@@ -3,7 +3,8 @@ import EntryEdit from '../common/EntryEdit';
 import Search from '../common/Search';
 import Trashed from '../common/Trashed'
 import Calendar from './Calendar'
-import CalendarViews from './CalendarViews'
+// import CalendarViews from './CalendarViews'
+import NPCalendar from './NPCalendar'
 import NPModule from '../../core/datamodel/NPModule';
 import FolderDetail from '../folder/FolderDetail';
 import AppRoute from '../AppRoute';
@@ -27,17 +28,17 @@ export default class CalendarModule extends AppRoute {
           {
             name: 'calendarHome',
             path: '',
-            component: CalendarViews
+            component: NPCalendar
           },
           {
             name: 'eventCalendar',
             path: 'calendar/:folderId',
-            component: CalendarViews
+            component: NPCalendar
           },
           {
             name: 'sharedCalendar',
             path: 'shared/:user/:folderId',
-            component: CalendarViews
+            component: NPCalendar
           },
           {
             name: 'newCalendar',

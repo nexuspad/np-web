@@ -6,7 +6,6 @@ export default class UserPreference {
 
   docFormat = 'HTML';
 
-  calendarDate;
   firstDayOfWeek = 7;
   locale = '';
   userName = '';
