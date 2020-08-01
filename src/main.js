@@ -141,7 +141,7 @@ let errorInstance = new Vue({
   `
 });
 
-let initPromises = [AppManager.serviceLocate(), AppManager.initCms(), AppManager.initClient(clientType)];
+let initPromises = [AppManager.serviceLocate(), AppManager.initClient(clientType)];
 
 Promise.all(initPromises).then(() => {
   app.$mount('#app');

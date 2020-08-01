@@ -48,7 +48,7 @@ export default {
                 plugins: [ dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin ],
                 selectable: true,
                 editable: true,
-                initialView: 'dayGridMonth',
+                initialView: PreferenceService.getCalendarDefaultView(),
                 initialDate: PreferenceService.getCalendarDefaultDate(),
                 headerToolbar: {
                     left: 'prevYear,prev,next,nextYear today',
@@ -57,7 +57,14 @@ export default {
                 },
                 events: this.fetchEvents,
                 datesSet: (dateInfo) => {
+                    PreferenceService.setCalendarDefaultView(dateInfo.view.type)
                     let defaultStartYmd = TimeUtil.npLocalDate(dateInfo.start)
+                    // For month view, the start date is the starting of the hidden dates, often goes back to last month
+                    // we need to use the currentStart from the view object to set the default date so we wont see the
+                    // calendar month keeps getting moved back.
+                    if (dateInfo.view.type === 'dayGridMonth') {
+                        defaultStartYmd = TimeUtil.npLocalDate(this.$refs.calendar.getApi().view.currentStart)
+                    }
                     PreferenceService.setCalendarDefaultDate(defaultStartYmd);
                 },
                 eventClick: (eventInfo) => {
@@ -174,17 +181,30 @@ export default {
                     }
                     fcEvent.title = entry.title;
 
-                    fcEvent.start = TimeUtil.iso8601Format(entry.startDateObj);
-                    if (entry.endDateObj !== null) {
-                        fcEvent.end = TimeUtil.iso8601Format(entry.endDateObj);
-                    }
-
-                    // one day or multiple days
+                    // For event with multiple all days span, make sure the end date is added by 1 day
                     if (entry.hasTime() === false) {
                         fcEvent.allDay = true;
+                        fcEvent.startStr = entry.localStartDate
+                        if (entry.localEndDate) {
+                            fcEvent.endStr = TimeUtil.npLocalDate(
+                                TimeUtil.addDays(TimeUtil.toDateObj(entry.localEndDate), 1))
+                        } else {
+                            fcEvent.endStr = TimeUtil.npLocalDate(
+                                TimeUtil.addDays(TimeUtil.toDateObj(entry.localStartDate), 1))
+                        }
+
+                        fcEvent.start = TimeUtil.toDateObj(fcEvent.startStr)
+                        fcEvent.end = TimeUtil.toDateObj(fcEvent.endStr)
+
+                    } else {
+                        fcEvent.start = TimeUtil.iso8601Format(entry.startDateObj);
+                        if (entry.endDateObj !== null) {
+                            fcEvent.end = TimeUtil.iso8601Format(entry.endDateObj);
+                        }
                     }
 
                     fcEvent.backgroundColor = entry.colorLabel;
+                    fcEvent.borderColor = entry.colorLabel;
                     fcEvent.textColor = this.eventTextColor(entry.colorLabel);
 
                     return fcEvent;

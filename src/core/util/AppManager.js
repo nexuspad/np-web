@@ -7,7 +7,6 @@ import ListServiceFactory from '../service/ListServiceFactory'
 import FolderService from '../service/FolderService'
 import SharedFolderService from '../service/SharedFolderService'
 import AccountService from '../service/AccountService';
-import CmsService from '../service/CmsService';
 import EventManager from './EventManager'
 import AppEvent from './AppEvent'
 
@@ -87,10 +86,6 @@ export default class AppManager {
 
     PromiseManager.set(p, 'INIT_CLIENT');
     return p;
-  }
-
-  static initCms () {
-    return CmsService.getSiteContent();
   }
 
   static cleanup () {

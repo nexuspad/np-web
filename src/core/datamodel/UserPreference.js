@@ -58,11 +58,20 @@ export default class UserPreference {
   }
 
   getCalendarDefaultView () {
-    if (this.viewPreferences && this.viewPreferences.calendar.view) {
-      return this.viewPreferences.calendar.view;
+    if (this.viewPreferences && this.viewPreferences.calendar && this.viewPreferences.calendar.defaultView) {
+      return this.viewPreferences.calendar.defaultView;
     } else {
-      return 'month';
+      return '';
     }
+  }
+
+  setCalendarDefaultView (view) {
+    let calViewPref = this.viewPreferences.calendar;
+    if (!calViewPref) {
+      calViewPref = {};
+    }
+    calViewPref['defaultView'] = view;
+    this.viewPreferences.calendar = calViewPref;
   }
 
   getTimezoneName () {

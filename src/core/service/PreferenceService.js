@@ -28,12 +28,20 @@ export default class PreferenceService {
   }
 
   static getCalendarDefaultDate () {
-    console.log('in get', this._preference);
     return this.getPreference().getCalendarDefaultDate();
   }
 
   static setCalendarDefaultDate (ymd) {
     this.getPreference().setCalendarDefaultDate(ymd);
+    StorageUtils.saveToSession(StorageUtils.PREFERENCE, PreferenceService._preference);
+  }
+
+  static getCalendarDefaultView () {
+    return this.getPreference().getCalendarDefaultView();
+  }
+
+  static setCalendarDefaultView (view) {
+    this.getPreference().setCalendarDefaultView(view);
     StorageUtils.saveToSession(StorageUtils.PREFERENCE, PreferenceService._preference);
   }
 

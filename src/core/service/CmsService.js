@@ -2,7 +2,8 @@ import ServiceHelper from './ServiceHelper'
 import PromiseManager from '../util/PromiseManager'
 import RestClient from '../util/RestClient'
 import ErrorHandler from '../util/ErrorHandler'
-import ContentHelper from './ContentHelper';
+import ContentHelper from './ContentHelper'
+
 import axios from 'axios';
 
 export default class CmsService {
@@ -39,6 +40,7 @@ export default class CmsService {
     }
   }
 
+  // Not in use
   static getSiteContent () {
     if (ContentHelper.siteContentInitialized()) {
       return new Promise((resolve) => {

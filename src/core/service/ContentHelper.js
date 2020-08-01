@@ -1,7 +1,8 @@
 import NPModule from "../datamodel/NPModule";
+import { CMS_TEXT } from '../data/cms'
 
 export default class ContentHelper {
-  static _siteContent;
+  static _siteContent = CMS_TEXT;
 
   static siteContentInitialized () {
     if (this._siteContent && this._siteContent['login']) {
