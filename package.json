@@ -1,17 +1,17 @@
 {
   "name": "np-web",
   "version": "1.0.0",
+  "private": true,
   "description": "NexusPad web project",
   "author": "Ren",
-  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --mode production",
     "deploy": "s3-deploy './dist/**' --cwd './dist/' --region us-east-1 --bucket nexuspad.com"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.13.0",
     "@ckeditor/ckeditor5-build-classic": "^19.0.2",
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "@fullcalendar/daygrid": "^5.1.0",
     "@fullcalendar/interaction": "^5.1.0",
     "@fullcalendar/list": "^5.1.0",
@@ -33,9 +33,9 @@
     "vue-textarea-autosize": "^1.0.4"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.4.4",
-    "@vue/cli-plugin-eslint": "^4.4.4",
-    "@vue/cli-service": "^4.4.4",
+    "@vue/cli-plugin-babel": "~4.5.13",
+    "@vue/cli-plugin-eslint": "~4.5.13",
+    "@vue/cli-service": "~4.5.13",
     "babel-eslint": "^10.0.3",
     "eslint": "^7.2.0",
     "eslint-plugin-vue": "^6.1.2",
