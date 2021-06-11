@@ -1,17 +1,27 @@
 <template>
-  <b-modal ref="stopSharingConfirmModalRef" :title="npContent('confirm sharing change')">
-    <div class="h6">{{ itemTitle }}</div>
-    <div>{{npContent('will not longer be shared to you')}}</div>
-    <div slot="modal-footer">
-      <b-btn variant="secondary" @click="hideModal">{{npContent('cancel')}}</b-btn>
-      <b-btn variant="danger" @click="confirmed">{{npContent('confirm')}}</b-btn>
+  <div class="modal" ref="stopSharingConfirmModalRef">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ npContent('confirm sharing change') }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{npContent('will not longer be shared to you')}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" @click="hideModal">{{npContent('cancel')}}</button>
+          <button type="button" class="btn btn-primary" @click="confirmed">{{npContent('confirm')}}</button>
+        </div>
+      </div>
     </div>
-  </b-modal>
+  </div>
 </template>
 
 <script>
 import FolderActionProvider from '../common/FolderActionProvider.js';
 import SiteProvider from './SiteProvider';
+import { Modal } from 'bootstrap';
 
 export default {
   name: 'StopSharingConfirmModal',
@@ -28,6 +38,7 @@ export default {
   },
   mounted () {
     this.setTitle();
+    this.modal = new Modal(this.$refs.stopSharingConfirmModalRef)
   },
   methods: {
     showModal (item) {
@@ -35,13 +46,13 @@ export default {
         this.item = item;
         this.setTitle();
       }
-      this.$refs.stopSharingConfirmModalRef.show();
+      this.modal.show();
     },
     setTitle () {
       this.itemTitle = this.item.folderName;
     },
     hideModal () {
-      this.$refs.stopSharingConfirmModalRef.hide();
+      this.modal.hide();
     },
     confirmed () {
       this.$emit('stopSharingConfirmed', this.item);

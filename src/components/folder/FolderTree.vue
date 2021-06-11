@@ -43,7 +43,7 @@ export default {
     this.loadTree(this.moduleId);
     EventManager.subscribe(AppEvent.FOLDER_RELOAD_EVENT, this.onFolderReloadEvent);
   },
-  beforeDestroy () {
+  beforeUnmount () {
     EventManager.unSubscribe(AppEvent.FOLDER_RELOAD_EVENT, this.onFolderReloadEvent);
   },
   methods: {

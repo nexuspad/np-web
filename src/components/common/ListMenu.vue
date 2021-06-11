@@ -8,92 +8,116 @@
     <stop-sharing-confirm-modal ref="stopSharingConfirmModalRef" @stopSharingConfirmed="performStopSharingFolder" />
     <!-- add z-index so dropdown won't become transparent -->
     <div>
-      <b-button-toolbar variant="light" size="sm" v-if="!isSearch()">
-        <b-button-group class="mr-1" v-show="bulkEdit === false">
-          <b-button class="pl-3 pr-3" variant="light" @click="navigateToParentFolder(folder)" v-if="canNavigateUp(folder)">
+      <div class="btn-toolbar" v-if="!isSearch()">
+        <div class="btn-group mr-1" v-show="bulkEdit === false">
+          <a class="pl-3 pr-3 btn btn-light"
+           @click="navigateToParentFolder(folder)" v-if="canNavigateUp(folder)">
             <i class="fas fa-level-up-alt flipH" data-fa-transform="flip-h"></i>
-          </b-button>
-        </b-button-group>
+          </a>
+        </div>
         <!-- folder name with dropdown -->
-        <b-button-group class="mr-1" v-show="bulkEdit === false">
-          <!-- non-root folder dropdown menu -->
-          <b-dropdown v-if="!folder.isRoot()">
-            <template slot="button-content">
-              {{ folder.folderName }}
-            </template>
-            <b-dropdown-item @click="updateFolderEditor(folder)" v-if="folder.isMyFolder()">
-              <i class="far fa-edit mr-1"></i>{{npContent('update')}}
-            </b-dropdown-item>
-            <b-dropdown-item @click="openFolderTreeModal(folder)" href="#" v-if="folder.isMyFolder()">
-              <i class="far fa-folder-open mr-1"></i>{{npContent('move')}}
-            </b-dropdown-item>
-            <b-dropdown-item @click="openDeleteConfirmModal(folder)" v-if="folder.isMyFolder()" class="text-danger">
-              <i class="far fa-trash-alt mr-1"></i>{{npContent('delete')}}
-            </b-dropdown-item>
-            <b-dropdown-item @click="openStopSharingConfirmModal(folder)" v-if="!folder.isMyFolder()" class="text-danger">
-              <i class="fa fa-stop-circle mr-1"></i>{{npContent('stop sharing')}}
-            </b-dropdown-item>
-          </b-dropdown>
-          <!-- own root folder dropdown menu -->
-          <b-dropdown v-if="folder.isRoot() && folder.isMyFolder()">
-            <b-dropdown-item @click="updateFolderEditor(folder)">
-              <i class="far fa-edit mr-1"></i>{{npContent('sharing')}}
-            </b-dropdown-item>
-          </b-dropdown>
-          <!-- shared root folder dropdown menu -->
-          <b-dropdown v-if="folder.isRoot() && !folder.isMyFolder() && folder.isRootFolderAndShared()">
-            <b-dropdown-item @click="openStopSharingConfirmModal(folder)" class="text-danger">
-              <i class="fa fa-stop-circle mr-1"></i>{{npContent('stop sharing')}}
-            </b-dropdown-item>
-          </b-dropdown>
+        <div class="input-group" v-if="!folder.isRoot()">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ folder.folderName }}
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" @click="updateFolderEditor(folder)" v-if="folder.isMyFolder()">
+                <i class="far fa-edit mr-1"></i>{{npContent('update')}}
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" @click="openFolderTreeModal(folder)" href="#" v-if="folder.isMyFolder()">
+                <i class="far fa-folder-open mr-1"></i>{{npContent('move')}}
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item text-danger" @click="openDeleteConfirmModal(folder)" v-if="folder.isMyFolder()">
+                <i class="far fa-trash-alt mr-1"></i>{{npContent('delete')}}
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item text-danger" @click="openStopSharingConfirmModal(folder)" v-if="!folder.isMyFolder()">
+                <i class="fa fa-stop-circle mr-1"></i>{{npContent('stop sharing')}}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="input-group" v-if="folder.isRoot()">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ folder.folderName }}
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" @click="updateFolderEditor(folder)">
+                <i class="far fa-edit mr-1"></i>{{npContent('sharing')}}
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item text-danger" @click="openStopSharingConfirmModal(folder)">
+                <i class="fa fa-stop-circle mr-1"></i>{{npContent('stop sharing')}}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="btn-group mr-1" v-show="bulkEdit === false">
           <!-- add folder -->
-          <b-button variant="primary" @click="addFolderEditor(folder)" v-if="folder.isMyFolder()">
+          <a class="btn btn-primary"
+           @click="addFolderEditor(folder)" v-if="folder.isMyFolder()">
             <i class="fas fa-plus"></i> {{npContent('folder')}}
-          </b-button>
+          </a>
           <!-- add entry -->
-          <b-button variant="primary" @click="addEntryEditor(folder)" v-if="folder.hasWritePermission() && folder.moduleId !== 6">
+          <a class="btn btn-primary"
+           @click="addEntryEditor(folder)" v-if="folder.hasWritePermission() && folder.moduleId !== 6">
             <i class="fas fa-plus"></i> {{npContent(folder.moduleId.toString())}}
-          </b-button>
+          </a>
           <!-- upload -->
-          <b-button variant="primary" @click="showUploader()" v-if="uploadEligible() && folder.hasWritePermission()">
+          <a class="btn btn-primary"
+           @click="showUploader()" v-if="uploadEligible() && folder.hasWritePermission()">
             <i class="fas fa-upload"></i> {{npContent('upload')}}
-          </b-button>
+          </a>
           <!-- bulk edit -->
-          <b-button variant="primary" @click="toggleBulkEdit()" v-if="folder.isMyFolder() && folder.moduleId !== 2">
+          <a class="btn btn-primary"
+           @click="toggleBulkEdit()" v-if="folder.isMyFolder() && folder.moduleId !== 2">
             <i class="fas fa-highlighter"></i> {{npContent('edit')}}
-          </b-button>
+          </a>
           <!-- loading/refresh -->
-          <b-button class="pl-3 pr-3" variant="light" v-show="bulkEdit === false" v-on:click="refreshList()">
+          <a class="pl-3 pr-3 btn btn-light"
+           v-show="bulkEdit === false" v-on:click="refreshList()">
             <i class="fas fa-sync" v-bind:class="{ 'fa-spin': loading }"></i>
-          </b-button>
-        </b-button-group>
-        <b-button-group class="mr-1" v-show="bulkEdit === true">
-          <b-button variant="light"><span class="badge badge-gray">{{ bulkEditCount }}</span></b-button>
-          <b-button variant="primary" @click="bulkSelectAction(true)">{{npContent('select all')}}</b-button>
-          <b-button variant="primary" @click="bulkSelectAction(false)" v-if="bulkEditCount > 0">{{npContent('clear all')}}</b-button>
-          <b-button variant="primary" @click="openFolderTreeModal(null)" :disabled="bulkEditCount === 0">{{npContent('move')}}</b-button>
-          <b-button variant="danger" @click="$emit('bulkDelete')" :disabled="bulkEditCount === 0">{{npContent('delete')}}</b-button>
-          <b-button variant="light" @click="toggleBulkEdit()">{{npContent('done')}}</b-button>
-        </b-button-group>
-      </b-button-toolbar>
-      <b-button-toolbar variant="light" size="sm" v-if="isSearch() && folder.isMyFolder()">
-        <b-button-group class="mr-1" v-show="bulkEdit === false">
-          <b-button variant="primary" @click="toggleBulkEdit()" v-if="folder.isMyFolder()">
+          </a>
+        </div>
+        <div class="btn-group mr-1" v-show="bulkEdit === true">
+          <a class="btn btn-light"><span class="badge badge-gray">{{ bulkEditCount }}</span></a>
+          <a class="btn btn-primary" @click="bulkSelectAction(true)">{{npContent('select all')}}</a>
+          <a class="btn btn-primary" @click="bulkSelectAction(false)" v-if="bulkEditCount > 0">{{npContent('clear all')}}</a>
+          <a class="btn btn-primary" @click="openFolderTreeModal(null)" :disabled="bulkEditCount === 0">{{npContent('move')}}</a>
+          <a class="btn btn-danger" @click="$emit('bulkDelete')" :disabled="bulkEditCount === 0">{{npContent('delete')}}</a>
+          <a class="btn btn-light" @click="toggleBulkEdit()">{{npContent('done')}}</a>
+        </div>
+      </div>
+      <div class="btn-toolbar" v-if="isSearch() && folder.isMyFolder()">
+        <div class="btn-group mr-1" v-show="bulkEdit === false">
+          <a class="btn btn-primary"
+           @click="toggleBulkEdit()" v-if="folder.isMyFolder()">
             <i class="fas fa-highlighter"></i> {{npContent('edit')}}
-          </b-button>
-          <b-button class="pl-3 pr-3" variant="light" v-show="bulkEdit === false" @click="refreshList()">
+          </a>
+          <a class="pl-3 pr-3 btn btn-light"
+           v-show="bulkEdit === false" @click="refreshList()">
             <i class="fas fa-sync" v-bind:class="{ 'fa-spin': loading }"></i>
-          </b-button>
-        </b-button-group>
-        <b-button-group class="mr-1" v-show="bulkEdit === true">
-          <b-button variant="light"><span class="badge badge-gray">{{ bulkEditCount }}</span></b-button>
-          <b-button variant="primary" @click="bulkSelectAction(true)">{{npContent('select all')}}</b-button>
-          <b-button variant="primary" @click="bulkSelectAction(false)" v-if="bulkEditCount > 0">{{npContent('clear all')}}</b-button>
-          <b-button variant="primary" @click="openFolderTreeModal(null)" :disabled="bulkEditCount === 0">{{npContent('move')}}</b-button>
-          <b-button variant="danger" @click="$emit('bulkDelete')" :disabled="bulkEditCount === 0">{{npContent('delete')}}</b-button>
-          <b-button variant="light" @click="toggleBulkEdit()">{{npContent('done')}}</b-button>
-        </b-button-group>
-      </b-button-toolbar>
+          </a>
+        </div>
+        <div class="btn-group mr-1" v-show="bulkEdit === true">
+          <a class="btn btn-light"><span class="badge badge-gray">{{ bulkEditCount }}</span></a>
+          <a class="btn btn-primary" @click="bulkSelectAction(true)">{{npContent('select all')}}</a>
+          <a class="btn btn-primary"
+           @click="bulkSelectAction(false)" v-if="bulkEditCount > 0">{{npContent('clear all')}}</a>
+          <a class="btn btn-primary"
+           @click="openFolderTreeModal(null)" :disabled="bulkEditCount === 0">{{npContent('move')}}</a>
+          <a class="btn btn-danger" @click="$emit('bulkDelete')" :disabled="bulkEditCount === 0">{{npContent('delete')}}</a>
+          <a class="btn btn-light" @click="toggleBulkEdit()">{{npContent('done')}}</a>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -153,7 +177,7 @@ export default {
   mounted () {
     EventManager.subscribe(AppEvent.LOADING, this.isLoading);
   },
-  beforeDestroy () {
+  beforeUnmount () {
     EventManager.unSubscribe(AppEvent.LOADING);
   },
   methods: {

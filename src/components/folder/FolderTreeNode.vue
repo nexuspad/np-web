@@ -14,7 +14,7 @@
         {{ folderObj.folderName }}
       </a>
     </div>
-    <ul class="list-unstyled pl-3" v-show="showSubFolderNode" v-if="hasSubFolder">
+    <ul class="list-unstyled ps-3" v-show="showSubFolderNode" v-if="hasSubFolder">
       <folder-tree-node
         v-for="(folderObj, index) in folderObj.subFolders"
         :key="nodeKey(index)"

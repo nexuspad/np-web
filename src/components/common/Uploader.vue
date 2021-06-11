@@ -6,7 +6,8 @@
           <span v-bind:class="{active : fileObj.status === 'uploading'}">{{ fileObj.file.name }}</span>
         </div>
         <div class="col align-bottom">
-          <b-progress height="2px" :value="fileObj.uploadProgress" class="mt-3"></b-progress>
+          <!-- <b-progress height="2px" :value="fileObj.uploadProgress" class="mt-3"></b-progress> -->
+          {{ fileObj.uploadProgress }}
         </div>
         <div class="col align-bottom">
           <span v-bind:class="{'text-danger': fileObj.status === 'failed', 'text-success': fileObj.status === 'completed'}">
@@ -206,7 +207,7 @@ export default {
       this.$emit('closeUploadModal', true);
     }
   },
-  beforeDestroy () {
+  beforeUnmount () {
     this.close();
   }
 }

@@ -1,13 +1,24 @@
 <template>
-  <b-modal ref="myModalRef" size="md" hide-footer :title=entry.title>
-    <label-input :initialValues="entry.tags" @labelUpdated="updateTags" />
-  </b-modal>
+  <div class="modal" ref="tagUpdateModalRef">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ entry.title }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label-input :initialValues="entry.tags" @labelUpdated="updateTags" />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import LabelInput from './LabelInput';
 import EntryService from '../../core/service/EntryService';
 import EventManager from '../../core/util/EventManager';
+import { Modal } from 'bootstrap';
 
 export default {
   name: 'UpdateTagModal',
@@ -20,13 +31,16 @@ export default {
   components: {
     LabelInput
   },
+  mounted () {
+    this.modal = new Modal(this.$refs.tagUpdateModalRef)
+  },
   methods: {
     showModal (entry) {
       this.entry = entry;
-      this.$refs.myModalRef.show();
+      this.modal.show();
     },
     hideModal () {
-      this.$refs.myModalRef.hide();
+      this.modal.hide();
     },
     updateTags: function (tags) {
       this.entry.tags = tags;

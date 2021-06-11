@@ -104,8 +104,6 @@ export default {
     this.reloadDoc();
     // this.updateWeight(this.docObj);
   },
-  beforeDestroy () {
-  },
   methods: {
     isHtml () {
       return this.docObj.format === 'HTML';

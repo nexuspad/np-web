@@ -105,12 +105,15 @@ export default {
     }
   },
   watch: {
-    initialValues: function (values) {
-      if (values && values.length) {
-        this.labels = values.slice(0);
-      } else {
-        this.labels = [];
-      }
+    initialValues: {
+      handler(values) {
+        if (values && values.length) {
+          this.labels = values.slice(0);
+        } else {
+          this.labels = [];
+        }
+      },
+      deep: true
     }
   }
 }

@@ -1,16 +1,16 @@
 <template>
   <div class="np-module-container">
     <split-panel>
-      <div slot="left-pane">
+      <template slot:left-pane>
         <folder-tree :moduleId="moduleId" :active-folder-key="folderKey" usage="editor" />
         <shared-folder-tree :moduleId="moduleId" :active-folder-key="folderKey" usage="editor" />
-      </div>
-      <div slot="right-pane">
+      </template>
+      <template slot:right-pane>
         <contact-edit :folder=folder v-if="moduleId === 1" />
         <event-edit :folder=folder :event=entry v-if="moduleId === 2" />
         <bookmark-edit :folder=folder v-if="moduleId === 3" />
         <doc-edit :folder=folder v-if="moduleId === 4" />
-      </div>
+      </template>
     </split-panel>
   </div>
 </template>
@@ -50,7 +50,7 @@ export default {
     }
     EventManager.subscribe(AppEvent.ENTRY_MOVE, this.updateFolder);
   },
-  beforeDestroy () {
+  beforeUnmount () {
     EventManager.unSubscribe(AppEvent.ENTRY_MOVE, this.updateFolder);
   },
   methods: {

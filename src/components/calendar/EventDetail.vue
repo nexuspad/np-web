@@ -89,8 +89,6 @@ export default {
     this.eventObj.localStartTime = TimeUtil.hh24ToAmPm(this.eventObj.localStartTime);
     this.eventObj.localEndTime = TimeUtil.hh24ToAmPm(this.eventObj.localEndTime);
   },
-  beforeDestroy () {
-  },
   methods: {
     debug () {
       return JSON.stringify(this.eventObj, null, 4);

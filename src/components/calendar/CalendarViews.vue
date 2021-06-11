@@ -205,7 +205,7 @@ export default {
     });
     EventManager.subscribe(AppEvent.ENTRY_UPDATE, this.refreshEvents);
   },
-  beforeDestroy () {
+  beforeUnmount () {
     EventManager.unSubscribe(AppEvent.ENTRY_UPDATE, this.refreshEvents);
   },
   methods: {

@@ -180,7 +180,7 @@ export default {
       });
     }
   },
-  beforeDestroy () {
+  beforeUnmount () {
     EventManager.subscribe(AppEvent.ENTRY_UPDATE, this.makeGroups);
     EventManager.subscribe(AppEvent.ENTRY_DELETE, this.makeGroups);
     EventManager.subscribe(AppEvent.ENTRY_MOVE, this.makeGroups);

@@ -1,7 +1,17 @@
 <template>
-  <b-modal ref="uploaderModalRef" hide-footer size="lg" :title="title()" hide-header-close  @hide="checkBeforeHideIt($event)">
-    <uploader :folder="folder" :entry="entry" v-on:closeUploadModal="hideUploader()" />
-  </b-modal>
+  <div class="modal" ref="uploaderModalRef">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ title() }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <uploader :folder="folder" :entry="entry" v-on:closeUploadModal="hideUploader()" />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -9,6 +19,7 @@ import Uploader from './Uploader';
 import EntryActionProvider from '../common/EntryActionProvider.js';
 import FolderActionProvider from '../common/FolderActionProvider.js';
 import ContentHelper from '../../core/service/ContentHelper';
+import { Modal } from 'bootstrap';
 
 export default {
   name: 'UploaderModal',
@@ -17,7 +28,8 @@ export default {
     return {
       folder: null,
       entry: null,
-      okToHide: false
+      okToHide: false,
+      modal: null
     };
   },
   components: {
@@ -26,6 +38,11 @@ export default {
   computed: {
   },
   mounted () {
+    this.modal = new Modal(this.$refs.uploaderModalRef)
+    let me = this
+    this.$refs.uploaderModalRef.addEventListener('hidden.bs.modal', function (event) {
+      me.checkBeforeHideIt(event)
+    })
   },
   methods: {
     title () {
@@ -44,11 +61,11 @@ export default {
     showUploader ({folder = null, entry = null}) {
       this.folder = folder;
       this.entry = entry;
-      this.$refs.uploaderModalRef.show();
+      this.modal.show()
     },
     hideUploader () {
       this.okToHide = true;
-      this.$refs.uploaderModalRef.hide();
+      this.modal.hide()
     },
     checkBeforeHideIt (event) {
       if (!this.okToHide) {

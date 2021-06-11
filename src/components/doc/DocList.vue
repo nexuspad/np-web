@@ -25,8 +25,6 @@ export default {
   created () {
     this.locateRouteFolder(NPModule.DOC, this.$route.params);
   },
-  beforeDestroy () {
-  },
   methods: {
   },
   watch: {

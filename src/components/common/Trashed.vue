@@ -20,12 +20,12 @@
         <div class="row" v-for="group in Math.ceil(entryList.folder.subFolders.length / 3)" v-bind:key="group">
           <div class="col" v-for="folder in entryList.folder.subFolders.slice((group - 1) * 3, group * 3)" v-bind:key="folder.folderId">
             <div class="row m-2">
-              <b-dropdown variant="link" no-caret>
+              <!-- <b-dropdown variant="link" no-caret>
                 <template slot="button-content">
                   <i class="far fa-folder pr-1"></i>{{ folder.folderName }}
                 </template>
                 <b-dropdown-item @click="restoreFolder(folder)">{{npContent('restore')}}</b-dropdown-item>
-              </b-dropdown>
+              </b-dropdown> -->
             </div>
           </div>
         </div>
@@ -180,7 +180,7 @@ export default {
         });
     }
   },
-  beforeDestroy () {
+  beforeUnmount () {
     EventManager.unSubscribe(AppEvent.LOADING);
   }
 };

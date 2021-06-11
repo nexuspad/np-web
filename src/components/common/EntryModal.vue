@@ -1,12 +1,18 @@
 <template>
-  <div>
-    <b-modal ref="entryModalRef" size="lg" :title="entryObj.title" @hide="onDismiss">
-      <b-container fluid>
-      </b-container>
-      <div slot="modal-footer" class="w-100" v-if="entryObj.entryId">
-        <entry-menu :entry="entryObj" />
+  <div class="modal" ref="entryModalRef">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ entryObj.title }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <entry-menu :entry="entryObj" />
+        </div>
       </div>
-    </b-modal>
+    </div>
   </div>
 </template>
 
@@ -14,6 +20,7 @@
 import EntryMenu from './EntryMenu';
 import EntryActionProvider from './EntryActionProvider';
 import NPEntry from '../../core/datamodel/NPEntry';
+import { Modal } from 'bootstrap';
 
 export default {
   name: 'EntryModal',
@@ -26,13 +33,20 @@ export default {
       entryObj: new NPEntry()
     };
   },
+  mounted () {
+    this.modal = new Modal(this.$refs.entryModalRef)
+    let me = this
+    this.$refs.entryModalRef.addEventListener('hidden.bs.modal', function (event) {
+      me.onDismiss(event)
+    })
+  },
   methods: {
     showModal (entryObj) {
       this.entryObj = entryObj;
-      this.$refs.entryModalRef.show();
+      this.modal.show();
     },
     hideModal () {
-      this.$refs.entryModalRef.hide();
+      this.modal.hide();
     },
     onDismiss () {
       // event.preventDefault();

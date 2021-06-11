@@ -24,12 +24,10 @@
         <button class="btn btn-primary" v-on:click="register($event)" :disabled="!submissionEnabled()">{{npContent('create account')}}</button>
       </div>
     </form>
-    <cookie-law theme="dark-lime" v-if="!isDesktopApp()"></cookie-law>
   </div>
 </template>
 
 <script>
-import CookieLaw from 'vue-cookie-law';
 import AccountActionProvider from '../account/AccountActionProvider';
 import AccountService from '../../core/service/AccountService';
 import Message from '../common/Message';
@@ -43,7 +41,7 @@ export default {
   name: 'Register',
   mixins: [ AccountActionProvider, SiteProvider ],
   components: {
-    CookieLaw, Message
+    Message
   },
   data () {
     return {

@@ -200,8 +200,6 @@ export default {
       this.selectedPage = value;
       this.loadList();
     }
-  },
-  beforeDestroy () {
   }
 };
 </script>

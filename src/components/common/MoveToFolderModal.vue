@@ -1,7 +1,7 @@
 <template>
-  <b-modal ref="moveToFolderModalRef" size="md" hide-footer :title="npContent('choose a folder')">
+  <div class="modal" ref="moveToFolderModalRef" size="md" hide-footer :title="npContent('choose a folder')">
     <folder-tree :moduleId="moduleId" :active-folder-key="folderSelectionKey" usage="move" @folderSelected="onFolderSelected" />
-  </b-modal>
+  </div>
 </template>
 
 <script>

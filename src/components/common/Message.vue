@@ -1,37 +1,23 @@
 <template>
   <div>
     <div v-if="location === 'TOP_STICKY'" class="np-message">
-      <b-alert variant="success"
-              dismissible
-              :show="showSuccessWithCountDown"
-              @dismissed="showSuccessWithCountDown=0">
+      <div class="alert alert-success" v-show="showSuccess">
         {{successMessage}}
-      </b-alert>
-      <b-alert variant="danger"
-              dismissible
-              :show="showError"
-              @dismissed="showError=false">
+      </div>
+      <div class="alert alert-danger" v-show="showError">
         {{failureMessage}}
-      </b-alert>
+      </div>
     </div>
     <div v-if="location === 'LIST'">
-      <b-alert :show="showInformation"
-              dismissible
-              @dismissed="showInformation=false">
+      <div class="alert alert-info" v-show="showInformation">
         {{informationMessage}}
-      </b-alert>
-      <b-alert variant="success"
-              dismissible
-              :show="showSuccess"
-              @dismissed="showSuccess=false">
+      </div>
+      <div class="alert alert-success" v-show="showSuccess">
         {{successMessage}}
-      </b-alert>
-      <b-alert variant="danger"
-              dismissible
-              :show="showError"
-              @dismissed="showError=false">
+      </div>
+      <div class="alert alert-danger" v-show="showError">
         {{failureMessage}}
-      </b-alert>
+      </div>
     </div>
     <div v-if="location === 'TOP_NAVBAR'">
       <i class="fas fa-dot-circle" v-show="!loadingIcon"></i>
@@ -88,7 +74,7 @@ export default {
     EventManager.subscribe(AppEvent.EMPTY_LIST, this.showGeneralMessage);
     EventManager.subscribe(AppEvent.LOADING, this.showLoadingIcon);
   },
-  beforeDestroy () {
+  beforeUnmount () {
     EventManager.unSubscribe(AppEvent.ACCOUNT_CREATION_FAILURE, this.showErrorMessage);
     EventManager.unSubscribe(AppEvent.ACCOUNT_LOGIN_FAILURE, this.showErrorMessage);
     EventManager.unSubscribe(AppEvent.ACCOUNT_PASSWORD_UPDATE, this.showUpdateResult);

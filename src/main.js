@@ -1,6 +1,8 @@
 import Vue from 'vue';
+import { createApp } from 'vue'
 import VueRouter from 'vue-router';
-import BootstrapVue from 'bootstrap-vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import bootstrap from 'bootstrap'
 import VueTextareaAutosize from 'vue-textarea-autosize';
 
 import './assets/global.css';
@@ -22,7 +24,6 @@ import Landing from './components/Landing';
 import TopNavigation from './components/layout/TopNavigation';
 import SideNavigation from './components/layout/SideNavigation';
 import SplitPanel from './components/layout/SplitPanel';
-import UploaderModal from './components/common/UploaderModal';
 import Highlighter from './core/util/Highlighter';
 import ContentHelper from './core/service/ContentHelper';
 
@@ -32,7 +33,7 @@ Vue.component('SplitPanel', SplitPanel);
 
 Vue.config.productionTip = false;
 
-Vue.use(BootstrapVue);
+Vue.use(bootstrap)
 Vue.use(VueRouter);
 Vue.use(ErrorPage);
 Vue.use(VueTextareaAutosize);
@@ -57,36 +58,25 @@ const scrollBehavior = function (to, from, savedPosition) {
 
 // window.DESKTOP is set in index.html. index.html is built in desktop/prebuild.js
 var clientType = 'browser';
-if (window.NP_DESKTOP) {
-  clientType = 'electronjs'
-  console.log('[App] creating router for desktop...');
-  router = new VueRouter({
-    base: __dirname,
-    routes: [
-      { name: 'landing', path: '/', component: Landing, meta: { requiresAuth: false } }
-    ],
-    scrollBehavior
-  });
-} else {
-  console.log('[App] creating router for web...');
-  router = new VueRouter({
-    mode: 'history',
-    base: __dirname,
-    scrollBehavior,
-    routes: [
-      { name: 'landing', path: '/', component: Landing, meta: { requiresAuth: false } }
-    ],
-  });
-}
 
-router.addRoutes(AccountModule.routes());
+console.log('[App] creating router for web...');
+router = createRouter({
+  history: createWebHistory(__dirname),
+  scrollBehavior,
+  routes: [
+    { name: 'landing', path: '/', component: Landing, meta: { requiresAuth: false } }
+  ],
+});
+
+// router.addRoute(AccountModule.routes());
+AccountModule.routes().forEach(r => router.addRoute(r))
 
 AppRoute.base = 'organize';
-router.addRoutes(BookmarkModule.routes(AppRoute.base));
-router.addRoutes(CalendarModule.routes(AppRoute.base));
-router.addRoutes(DocModule.routes(AppRoute.base));
-router.addRoutes(PhotoModule.routes(AppRoute.base));
-router.addRoutes(ContactModule.routes(AppRoute.base));
+BookmarkModule.routes(AppRoute.base).forEach(r => router.addRoute(r))
+CalendarModule.routes(AppRoute.base).forEach(r => router.addRoute(r))
+DocModule.routes(AppRoute.base).forEach(r => router.addRoute(r))
+ContactModule.routes(AppRoute.base).forEach(r => router.addRoute(r))
+PhotoModule.routes(AppRoute.base).forEach(r => router.addRoute(r))
 
 EventManager.subscribe(AppEvent.ACCOUNT_SESSION_INACTIVE, () => {
   if (router.currentRoute.meta.requiresAuth !== false) {
@@ -108,44 +98,18 @@ Vue.filter('npHighlighter', function (value, keyword) {
   return Highlighter.mark(value, keyword);
 })
 
-//// create the instance
-var app = new Vue({
-  router,
-  template: `
-  <div class="container-fluid">
-    <uploader-modal ref="uploaderRef" />
-    <top-navigation />
-    <router-view class="view"></router-view>
-  </div>
-  `,
-  components: { UploaderModal }
-});
+import App from './components/App.vue'
+const app = createApp(App)
+app.use(router)
 
-EventManager.subscribe(AppEvent.SHOW_UPLOADER, (appEvent) => {
-  app.$refs.uploaderRef.showUploader(appEvent.affectedItem);
-});
-
-let tryAgain = '<a href="/">Try again.</a>';
-if (window.NP_DESKTOP) {
-  tryAgain = 'Use file -> reload to retry.'
-}
-let errorInstance = new Vue({
-  template: `
-    <div class="container-fluid">
-      <top-navigation />
-      <div class="row" style="margin-top:120px;">
-        Cannot connect to the service. Either the service is down or internet connection is not available.
-        &nbsp; ${tryAgain}
-      </div>
-    </div>
-  `
-});
+import AppError from './components/AppError'
 
 let initPromises = [AppManager.serviceLocate(), AppManager.initClient(clientType)];
 
 Promise.all(initPromises).then(() => {
-  app.$mount('#app');
+  app.mount('#app');
 }).catch((error) => {
   console.error(error);
-  errorInstance.$mount('#app');
+  const appError = createApp(AppError)
+  appError.mount('#app');
 });

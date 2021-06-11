@@ -71,7 +71,7 @@ div.dropdown-menu {
 
 .pinned { font-weight: bold; }
 
-ul.list-unstyled a { color: #222 !important; }
+ul.list-unstyled a { color: #222 !important; text-decoration: none; }
 ul.list-unstyled a.disabled { cursor: auto; color: #888888 !important; }
 
 a:hover { text-decoration: none !important; }

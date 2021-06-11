@@ -13,7 +13,7 @@
 
 <script>
 // https://fullcalendar.io/docs/vue
-import FullCalendar from '@fullcalendar/vue'
+import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
@@ -105,7 +105,7 @@ export default {
         });
         EventManager.subscribe(AppEvent.ENTRY_UPDATE, this.refreshEvents);
     },
-    beforeDestroy () {
+    beforeUnmount () {
         EventManager.unSubscribe(AppEvent.ENTRY_UPDATE, this.refreshEvents);
     },
     methods: {

@@ -186,7 +186,7 @@ export default {
       this.loadList();
     }
   },
-  beforeDestroy () {
+  beforeUnmount () {
     if (this.infScroller) {
       this.infScroller.destroy();
     }

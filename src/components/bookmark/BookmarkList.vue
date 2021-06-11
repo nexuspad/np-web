@@ -27,10 +27,6 @@ export default {
   beforeMount () {
     this.locateRouteFolder(NPModule.BOOKMARK, this.$route.params);
   },
-  beforeDestroy () {
-  },
-  methods: {
-  },
   watch: {
     '$route.params': function () {
       this.locateRouteFolder(NPModule.BOOKMARK, this.$route.params);

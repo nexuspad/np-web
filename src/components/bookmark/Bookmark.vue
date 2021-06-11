@@ -1,32 +1,18 @@
 <template>
   <div class="np-module-container">
     <split-panel>
-      <div slot="left-pane">
+      <template v-slot:left-pane>
         <side-navigation />
-      </div>
-      <div slot="right-pane">
-        <router-view class="view"></router-view>
-      </div>
+      </template>
+      <template v-slot:right-pane>
+        <router-view></router-view>
+      </template>
     </split-panel>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Bookmark',
-  data () {
-    return {
-    };
-  },
-  components: {
-  },
-  mounted () {
-  },
-  beforeDestroy () {
-  },
-  methods: {
-  },
-  watch: {
-  }
+  name: 'Bookmark'
 };
 </script>

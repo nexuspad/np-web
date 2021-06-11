@@ -2,20 +2,20 @@
   <div class="np-module-container">
     <message :location="'TOP_STICKY'" />
     <split-panel>
-      <div slot="left-pane">
+      <template v-slot:left-pane>
         <folder-tree :moduleId="moduleId" :active-folder-key="folderKey" usage="sidenav" />
         <shared-folder-tree :moduleId="moduleId" :active-folder-key="folderKey" usage="sidenav" />
-      </div>
-      <div slot="right-pane">
+      </template>
+      <template v-slot:right-pane>
         <div class="mt-1 mb-2 np-entry-menu-bar" v-if="entryObj.entryId">
-          <b-button-toolbar variant="light" size="sm">
-            <b-button-group size="sm" class="mr-1">
-              <b-button class="pl-3 pr-3" variant="light" @click="backToFolder()">
+          <div class="btn-toolbar">
+            <div class="btn-group">
+              <a class="pl-3 pr-3 btn btn-light" @click="backToFolder()">
                 <i class="fas fa-level-up-alt flipH" data-fa-transform="flip-h"></i>
-              </b-button>
-            </b-button-group>
+              </a>
+            </div>
             <entry-menu :entry="entryObj" :folder="folder" v-if="entryObj.hasWritePermission()" />
-          </b-button-toolbar>
+          </div>
         </div>
         <div class="np-content-below-menu">
           <contact-detail :contactObj="entryObj" :keyword=keyword v-if="entryObj.moduleId === 1" />
@@ -23,7 +23,7 @@
           <bookmark-detail :bookmarkObj="entryObj" :keyword=keyword v-if="entryObj.moduleId === 3" />
           <doc-detail :docObj="entryObj" :keyword=keyword v-if="entryObj.moduleId === 4" />
         </div>
-      </div>
+      </template>
     </split-panel>
   </div>
 </template>
@@ -128,7 +128,7 @@ export default {
     EventManager.subscribe(AppEvent.ENTRY_DELETE, this.backToFolder);
     EventManager.subscribe(AppEvent.ENTRY_UPDATE, this.entryUpdated);
   },
-  beforeDestroy () {
+  beforeUnmount () {
     EventManager.unSubscribe(AppEvent.ENTRY_DELETE, this.backToFolder);
     EventManager.unSubscribe(AppEvent.ENTRY_UPDATE, this.entryUpdated);
   },

@@ -213,7 +213,7 @@ export default {
         });
     }
   },
-  beforeDestroy () {
+  beforeUnmount () {
     if (this.autoSaver) {
       this.autoSaver.destroy();
     }

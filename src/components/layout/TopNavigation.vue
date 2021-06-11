@@ -1,46 +1,45 @@
 <template>
-  <b-navbar toggleable="md" fixed="top" type="dark" variant="dark">
-    <b-navbar-toggle target="topnav_collapse"></b-navbar-toggle>
-    <b-navbar-brand href="https://nexuspad.com/about.html" v-if="!isLoggedIn">
-      <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://nexuspad.com/images/np-logo.png"/>
-    </b-navbar-brand>
-    <b-navbar-brand href="/" v-if="isLoggedIn && !onEdge">
-      <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://nexuspad.com/images/np-logo.png"/>
-    </b-navbar-brand>
-    <b-navbar-brand v-if="isLoggedIn && onEdge">
-      <router-link to="/activities">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://nexuspad.com/about.html" v-if="!isLoggedIn">
         <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://nexuspad.com/images/np-logo.png"/>
-      </router-link>
-    </b-navbar-brand>
-
-    <b-collapse is-nav id="topnav_collapse" v-if="isLoggedIn === false">
-      <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item to="/login">{{npContent('log in')}}</b-nav-item>
-      </b-navbar-nav>
-    </b-collapse>
-
-    <b-collapse is-nav id="topnav_collapse" v-if="isLoggedIn === true">
-      <b-navbar-nav>
-        <b-nav-item v-for="m in availableModules" :to="m.link" v-bind:key="m.id" :class="{'highlight' : activeModule == m.id}"
-          :active="activeModule == m.id">
-          {{npContent('m' + m.id)}}
-        </b-nav-item>
-        <b-nav-item></b-nav-item>
-        <b-nav-form @submit="search">
-          <input ref="searchInput" class="form-control mr-sm-2" type="search" v-model="searchKeyword"
-            v-on:keyup.enter="search($event)" v-on:keyup.delete="clearSearch($event)" />
-          <b-button class="my-2 my-sm-0" v-on:click="search($event)">{{npContent('search')}}</b-button>
-        </b-nav-form>
-      </b-navbar-nav>
-
-      <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item to="/account">{{npContent('settings')}}</b-nav-item>
-        <b-nav-item @click="logout()">{{npContent('log_out')}}</b-nav-item>
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
+      </a>
+      <a class="navbar-brand" href="https://nexuspad.com/about.html" v-if="isLoggedIn && !onEdge">
+        <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://nexuspad.com/images/np-logo.png"/>
+      </a>
+      <a class="navbar-brand" href="https://nexuspad.com/about.html" v-if="isLoggedIn && onEdge">
+        <img style="width:26px;" :class="{imageRotateHorizontal:loadingIcon}" src="https://nexuspad.com/images/np-logo.png"/>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item" v-for="m in availableModules" v-bind:key="m.id" :class="{'highlight' : activeModule == m.id}">
+            <router-link class="nav-link" :to="m.link">{{npContent('m' + m.id)}}</router-link>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+            v-model="searchKeyword" v-on:keyup.enter="search($event)" v-on:keyup.delete="clearSearch($event)" >
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0" v-if="isLoggedIn === false">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/login">{{npContent('log in')}}</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0" v-if="isLoggedIn === true">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/account">{{npContent('settings')}}</a>
+          </li>
+          <li>
+            <a class="nav-link" aria-current="page" href="#" @click="logout()">{{npContent('log_out')}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -94,7 +93,7 @@ export default {
     this.setActiveModule();
     this.isEdgeApi();
   },
-  beforeDestroy () {
+  beforeUnmount () {
     EventManager.unSubscribe(AppEvent.LOADING, this.showLoadingIcon);
     EventManager.unSubscribe(AppEvent.ACCOUNT_LOGIN_SUCCESS, this.setModules);
   },
