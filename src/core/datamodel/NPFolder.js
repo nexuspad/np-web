@@ -252,9 +252,9 @@ export default class NPFolder {
     return data;
   }
 
-  toString () {
-    return 'module: ' + this.moduleId + ' folder: ' + this.folderName + ' ' + this.folderId;
-  }
+  // toString () {
+  //   return 'module: ' + this.moduleId + ' folder: ' + this.folderName + ' ' + this.folderId;
+  // }
 
   static key ({folder: folderObj, moduleId: moduleId, folderId: folderId, ownerId: ownerId}) {
     if (folderObj) {

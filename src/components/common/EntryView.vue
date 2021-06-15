@@ -74,7 +74,10 @@ export default {
      * don't rely on props because the page may be refreshed.
      */
     let entryObj, folder;
-    this.moduleId = AppRoute.module(this.$route);
+    this.moduleId = AppRoute.module(this.$route)
+
+    console.log(this.$route)
+    // this.entryId = this.$route.params.entryId
 
     if (!this.folder) {
       folder = NPFolder.of(this.moduleId, NPFolder.UNASSIGNED);

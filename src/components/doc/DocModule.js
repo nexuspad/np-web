@@ -27,7 +27,8 @@ export default class DocModule extends AppRoute {
           {
             name: 'docHome',
             path: '',
-            component: DocList
+            component: DocList,
+            props: true
           },
           {
             name: 'docFolder',
@@ -68,8 +69,7 @@ export default class DocModule extends AppRoute {
       {
         path: base + '/doc/:entryId/view',
         name: 'viewDoc',
-        component: EntryView,
-        props: true
+        component: EntryView
       },
       {
         path: base + '/doc/add',

@@ -12,7 +12,7 @@ import NPEvent from '../../core/datamodel/NPEvent';
 export default {
   methods: {
     goEntryRoute: function (entry, type, folder, searchKeyword) {
-      let params = { entryId: entry.entryId, folder: folder };
+      let params = { entryId: entry.entryId }
       if (entry.moduleId === NPModule.EVENT) {
         params['recurId'] = entry.recurId;
       }
@@ -20,13 +20,15 @@ export default {
       if (folder.isMyFolder()) {
         route = {
           name: AppRoute.entryRouteName(entry, type),
-          params: params
+          params: params,
+          props: {folder: folder}
         };  
       } else {
         params.user = folder.getOwnerId();
         route = {
           name: AppRoute.sharedEntryRouteName(entry, type),
-          params: params
+          params: params,
+          props: {folder: folder}
         };  
       }
       if (searchKeyword) {
@@ -67,7 +69,7 @@ export default {
         default:
           break;
       }
-      this.$router.push({ name: routeName, params: { folder: folder } });
+      this.$router.push({ name: routeName, props: { folder: folder } });
     },
     save: function ($event, entry, updateOption) {
       if ($event) {

@@ -33,21 +33,17 @@ export default {
   data () {
     return {
       moduleId: NPModule.NOT_ASSIGNED,
-      folder: new NPFolder(),
       folderKey: ''
     };
   },
-  props: ['entry'],
+  props: ['entry', 'folder'],
   components: {
     FolderTree, SharedFolderTree, ContactEdit, EventEdit, BookmarkEdit, DocEdit
   },
-  created () {
+  beforeMount () {
     this.moduleId = AppRoute.module(this.$route);
 
-    if (this.$route.params.folder) {
-      this.folder = this.$route.params.folder;
-      this.folderKey = NPFolder.key({folder: this.folder});
-    }
+    this.folderKey = NPFolder.key({folder: this.folder});
     EventManager.subscribe(AppEvent.ENTRY_MOVE, this.updateFolder);
   },
   beforeUnmount () {

@@ -5,7 +5,7 @@
         <side-navigation />
       </template>
       <template v-slot:right-pane>
-        <router-view class="view"></router-view>
+        <router-view></router-view>
       </template>
     </split-panel>
   </div>

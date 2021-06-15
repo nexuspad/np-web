@@ -1,22 +1,10 @@
 <template>
   <div class="card">
     <delete-confirm-modal ref="deleteConfirmModalRef" @deleteEntryConfirmed="deleteAttachment" />
-    <h1 class="card-header" v-show="!editTitle">
-      <span v-html="$options.filters.npHighlighter(docObj.title, keyword)" />
-      <!-- edit title doesn't seem to be useful
-      <button type="button" class="icon-button" @click="editTitle = !editTitle"><i class="fa fa-edit"></i></button>
-      -->
+    <h1 class="card-header">
+      <!-- <span v-html="$options.filters.npHighlighter(docObj.title, keyword)" /> -->
+      {{ docObj.title }}
     </h1>
-    <div class="row form-group mt-2" v-show="editTitle">
-      <div class="col">
-        <input type="text" class="form-control input-underline" v-model="docObj.title" />
-      </div>
-      <div class="col-md-auto">
-        <b-button-group>
-          <b-button variant="primary" @click="updateTitle(docObj)"><i class="fa fa-check"></i></b-button>
-        </b-button-group>
-      </div>
-    </div>
     <div class="card-body">
       <ul class="list-inline">
         <li v-for="tag in docObj.tags" :key="tag" class="list-inline-item">
@@ -81,7 +69,6 @@ export default {
   mixins: [ EntryActionProvider ],
   data: function () {
     return {
-      editTitle: false,
       attachments: []
     };
   },

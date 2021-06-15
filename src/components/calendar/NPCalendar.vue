@@ -1,18 +1,19 @@
 <template>
-    <div>
-        <message :location="'TOP_STICKY'" />
-        <entry-modal ref="entryModalRef" />
-        <div class="np-list-menu-bar">
-            <list-menu :folder="folder" v-on:toggleBulkEdit="bulkEdit = !bulkEdit" v-on:refreshList="refreshEvents()" />
-        </div>
-        <div class="np-content-below-menu">
-            <FullCalendar ref="calendar" :options="calendarOptions" />
-        </div>
+  <div>
+    <message :location="'TOP_STICKY'" />
+    <entry-modal ref="entryModalRef" />
+    <div class="np-list-menu-bar">
+        <list-menu :folder="folder" v-on:toggleBulkEdit="bulkEdit = !bulkEdit" v-on:refreshList="refreshEvents()" />
     </div>
+    <div class="np-content-below-menu">
+        <FullCalendar ref="fullCalendar" :options="calendarOptions" />
+    </div>
+  </div>
 </template>
 
 <script>
 // https://fullcalendar.io/docs/vue
+import '@fullcalendar/core/vdom'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -63,7 +64,7 @@ export default {
                     // we need to use the currentStart from the view object to set the default date so we wont see the
                     // calendar month keeps getting moved back.
                     if (dateInfo.view.type === 'dayGridMonth') {
-                        defaultStartYmd = TimeUtil.npLocalDate(this.$refs.calendar.getApi().view.currentStart)
+                        defaultStartYmd = TimeUtil.npLocalDate(this.$refs.fullCalendar.getApi().view.currentStart)
                     }
                     PreferenceService.setCalendarDefaultDate(defaultStartYmd);
                 },
@@ -101,7 +102,8 @@ export default {
     created () {
         let componentSelf = this;
         this.locateRouteFolder(NPModule.CALENDAR, this.$route.params).then(() => {
-            componentSelf.$refs.calendar.getApi().refetchEvents();
+            console.log(componentSelf.$refs.fullCalendar)
+            componentSelf.$refs.fullCalendar.getApi().refetchEvents();
         });
         EventManager.subscribe(AppEvent.ENTRY_UPDATE, this.refreshEvents);
     },
@@ -149,11 +151,11 @@ export default {
         },
         refreshEvents () {
             this.listService.clear();
-            this.$refs.calendar.getApi().refetchEvents();
+            this.$refs.fullCalendar.getApi().refetchEvents();
         },
         removeEvent () {
-            this.$refs.calendar.$emit('remove-event', this.selected);
-            this.$refs.calendar.getApi().remove();
+            this.$refs.fullCalendar.$emit('remove-event', this.selected);
+            this.$refs.fullCalendar.getApi().remove();
             this.selected = {};
         },
         eventSelected: function (event) {
@@ -216,7 +218,7 @@ export default {
         '$route.params': function () {
             let componentSelf = this;
             this.locateRouteFolder(NPModule.CALENDAR, this.$route.params).then(() => {
-                componentSelf.$refs.calendar.getApi().refetchEvents();
+                componentSelf.$refs.fullCalendar.getApi().refetchEvents();
             });
         }
     }
