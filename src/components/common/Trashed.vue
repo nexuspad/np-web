@@ -2,16 +2,12 @@
   <div>
     <message :location="'TOP_STICKY'" />
     <div class="mt-1 mb-2 np-list-menu-bar">
-      <b-button-toolbar variant="light">
-        <b-button-group class="mr-1">
-          <b-button variant="danger" @click="emptyTrash" :disabled="isEmpty">
-            {{npContent('empty all')}}
-          </b-button>
-          <b-button class="pl-3 pr-3" variant="light" @click="loadList()">
-            <i class="fas fa-sync" v-bind:class="{ 'fa-spin': loading || deleting }"></i>
-          </b-button>
-        </b-button-group>
-      </b-button-toolbar>
+      <div class="btn-toolbar">
+        <div class="btn-group mr-1">
+          <button class="btn btn-danger" @click="emptyTrash" :disabled="isEmpty">{{npContent('empty all')}}</button>
+          <button class="btn btn-light" @click="loadList()"><i class="fas fa-sync" v-bind:class="{ 'fa-spin': loading || deleting }"></i></button>
+        </div>
+      </div>
     </div>
     <div v-if="deleting" class="alert alert-light"><small>* {{npContent('it may take a few seconds to delete all items')}}</small></div>
     <empty :list=true v-if="isEmpty" />
@@ -20,12 +16,16 @@
         <div class="row" v-for="group in Math.ceil(entryList.folder.subFolders.length / 3)" v-bind:key="group">
           <div class="col" v-for="folder in entryList.folder.subFolders.slice((group - 1) * 3, group * 3)" v-bind:key="folder.folderId">
             <div class="row m-2">
-              <!-- <b-dropdown variant="link" no-caret>
-                <template slot="button-content">
-                  <i class="far fa-folder pr-1"></i>{{ folder.folderName }}
-                </template>
-                <b-dropdown-item @click="restoreFolder(folder)">{{npContent('restore')}}</b-dropdown-item>
-              </b-dropdown> -->
+              <div class="input-group">
+                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{folder.folderName}}
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" @click="restoreFolder(folder)">{{npContent('restore')}}</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -34,9 +34,16 @@
         <div class="row" v-for="group in Math.ceil(entryList.entries.length / 3)" v-bind:key="group">
           <div class="col" v-for="entry in entryList.entries.slice((group - 1) * 3, group * 3)" v-bind:key="entry.entryId">
             <div class="row m-2">
-              <b-dropdown variant="link" :text=entry.title no-caret>
-                <b-dropdown-item @click="restoreEntry(entry)">{{npContent('restore')}}</b-dropdown-item>
-              </b-dropdown>
+              <div class="input-group">
+                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{entry.title}}
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" @click="restoreEntry(entry)">{{npContent('restore')}}</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

@@ -11,6 +11,39 @@ import AccessPermission from '../datamodel/AccessPermission';
 
 export default class FolderService extends BaseService {
   static folders = null;
+  static currentFolder = null;
+
+  static current (moduleId, folderId = NPFolder.ROOT) {
+    if (FolderService.currentFolder != null && FolderService.currentFolder.folderId == folderId) {
+      return new Promise((resolve) => {
+        resolve(FolderService.currentFolder)
+      })
+    }
+    let folder = new NPFolder()
+    folder.moduleId = moduleId
+    folder.folderId = folderId
+    return new Promise((resolve, reject) => {
+      RestClient.instance(AccountService.currentSession(), BaseService.getHeaders({folder: folder})).get(BaseService.getFolderDetailEndPoint(folder))
+        .then(function (response) {
+          // Parse application level response data
+          if (response.data.errorCode) {
+            reject(new NPError(response.data.errorCode));
+          } else {
+            let folder = NPFolder.initWith(response.data.folder);
+            FolderService.currentFolder = folder
+            resolve(folder);
+          }
+        })
+        .catch(function (error) {
+          let rc = ErrorHandler.handleError(error);
+          reject(new NPError(rc));
+        });
+    });
+  }
+
+  static setCurrent(folder) {
+    FolderService.currentFolder = folder
+  }
 
   static getAllFolders (moduleId, refresh = false) {
     let root = NPFolder.of(moduleId, NPFolder.ROOT, AccountService.currentUser(),

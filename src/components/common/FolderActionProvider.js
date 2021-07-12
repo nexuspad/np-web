@@ -33,6 +33,7 @@ export default {
                         // the re-activity.
                         // also need to keep in mind: Object.assign won't copy methods.
                         NPFolder.makeCopy(folderObj, componentSelf.folder);
+                        FolderService.setCurrent(folderObj)
                         resolve();
                       })
                       .catch(function (error) {
@@ -52,6 +53,7 @@ export default {
                 FolderService.getFolderById(moduleId, routeParam.folderId)
                   .then(function (folderObj) {
                     NPFolder.makeCopy(folderObj, componentSelf.folder);
+                    FolderService.setCurrent(folderObj)
                     resolve();
                   })
                   .catch(function (error) {
@@ -70,6 +72,7 @@ export default {
                 SharedFolderService.getFolderById(moduleId, 0, NPUser.newFromId(routeParam.user))
                 .then(function (folderObj) {
                   NPFolder.makeCopy(folderObj, componentSelf.folder);
+                  FolderService.setCurrent(folderObj)
                   resolve();
                 })
                 .catch(function (error) {
@@ -82,10 +85,9 @@ export default {
           } else {
             AccountService.hello()
               .then(() => {
-                NPFolder.makeCopy(
-                  NPFolder.of(moduleId, NPFolder.ROOT, AccountService.currentUser(), AccessPermission.ofOwnerDefault(AccountService.currentUser().userId)),
-                  componentSelf.folder
-                );
+                let root = NPFolder.of(moduleId, NPFolder.ROOT, AccountService.currentUser(), AccessPermission.ofOwnerDefault(AccountService.currentUser().userId))
+                NPFolder.makeCopy(root, componentSelf.folder)
+                FolderService.setCurrent(root)
                 resolve();
               })
               .catch(function (error) {

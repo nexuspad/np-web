@@ -69,7 +69,8 @@ export default class DocModule extends AppRoute {
       {
         path: base + '/doc/:entryId/view',
         name: 'viewDoc',
-        component: EntryView
+        component: EntryView,
+        props: true
       },
       {
         path: base + '/doc/add',

@@ -92,31 +92,42 @@
         </div>
       </div>
     </form>
-    <b-navbar toggleable="md" fixed="top" type="dark" variant="dark">
-      <b-collapse is-nav id="editor_nav_menu_collapse">
-        <b-navbar-nav>
-          <b-nav-text class="mr-2"><message :location="'TOP_NAVBAR'" /></b-nav-text>
-          <b-nav-text v-if="!npEvent.entryId">{{npContent('new event')}}</b-nav-text>
-          <b-nav-text v-if="npEvent.entryId">{{npContent('update event')}}</b-nav-text>
-        </b-navbar-nav>
-        <b-navbar-nav v-if="npEvent.recurring">
-          <b-dropdown :text="whatsUpdateOption(updateOption)" class="ml-4" size="sm">
-            <b-dropdown-item @click="updateOption = 0">{{ whatsUpdateOption(0) }}</b-dropdown-item>
-            <b-dropdown-item @click="updateOption = 1">{{ whatsUpdateOption(1) }}</b-dropdown-item>
-          </b-dropdown>
-        </b-navbar-nav>
-
-        <!-- right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-button-group class="mx-1">
-            <button class="btn btn-primary" v-on:click="collectTags(); saveEvent($event, npEvent)">{{npContent('save')}}</button>
-          </b-button-group>
-          <b-button-group class="mx-1">
-            <b-button class="my-2 my-sm-0" type="button" v-on:click="cancel()">{{npContent('cancel')}}</b-button>
-          </b-button-group>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item text-light px-1"><message :location="'TOP_NAVBAR'" /></li>
+            <li class="nav-item text-light px-1" v-if="!npEvent.entryId">{{npContent('new event')}}</li>
+            <li class="nav-item text-light px-1" v-if="npEvent.entryId">{{npContent('edit event')}}</li>
+            <li class="nav-item text-light px-1" v-if="npEvent.recurring">
+              <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ whatsUpdateOption(updateOption) }}
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" @click="updateOption = 0">
+                    {{ whatsUpdateOption(0) }}
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" @click="updateOption = 1">
+                    {{ whatsUpdateOption(1) }}
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item px-1">
+              <button class="btn btn-primary" v-on:click="collectTags(); save($event, npEvent)">{{npContent('save')}}</button>
+            </li>
+            <li class="nav-item px-1">
+              <button class="btn btn-warning" v-on:click="cancel()">{{npContent('cancel')}}</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
   </div>
 </template>
 

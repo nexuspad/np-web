@@ -1,6 +1,6 @@
 <template>
   <div class="input-group">
-    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="fas fa-ellipsis-h"></i>
     </button>
     <ul class="dropdown-menu">

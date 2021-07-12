@@ -23,33 +23,37 @@
         <textarea id="DocCKEditor"></textarea>
       </div>
     </div>
-    <b-navbar toggleable="md" fixed="top" type="dark" variant="dark">
-      <b-collapse is-nav id="editor_nav_menu_collapse">
-        <b-navbar-nav>
-          <b-nav-text class="mr-2"><message :location="'TOP_NAVBAR'" /></b-nav-text>
-          <b-nav-text v-if="!doc.entryId">{{npContent('new doc')}}</b-nav-text>
-          <b-nav-text v-if="doc.entryId">{{npContent('edit doc')}}</b-nav-text>
-        </b-navbar-nav>
-        <b-navbar-nav v-if="doc.format === 'TEXT'">
-          <b-dropdown :text="docFormat()" class="ml-4" size="sm">
-            <b-dropdown-item v-if="doc.format !== 'HTML'" @click="switchFormat('HTML')">{{ docFormat('HTML') }}</b-dropdown-item>
-            <!--
-            <b-dropdown-item v-if="doc.format !== 'TEXT'" @click="switchFormat('TEXT')">{{ docFormat('TEXT') }}</b-dropdown-item>
-            <b-dropdown-item v-if="doc.format !== 'MD'" @click="switchFormat('MD')">{{ docFormat('MD') }}</b-dropdown-item>
-            -->
-          </b-dropdown>
-        </b-navbar-nav>
-        <!-- right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-button-group class="mx-1">
-            <button class="btn btn-primary" v-on:click="collectTags(); save($event, doc)">{{npContent('save')}}</button>
-          </b-button-group>
-          <b-button-group class="mx-1">
-            <b-button class="my-2 my-sm-0" type="button" v-on:click="cancel()">{{npContent('close')}}</b-button>
-          </b-button-group>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item text-light px-1"><message :location="'TOP_NAVBAR'" /></li>
+            <li class="nav-item text-light px-1" v-if="!doc.entryId">{{npContent('new doc')}}</li>
+            <li class="nav-item text-light px-1" v-if="doc.entryId">{{npContent('edit doc')}}</li>
+            <li class="nav-item text-light px-1" v-if="doc.format === 'TEXT'">
+              <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ docFormat() }}
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" v-if="doc.format !== 'HTML'" @click="switchFormat('HTML')">
+                    {{ docFormat('HTML') }}
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item px-1">
+              <button class="btn btn-primary" v-on:click="collectTags(); save($event, doc)">{{npContent('save')}}</button>
+            </li>
+            <li class="nav-item px-1">
+              <button class="btn btn-warning" v-on:click="cancel()">{{npContent('cancel')}}</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
   </div>
 </template>
 

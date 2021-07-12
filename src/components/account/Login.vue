@@ -16,10 +16,10 @@
         <button class="btn btn-primary" v-on:click="login($event, username, password)" :disabled="posting">{{npContent('login')}}</button>
       </div>
     </form>
-    <b-alert :show="showLegacyAccountLink">
+    <div class="alert alert-warning" v-show="showLegacyAccountLink">
       You might have an older account which can be accessed at:
       <a href="https://legacy.nexuspad.com/account.htm#/login">https://legacy.nexuspad.com/account.htm#/login</a>.
-    </b-alert>
+    </div>
     <div v-if="user !== null && user.sessionId">
       {{ user.sessionId }}
       <div class="form-group">

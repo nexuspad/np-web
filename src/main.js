@@ -56,9 +56,6 @@ const scrollBehavior = function (to, from, savedPosition) {
   }
 };
 
-// window.DESKTOP is set in index.html. index.html is built in desktop/prebuild.js
-var clientType = 'browser';
-
 console.log('[App] creating router for web...');
 router = createRouter({
   history: createWebHistory(__dirname),
@@ -86,25 +83,28 @@ EventManager.subscribe(AppEvent.ACCOUNT_SESSION_INACTIVE, () => {
   }
 });
 
-// -------------------------------------------------------------------------------------------
-// global filters
-// -------------------------------------------------------------------------------------------
-Vue.filter('npTranslate', function (value) {
-  if (!value) return '';
-  return ContentHelper.translate(value);
-})
-
-Vue.filter('npHighlighter', function (value, keyword) {
-  return Highlighter.mark(value, keyword);
-})
-
 import App from './components/App.vue'
 const app = createApp(App)
 app.use(router)
 
+
+// -------------------------------------------------------------------------------------------
+// global filters
+// -------------------------------------------------------------------------------------------
+app.config.globalProperties.$filters = {
+  npHighlighter(value, keyword) {
+    return Highlighter.mark(value, keyword)
+  },
+  npTranslate(value) {
+    if (!value) return '';
+    return ContentHelper.translate(value);
+  }
+}
+
+
 import AppError from './components/AppError'
 
-let initPromises = [AppManager.serviceLocate(), AppManager.initClient(clientType)];
+let initPromises = [AppManager.serviceLocate(), AppManager.initClient('browser')];
 
 Promise.all(initPromises).then(() => {
   app.mount('#app');

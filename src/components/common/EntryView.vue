@@ -52,10 +52,11 @@ import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import NPUser from '../../core/datamodel/NPUser';
 import EventService from '../../core/service/EventService';
+import FolderService from '../../core/service/FolderService';
 
 export default {
   name: 'EntryView',
-  props: ['entryId', 'recurId', 'folder'],
+  props: ['entryId', 'recurId', 'folderId'],
   mixins: [ EntryActionProvider ],
   components: {
     Message, FolderTree, SharedFolderTree, EntryMenu, ContactDetail, EventDetail, BookmarkDetail, DocDetail
@@ -73,57 +74,57 @@ export default {
      * get an entry object.
      * don't rely on props because the page may be refreshed.
      */
-    let entryObj, folder;
+    let entryObj;
     this.moduleId = AppRoute.module(this.$route)
 
-    console.log(this.$route)
-    // this.entryId = this.$route.params.entryId
+    FolderService.current(this.moduleId, this.folderId)
+    .then(folder => {
+      this.folder = folder;
 
-    if (!this.folder) {
-      folder = NPFolder.of(this.moduleId, NPFolder.UNASSIGNED);
-    } else {
-      folder = this.folder;
-    }
+      switch (this.moduleId) {
+        case NPModule.CONTACT:
+          entryObj = NPContact.blankInstance(this.folder, this.entryId);
+          break;
+        case NPModule.CALENDAR:
+          entryObj = NPEvent.blankInstance(this.folder, this.entryId, this.recurId);
+          break;
+        case NPModule.DOC:
+          entryObj = NPDoc.blankInstance(this.folder, this.entryId);
+          break;
+        case NPModule.BOOKMARK:
+          entryObj = NPBookmark.blankInstance(this.folder, this.entryId);
+          break;
+      }
 
-    switch (this.moduleId) {
-      case NPModule.CONTACT:
-        entryObj = NPContact.blankInstance(folder, this.entryId);
-        break;
-      case NPModule.CALENDAR:
-        entryObj = NPEvent.blankInstance(folder, this.entryId, this.recurId);
-        break;
-      case NPModule.DOC:
-        entryObj = NPDoc.blankInstance(folder, this.entryId);
-        break;
-      case NPModule.BOOKMARK:
-        entryObj = NPBookmark.blankInstance(folder, this.entryId);
-        break;
-    }
+      if (this.$route.params.user) {
+        entryObj.owner = NPUser.newFromId(this.$route.params.user);
+      }
 
-    if (this.$route.params.user) {
-      entryObj.owner = NPUser.newFromId(this.$route.params.user);
-    }
+      let componentSelf = this;
+      AccountService.hello()
+        .then(function () {
+          let p;
+          if (entryObj instanceof NPEvent) {
+            p = EventService.get(entryObj);
+          } else {
+            p = EntryService.get(entryObj);
+          }
+          p.then(function (entryObj) {
+              componentSelf.entryObj = entryObj;
+              componentSelf.folderKey = NPFolder.key({folder: entryObj.folder});
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
 
-    let componentSelf = this;
-    AccountService.hello()
-      .then(function () {
-        let p;
-        if (entryObj instanceof NPEvent) {
-          p = EventService.get(entryObj);
-        } else {
-          p = EntryService.get(entryObj);
-        }
-        p.then(function (entryObj) {
-            componentSelf.entryObj = entryObj;
-            componentSelf.folderKey = NPFolder.key({folder: entryObj.folder});
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    })
+    .catch(error => {
+      console.log(error)
+    })
   },
   mounted () {
     this.keyword = this.$route.query.keyword;

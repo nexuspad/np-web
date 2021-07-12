@@ -1,11 +1,11 @@
 <template>
   <div class="np-module-container">
     <split-panel>
-      <template slot:left-pane>
+      <template v-slot:left-pane>
         <folder-tree :moduleId="moduleId" :active-folder-key="folderKey" usage="editor" />
         <shared-folder-tree :moduleId="moduleId" :active-folder-key="folderKey" usage="editor" />
       </template>
-      <template slot:right-pane>
+      <template v-slot:right-pane v-if="folder != null">
         <contact-edit :folder=folder v-if="moduleId === 1" />
         <event-edit :folder=folder :event=entry v-if="moduleId === 2" />
         <bookmark-edit :folder=folder v-if="moduleId === 3" />
@@ -27,23 +27,34 @@ import AppRoute from '../AppRoute';
 import EventManager from '../../core/util/EventManager';
 import AppEvent from '../../core/util/AppEvent';
 import NPFolder from '../../core/datamodel/NPFolder';
+import FolderService from '../../core/service/FolderService'
 
 export default {
   name: 'EntryEdit',
   data () {
     return {
       moduleId: NPModule.NOT_ASSIGNED,
-      folderKey: ''
+      folderKey: '',
+      folder: null
     };
   },
-  props: ['entry', 'folder'],
+  props: ['entry', 'folderId'],
   components: {
     FolderTree, SharedFolderTree, ContactEdit, EventEdit, BookmarkEdit, DocEdit
   },
   beforeMount () {
     this.moduleId = AppRoute.module(this.$route);
+    let self = this
 
-    this.folderKey = NPFolder.key({folder: this.folder});
+    FolderService.current(this.moduleId, this.folderId)
+    .then(folder => {
+      self.folder = folder
+      self.folderKey = NPFolder.key({folder: this.folder});
+    })
+    .catch(error => {
+      console.log(error)
+    })
+
     EventManager.subscribe(AppEvent.ENTRY_MOVE, this.updateFolder);
   },
   beforeUnmount () {

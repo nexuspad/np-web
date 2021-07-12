@@ -2,7 +2,7 @@
   <div class="card">
     <delete-confirm-modal ref="deleteConfirmModalRef" @deleteEntryConfirmed="deleteAttachment" />
     <h1 class="card-header">
-      <!-- <span v-html="$options.filters.npHighlighter(docObj.title, keyword)" /> -->
+      <span v-html="$filters.npHighlighter(docObj.title, keyword)" />
       {{ docObj.title }}
     </h1>
     <div class="card-body">
@@ -11,7 +11,7 @@
           <span class="badge badge-info">{{ tag }}</span>
         </li>
       </ul>
-      <span v-html="$options.filters.npHighlighter(htmlNote, keyword)" v-if="isHtml()"></span>
+      <span v-html="$filters.npHighlighter(htmlNote, keyword)" v-if="isHtml()"></span>
       <span style="white-space: pre-wrap;" v-if="isPlainText()">{{ docObj.note }}</span>
     </div>
     <ul class="list-group mt-4">
